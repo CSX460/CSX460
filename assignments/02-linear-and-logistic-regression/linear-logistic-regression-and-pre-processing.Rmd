@@ -10,14 +10,14 @@ output: html_document
 In **Applied Predictive Modeling** (APM), Read:
 - Chapter 4 - Overfitting and Model Tuning
 - Chapter 5 - Regression Models
-- Chapter 6.2 - Linear Regression
+- Chapter 6 , esp. 6.2 - Linear Regression
 - Chapter 12.2 - Logistic Regression 
 
 
 
 # Problem Set 
 
-DUE: *In Class Monday October 5th*
+DUE: *In Class Monday October 12th*
 
 The assigments are designed to be completed using [RMarkdown](http://rmarkdown.rstudio.com/). 
 
