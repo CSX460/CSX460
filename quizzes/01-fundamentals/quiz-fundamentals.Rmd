@@ -1,0 +1,68 @@
+---
+title: "Week 3 Quiz"
+author: "Christopher Brown"
+date: "September 21, 2015"
+output: html_document
+---
+
+# Question 1:
+
+In Machine Learning 
+1. What are at least 3 names for the Y values 
+2. What are at least 3 names for the X values
+
+
+
+# Question 2:
+
+It is often useful to plot a scatter plot of your data with each X against the Y. 
+What can you understand from these plots
+
+1. 
+2.
+
+
+
+# Question 3: 
+
+Consider the **summary** of a lm model: 
+
+    Call:
+    lm(formula = Sepal.Length ~ . - Species, data = iris)
+    
+    Residuals:
+         Min       1Q   Median       3Q      Max 
+    -0.82816 -0.21989  0.01875  0.19709  0.84570 
+    
+    Coefficients:
+                 Estimate Std. Error t value Pr(>|t|)    
+    (Intercept)   1.85600    0.25078   7.401 9.85e-12 ***
+    Sepal.Width   0.65084    0.06665   9.765  < 2e-16 ***
+    Petal.Length  0.70913    0.05672  12.502  < 2e-16 ***
+    Petal.Width  -0.55648    0.12755  -4.363 2.41e-05 ***
+    ---
+    Signif. codes:  0  €˜*** €™ 0.001  €˜** €™ 0.01  €˜* €™ 0.05  €˜. €™ 0.1  €˜  €™ 1
+    
+    Residual standard error: 0.3145 on 146 degrees of freedom
+    Multiple R-squared:  0.8586,	Adjusted R-squared:  0.8557 
+    F-statistic: 295.5 on 3 and 146 DF,  p-value: < 2.2e-16
+
+What is/are:
+
+1. The Y: 
+2. The X's:
+3. The full (model) formula for the model: 
+If all units are the same (they are), which variable has the 
+4a.largest absolute impact on Y.
+4b. smallest absolute impact on Y.
+
+
+  
+  
+# Question 4: 
+
+Name (the) three things are that all ML algorithm share in common?
+1. 
+2.
+3.
+
