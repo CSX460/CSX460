@@ -13,6 +13,7 @@ In **Applied Predictive Modeling** (APM), Read:
 - Chapter 6 , esp. 6.2 - Linear Regression
 - Chapter 12.2 - Logistic Regression 
 
+- [A Short Introduction to the Caret Package](https://cran.r-project.org/web/packages/caret/vignettes/caret.pdf) 
 
 
 # Problem Set 
@@ -66,5 +67,6 @@ Show all code used to arrive at the answers.
 
 
 ## ***APM*** 6.3 
+
 
 
