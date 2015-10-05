@@ -11,6 +11,9 @@ In Machine Learning
 1. What are at least 3 names for the Y values 
 2. What are at least 3 names for the X values
 
+Answer:
+1. target, response, effect
+2. predictor, input, feature
 
 
 # Question 2:
@@ -18,9 +21,9 @@ In Machine Learning
 It is often useful to plot a scatter plot of your data with each X against the Y. 
 What can you understand from these plots
 
-1. 
-2.
-
+Answer:
+1. ensure data in correlation 
+2. make it more easier to check out the data of single variables instead of observing the whole data.
 
 
 # Question 3: 
@@ -41,7 +44,7 @@ Consider the **summary** of a lm model:
     Petal.Length  0.70913    0.05672  12.502  < 2e-16 ***
     Petal.Width  -0.55648    0.12755  -4.363 2.41e-05 ***
     ---
-    Signif. codes:  0  €˜*** €™ 0.001  €˜** €™ 0.01  €˜* €™ 0.05  €˜. €™ 0.1  €˜  €™ 1
+    Signif. codes:  0  ??*** ?? 0.001  ??** ?? 0.01  ??* ?? 0.05  ??. ?? 0.1  ??  ?? 1
     
     Residual standard error: 0.3145 on 146 degrees of freedom
     Multiple R-squared:  0.8586,	Adjusted R-squared:  0.8557 
@@ -56,13 +59,20 @@ If all units are the same (they are), which variable has the
 4a.largest absolute impact on Y.
 4b. smallest absolute impact on Y.
 
-
+Answer:
+1. Sepal.Length
+2. Sepal.Width,Petal.Length,Petal.Width
+3. Sepal.Width+Petal.Length+Petal.Width
+4a. Petal.Length 
+4b. Petal.Width
   
   
 # Question 4: 
 
 Name (the) three things are that all ML algorithm share in common?
-1. 
-2.
-3.
+
+Answer:
+1. errors
+2. restricted class of functions
+3. search/optimization
 

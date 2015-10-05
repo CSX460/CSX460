@@ -42,14 +42,23 @@ Assignments:
 # 1.  Do the boston-housing.Rmd assignment in github.
 Don't forget to show your works, plots included.
 
+The code is in BostonHousing.Rmd.
+
 
 # 2. Algorithms and Functions
 
 When speaking of Machine Learning, there are two functions or algorithms involved.
 Describe and differentiate the algorithms from the function.
 
+Basically, algorithms are different kinds of methods implemented by the function, which used to solve a kind of problem with limited time and space.
+Functions are relations between a set of inputs and a set of permissible outputs.
+
 
 # 2. RMSE and MAE
 
 Why is RMSE preferrable to MAE?  
 When is MAE better? 
+
+RMSE represents for root-mean-square error, which describe the measures of mispersion of the sample, but MAE is used to measure how close predictions are to the eventual outcomes, it can not show the mispersion.
+I think MAE is better when we want to see how far predictions are to the average value. 
+
