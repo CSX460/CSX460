@@ -1,0 +1,161 @@
+---
+title: "Binomial Model Metrics "
+author: "Christopher Brown"
+date: "October 5, 2015"
+output: html_document
+---
+
+```{r}
+set.seed(314159)
+library(ggplot2)
+```
+
+Review the [skin/non-skin UCI dataset]("https://archive.ics.uci.edu/ml/machine-learning-databases/00229/Skin_NonSkin.txt")
+
+1. Read in the data
+2. Partition data into Test(70%) and Training(30%) Sets using `base::sample` only (no other CRAN packages)  
+3. Train a model glm
+4. Train a model with higher order terms
+
+Show All Work!
+
+
+```{r}
+
+
+url <- "https://archive.ics.uci.edu/ml/machine-learning-databases/00229/Skin_NonSkin.txt"
+
+dat <- read.delim(url(url), header=FALSE )
+names(dat) <- c('r', 'g', 'b', 'skin') 
+
+# TRANSFORM DATA
+  dat$skin <- (dat$skin - 1) %>% as.logical 
+
+  
+# PARTITION DATA
+  wh <- sample(1:nrow(dat), size = .7 * nrow(dat) )
+  train <- dat[wh, ]
+  test  <- dat[-wh, ]
+  
+  
+# FIT MODEL
+  fit.1 <- glm( skin ~ . , data=train, family="binomial")
+  fit.2 <- glm( skin ~ (.)^2, data=train,  family="binomial")
+
+```
+
+
+- Predict results for the *TEST* set.  
+- Plot a histogram of the *TEST* probabilities, faceting or coloring TRUE outcomes in order to show the class differnces 
+
+
+```{r}
+
+test$fit.1 <-  
+  predict(fit.1, test, type="response") # > 0.5 
+
+  
+qplot( x=fit.1, data=test, fill=skin )
+qplot( x=fit.1, data=test, fill=skin ) + facet_grid( skin ~ . )
+
+
+test$fit.2 <- 
+  predict(fit.2, test, type="response") # > 0.5 
+
+qplot( x=fit.1, data=test, fill=skin )
+qplot( x=fit.1, data=test, fill=skin ) + facet_grid( skin ~ . )
+
+
+```
+
+
+
+## Contingency table, 
+
+- Predict classes for *TEST* (use threshold = 0.5 )
+- Use the `base::table` function to create a table showing TP, FP, TN, FN
+
+
+```{r}
+
+test$fit.1.class <-  
+  predict(fit.1, test, type="response") > 0.5 
+
+( tab.1 <- table( test$skin, test$fit.1.class ) )
+
+test$fit.2.class <-  
+  predict(fit.2, test, type="response") > 0.5 
+
+( tab.2 <- table( test$skin, test$fit.2.class ) )
+
+
+
+```
+
+Calculate the 
+
+
+Use the predict function on test data ... calculate: tra
+
+- Prevalence 
+- Accuracy
+- Error Rate / Misclassification Rate
+- True Positive Rate
+
+```{r, echo=FALSE}
+attach(test)
+tab <- tab.1
+
+sum(skin)/nrow(test)                        # prevalence: 0.792
+( accuracy = sum(diag(tab))/sum(tab) )      # accuracy  : 0.92
+1- accuracy                                 # error rate: 0.081
+sum( skin == fit.1.class & skin )/sum(skin) # TPR: 0.988
+detach(test)
+
+```
+
+
+- Using only functions: `sum`, `!`, `==` and `&`, 
+Write functions that take a vector of observed outcomes(x) and vector of predicted classes and calculates 
+  - True Positive Rate  
+  - False Positive Rate
+  - True Negative Rate  
+  - False Negative Rate 
+
+```{r}
+
+tpr <- function(x,y) sum(x==y & x ) /sum(x) 
+fpr <- function(x,y) sum(x!=y & !x) /sum(!x)  
+tnr <- function(x,y) sum(y==x & !x) /sum(!x)
+fnr <- function(x,y) sum(x!=y & x ) /sum(x)
+
+```
+
+
+What is the following for the model
+* Sensitivity 
+* Specificity 
+* Recall 
+
+
+```{r}
+tpr(test$skin,test$fit.1.class)  # 0.94 Sensitivity, Recall = TPR
+tnr(test$skin,test$fit.1.class)  # 0.83 Specificity
+
+tpr(test$skin,test$fit.2.class)  # 0.95 Sensitivity, Recall = TPR
+tnr(test$skin,test$fit.2.class)  # 0.82 Specificity
+```
+
+
+# Interactions
+
+Repeat using high-order interactions for your model between the pixels, how much did higher-order interactions improve the model
+
+
+
+# Question
+
+When applying your model, you learned that your model was way-off. After some investigation you learned that your new data set contained only If you knew that your new data set contained only 25% the number of skin toned pixels as compared to the 
+
+
+
