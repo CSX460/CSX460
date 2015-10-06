@@ -1,0 +1,80 @@
+---
+title: "week4 assignments"
+author: "Christopher Brown"
+date: "September 30, 2015"
+output: html_document
+---
+
+# Readings
+
+In **Applied Predictive Modeling** (APM), Read:
+- Chapter 4 - Overfitting and Model Tuning
+- Chapter 5 - Regression Models
+- Chapter 6 , esp. 6.2 - Linear Regression
+- Chapter 12.2 - Logistic Regression 
+
+- [A Short Introduction to the Caret Package](https://cran.r-project.org/web/packages/caret/vignettes/caret.pdf). Make sure that you work along with the text.   
+  
+
+
+# Problem Set 
+
+DUE: *In Class Monday October 12th*
+
+The assigments are designed to be completed using [RMarkdown](http://rmarkdown.rstudio.com/). 
+
+> R Markdown is an authoring format that enables easy creation of dynamic 
+> documents, presentations, and reports from R. It combines the core syntax of
+> markdown (an easy-to-write plain text format) with embedded R code chunks that
+> are run so their output can be included in the final document. R Markdown
+> documents are fully reproducible (they can be automatically regenerated 
+> whenever underlying R code or data changes).
+
+
+For questions requiring: 
+
+- textual answers: record your answer in plain text
+- code: place the code in the RMarkdown code fence. 
+
+Show all code used to arrive at the answers.
+
+
+
+## ***APM*** 6.2 (a)-(d)
+
+```{r}
+# Place your code here
+
+
+```
+
+(a) No response required.
+
+(b)   
+
+```{r}
+# place R code here
+```
+
+(c)
+```{r}
+# place R code here
+```
+
+(d) 
+```{r}
+# place R code here
+```
+
+
+## ***APM*** 6.3 
+
+
+## German Credit Data ## 
+
+The University of California, Irvine [Machine Learning Repository](https://archive.ics.uci.edu/ml/index.html). One popular data set is the [German Credit Data](https://archive.ics.uci.edu/ml/datasets/Statlog+%28German+Credit+Data). Using this data, create a logistic regression model. 
+
+
+
+
+
