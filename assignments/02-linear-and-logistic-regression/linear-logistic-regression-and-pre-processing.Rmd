@@ -39,6 +39,8 @@ For questions requiring:
 Show all code used to arrive at the answers.
 
 
+## Finish in-class assignments
+
 
 ## ***APM*** 6.2 (a)-(d)
 
@@ -66,8 +68,6 @@ Show all code used to arrive at the answers.
 # place R code here
 ```
 
-
-## ***APM*** 6.3 
 
 
 ## German Credit Data ## 
