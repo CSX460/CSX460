@@ -1,0 +1,55 @@
+---
+title: "Resampling"
+author: "Christopher Brown"
+date: "October 5, 2015"
+output: html_document
+---
+
+
+```{r}
+set.seed(314159)
+```
+
+
+Use the `baseball` data set from the `plyr` package for the following problem.
+
+A very simple model to predict the number of at-bats/game **each** player has per game is given by: 
+ 
+     abpg = sum(ab)/sum(g)  # 3.10
+     
+
+- Show that this is a bad:
+
+```{r}
+
+```
+
+
+
+- Create a better model using only number of games as a predictor
+
+```{r}
+
+
+```
+
+
+- Calculate the "Apparent" *RMSE* of this model.    
+
+```{r}
+
+
+
+```
+
+
+Using only Recreate the model, providing a new estimate for `ab/g` and the RMSE, using:
+- 5-Fold CV
+- Bootstrap
+
+```{r}
+
+
+
+```
+
