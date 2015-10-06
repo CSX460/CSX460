@@ -7,10 +7,15 @@ output: html_document
 
 # Question 1:
 
-In Machine Learning 
+In Machine Learning
+
 1. What are at least 3 names for the Y values 
+
+> dependent variable, response variable, explained variable
+
 2. What are at least 3 names for the X values
 
+> independent variable, predictor variable, explanatory variable
 
 
 # Question 2:
@@ -18,9 +23,8 @@ In Machine Learning
 It is often useful to plot a scatter plot of your data with each X against the Y. 
 What can you understand from these plots
 
-1. 
-2.
-
+>1. The rough correlation between X and Y.
+2. The distribution of X and Y.
 
 
 # Question 3: 
@@ -49,20 +53,22 @@ Consider the **summary** of a lm model:
 
 What is/are:
 
-1. The Y: 
-2. The X's:
-3. The full (model) formula for the model: 
-If all units are the same (they are), which variable has the 
-4a.largest absolute impact on Y.
-4b. smallest absolute impact on Y.
+>1. The Y: Sepal.Length
 
+>2. The X's: Sepal.Width, Petal.Length, Petal.Width
 
-  
+>3. The full (model) formula for the model: $Sepal.Length = 1.85600 + 0.65084 * Sepal.Width + 0.70913 * Petal.Length - 0.55648 * Petal.Width$
+
+>4. If all units are the same (they are), which variable has the
+* 4a. largest absolute impact on Y: Petal.Length
+* 4b. smallest absolute impact on Y: Petal.Width
+
   
 # Question 4: 
 
 Name (the) three things are that all ML algorithm share in common?
-1. 
-2.
-3.
+
+>1. They learn from data.
+2. They make predictions on data.
+3. Their accuracy depends on the dataset and algorithm used in learning.
 
