@@ -1,5 +1,7 @@
 # CSX460 Project Proposal
 
+Team Member(s):
+
 
 ## Model Objective
 

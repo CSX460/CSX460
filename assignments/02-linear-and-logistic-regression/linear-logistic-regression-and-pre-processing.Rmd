@@ -13,7 +13,8 @@ In **Applied Predictive Modeling** (APM), Read:
 - Chapter 6 , esp. 6.2 - Linear Regression
 - Chapter 12.2 - Logistic Regression 
 
-- [A Short Introduction to the Caret Package](https://cran.r-project.org/web/packages/caret/vignettes/caret.pdf) 
+- [A Short Introduction to the Caret Package](https://cran.r-project.org/web/packages/caret/vignettes/caret.pdf). Make sure that you work along with the text.   
+  
 
 
 # Problem Set 
@@ -67,6 +68,13 @@ Show all code used to arrive at the answers.
 
 
 ## ***APM*** 6.3 
+
+
+## German Credit Data ## 
+
+The University of California, Irvine [Machine Learning Repository](https://archive.ics.uci.edu/ml/index.html). One popular data set is the [German Credit Data](https://archive.ics.uci.edu/ml/datasets/Statlog+%28German+Credit+Data). Using this data, create a logistic regression model. 
+
+
 
 
 
