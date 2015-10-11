@@ -46,8 +46,8 @@ Show all code used to arrive at the answers.
 
 ```{r}
 # Place your code here
-
-
+library(AppliedPredictiveModeling)
+data(permeability)
 ```
 
 (a) No response required.
@@ -56,16 +56,43 @@ Show all code used to arrive at the answers.
 
 ```{r}
 # place R code here
+library(caret)
+ncol(fingerprints)
+nzv_cols = nearZeroVar(fingerprints)
+if(length(nzv_cols) > 0) {
+    fingerprints <- fingerprints[, -nzv_cols]
+}
+ncol(fingerprints)
 ```
 
 (c)
 ```{r}
 # place R code here
+library(caTools)
+set.seed(123456)
+split = sample.split(permeability, SplitRatio = 0.7)
+train = subset(fingerprints, split==TRUE)
+test = subset(fingerprints, split==FALSE)
+perm_train = subset(permeability, split==TRUE)
+perm_test = subset(permeability, split==FALSE)
+
+# library(pls)
+# pls1 = mvr(perm_train ~ train)
+# summary(pls1)
+# plot(pls1)
+set.seed(123456)
+pls = train(x = train, y = perm_train, method = "pls", tuneGrid = expand.grid(ncomp = 1:10), trControl = trainControl(method = "LGOCV"))
+ncomp = 1:10
+plot(pls)
+plot(ncomp, pls$results$Rsquared)
+min(pls$results$Rsquared)
 ```
 
 (d) 
 ```{r}
 # place R code here
+pred = predict(pls, newdata=test)
+plot(perm_test, pred)
 ```
 
 
@@ -74,7 +101,19 @@ Show all code used to arrive at the answers.
 
 The University of California, Irvine [Machine Learning Repository](https://archive.ics.uci.edu/ml/index.html). One popular data set is the [German Credit Data](https://archive.ics.uci.edu/ml/datasets/Statlog+%28German+Credit+Data). Using this data, create a logistic regression model. 
 
+```{r warning=FALSE}
+data(GermanCredit)
+set.seed(123456)
+split = sample.split(GermanCredit$Class, SplitRatio = 0.7)
+train = subset(GermanCredit, split==TRUE)
+test = subset(GermanCredit, split==FALSE)
 
+# Reference: APM pp. 85 - 87
+svmFit = train(Class ~ ., data = train, method = "svmRadial", preProc = c("center", "scale"), tuneLength = 10, trControl = trainControl(method = "repeatedcv", repeats = 5))
+plot(svmFit, scales = list(x = list(log = 2)))
+svmFit
 
-
+pred = predict(svmFit, test)
+plot(test$Class, pred)
+````
 
