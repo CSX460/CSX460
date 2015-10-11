@@ -8,6 +8,12 @@ output: html_document
 
 ```{r}
 set.seed(314159)
+library(ggplot2)
+install.packages("plyr")
+library(plyr)
+data(baseball, package = "plyr")
+View(baseball)
+hist(baseball$ab)
 ```
 
 
@@ -21,7 +27,16 @@ A very simple model to predict the number of at-bats/game **each** player has pe
 - Show that this is a bad:
 
 ```{r}
+attach(baseball)
+library(ggplot2)
 
+q_err <- quote(ab/g-abpg)
+q_abpg <- quote(sum(ab)/sum(g))
+
+mean( eval(q_err.baseball), na.rm = TRUE ) # -0.65
+hist( eval(q_err.baseball) )
+
+# residuals are not mean 0
 ```
 
 
@@ -30,6 +45,8 @@ A very simple model to predict the number of at-bats/game **each** player has pe
 
 ```{r}
 
+any(g==0)
+baseball <- baseball[g!=0]
 
 ```
 
