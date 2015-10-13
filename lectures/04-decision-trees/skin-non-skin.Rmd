@@ -8,6 +8,7 @@ output: html_document
 ```{r}
 set.seed(314159)
 library(ggplot2)
+library(maggir)
 ```
 
 Review the [skin/non-skin UCI dataset]("https://archive.ics.uci.edu/ml/machine-learning-databases/00229/Skin_NonSkin.txt")
@@ -27,8 +28,9 @@ url <- "https://archive.ics.uci.edu/ml/machine-learning-databases/00229/Skin_Non
 
 dat <- read.delim(url(url), header=FALSE )
 names(dat) <- c('r', 'g', 'b', 'skin') 
+#give names to each column
 
-# TRANSFORM DATA
+# TRANSFORM DATA(??as.logical)
   dat$skin <- (dat$skin - 1) %>% as.logical 
 
   
@@ -57,8 +59,10 @@ test$fit.1 <-
   
 qplot( x=fit.1, data=test, fill=skin )
 qplot( x=fit.1, data=test, fill=skin ) + facet_grid( skin ~ . )
+qplot( x=fit.1, data=test, fill=skin ) + facet_grid( . ~ skin )
+qplot( x=fit.1, data=test, fill=skin ) + facet_wrap( skin ~ . )
 
-
+#cross validation
 test$fit.2 <- 
   predict(fit.2, test, type="response") # > 0.5 
 
