@@ -1,0 +1,70 @@
+---
+title: "quiz-binomial-performance-measures"
+author: "Christopher Brown"
+date: "October 12, 2015"
+output: html_document
+---
+
+
+You have been selected by your peers to represent them in the TIC-TAC-TOE world championship. As part of your training, you plan to visit the TIC-TAC-TOE Hall of Fame and study the great plays, such as the middle-row gambit, three corners and middle out and the grand masters such as M. Broderick and A.Sheedy. Alas, the day before you were to arrive, a fire burned down the Hall.  Arson !?!!
+The only thing that was recovered after the fire was stack of old games, but you could only make out the Top Left (TL) and Center (MM) boxes and the outcome of that game.  
+
+Thinking quick and with only a day before the championship, you decide to analyze the games using you machine learning skills.  
+Using the `caret` package, create a logistic regression model on the 'train' set and predict it on the test set.
+
+
+The file: `quizzes/binomial-performance/data.RData`
+contains test and training data sets with the following columns
+TL - the value of the TOP LEFT SQUARE: either x, o or (b)lank
+MM - the value of the center square: either x, o or (b)lank
+
+
+```{r}
+set.seed(31415)
+library(caret)
+
+file="quizzes/binomial-performance/data.RData"
+load(file)
+
+# place work here
+```
+
+
+Based on your model and the test set, what is your disadvantage when O holds the middle square. Express as a probability (show your work)
+
+```{r}
+# place work here
+```
+
+- Using the 'model', create a contingency table for the predicted outcomes of the test set. (Resampling not necessary)
+
+
+```{r}
+# place work here
+```
+
+- If your contingency table looks like this:
+
+          predicted
+observed   negative positive
+  negative       83       98
+  positive       66      296
+  
+  
+Calculate
+
+    FP          :
+    TP          :
+    Accuracy    :
+    Sensitivity :
+    Specificity :
+    Recall      : 
+    TPR         :
+    Prevalance  :
+    Error Rate  :
+
+
+
+# Extra Credit: (O pts)
+- What is the "only winning move"?
+
