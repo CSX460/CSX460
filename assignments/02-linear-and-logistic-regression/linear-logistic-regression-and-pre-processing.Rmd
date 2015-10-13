@@ -46,8 +46,8 @@ Show all code used to arrive at the answers.
 
 ```{r}
 # Place your code here
-
-
+library(AppliedPredictiveModeling)
+data(permeability)
 ```
 
 (a) No response required.
@@ -56,19 +56,39 @@ Show all code used to arrive at the answers.
 
 ```{r}
 # place R code here
+nzvFingerprints <- nearZeroVar(fingerprints)
+noNzvFingerprints <- fingerprints[, -nzvFingerprints]
 ```
+
+719 near-zero variance fingerprints, 388 left for modeling
 
 (c)
 ```{r}
 # place R code here
+set.seed(614)
+trainingRows <- createDataPartition(permeability, p = 0.7, list = FALSE)
+
+trainFingerprints <- noNzvFingerprints[trainingRows, ]
+trainPermeability <- permeability[trainingRows, ]
+
+testFingerprints <- noNzvFingerprints[-trainingRows, ]
+testPermeability <- permeability[-traingRows, ]
+
+ctrl <- trainControl( method = "LGOCV")
+
+pls <- train( x = trainFingerprints, y = log10(trainPermeability), method = "pls", tuneGrid = expand.grid(ncomp = 1 : 15), trControl = ctrl)
 ```
+
+latent variables is 7
+corresponding resampled estimate of R(sqr) is 0.54
 
 (d) 
 ```{r}
 # place R code here
+pls <- train( x = testFingerprints, y = log10(testPermeability), method = "pls", tuneGrid = expand.grid(ncomp = 1 : 15), trControl = ctrl)
 ```
 
-
+corresponding resampled estimate of R(sqr) is 0.74
 
 ## German Credit Data ## 
 
