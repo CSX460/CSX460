@@ -1,3 +1,5 @@
 .RData
 .Rhistory
 .*answers.*
+students/*
+
