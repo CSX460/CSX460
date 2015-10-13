@@ -44,7 +44,10 @@ Show all code used to arrive at the answers.
 
 ```{r}
 # Place your code here
-
+library(AppliedPredictiveModeling)
+data(permeability)
+library(caret)
+set.seed(31416)
 
 ```
 
@@ -53,17 +56,38 @@ Show all code used to arrive at the answers.
 (b)   
 
 ```{r}
-# place R code here
+fingerprints <- fingerprints[,-nearZeroVar(fingerprints)]
+ncol(fingerprints) ## 388 remain
 ```
 
 (c)
 ```{r}
-# place R code here
+trainRows <- createDataPartition(y = permeability,
+                                 p = .8,
+                                 list = FALSE)
+trainSet <- data.frame(cbind(fingerprints[trainRows,],permeability[trainRows,])) 
+names(trainSet)[389]<-"Y"
+testSet <- data.frame(cbind(fingerprints[-trainRows,],permeability[-trainRows,])) 
+names(testSet)[389]<-"Y"
+plsFit <- train(Y ~ .,
+                data = trainSet,
+                method = "pls",
+                tuneLength = 20,
+                preProc = c("center", "scale"))
+plsFit
+# 2 components, r squared = .38
+plot(plsFit)
+
 ```
 
 (d) 
 ```{r}
-# place R code here
+predicted <- predict(plsFit, newdata = testSet)
+observed  <- testSet$Y
+rsquared <- cor(predicted,observed)^2
+rsquared  # test r squared = .43
+plot(observed,predicted,xlim=c(-1,60), ylim=c(-1,60))
+abline(0,1)
 ```
 
 
