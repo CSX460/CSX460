@@ -1,0 +1,36 @@
+---
+title: "Sensitivity and Specificity"
+author: "Christopher Brown"
+date: "October 5, 2015"
+output: html_document
+---
+
+The German Credit Data (data/german_credit); 
+
+1. Read in the German Credit Data
+2. Partition the model int Test and Training 
+ 
+
+```{r}
+
+
+```
+
+Use the predict function on test data ... calculate:
+* True Positive Rate  
+* False Positive Rate
+* True Negative Rate  
+* False Negative Rate 
+* Sensitivity 
+* Specificity 
+* Recall 
+* Precision
+* Prevalence 
+* Accuracy
+
+
+```{r, echo=FALSE}
+
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
