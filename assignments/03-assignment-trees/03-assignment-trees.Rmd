@@ -1,0 +1,24 @@
+---
+title: "03-assignment: Trees"
+author: "Christopher Brown"
+date: "October 12, 2015"
+output: html_document
+---
+
+## Readings
+
+In Applied Predictive Modeling (APM) read:
+- Chapter 8.1 - 8.8, 
+- Chapter 11
+- Chapter 14.1 - 14.5, 14.8
+
+## Problems: Due October 26th, 2015 
+
+- Project Update. (I will put a template in the projects folder for you to report your status on.) 
+
+- Excersizes, In APM: 
+
+8.1 (a) - (C)
+8.4 (a) - (b)
+14.2
+

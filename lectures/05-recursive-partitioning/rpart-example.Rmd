@@ -1,0 +1,20 @@
+This simple example demonstrates the building of a recursive partitioning using the `rpart` package and the ploting of the model using `partykit` 
+
+
+```{r}
+library(rpart)
+library(partykit)
+library(magrittr)
+
+data("iris")
+
+?rpart
+?rpart.control
+
+fit <- rpart(Sepal.Length ~ ., data = iris, cp=1e-5 )
+
+fit %>% as.party %>% plot
+predict(fit, iris, cp=1e-4 )
+
+fit  <- train( Sepal.Length ~ ., data = iris, method="rpart")
+```
