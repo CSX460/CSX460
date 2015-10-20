@@ -1,0 +1,51 @@
+
+# Limitation of Linear Methods
+
+x <- rnorm(150,sd = 4) 
+fy <- function(x) abs(x) + rnorm( length(x), mean=0 )
+dat <- data.frame( x = x, y=fy(x) )
+
+
+gg <- 
+  ggplot( data=dat, aes(x=x,y=y)) + 
+  geom_point()  
+
+gg
+  
+fit <- lm( y ~ x, data=dat)
+
+gg + geom_smooth( method="lm")
+
+fit %>% residuals %>% {(.)^2} %>% mean %>% sqrt
+
+
+
+# Bubble 
+
+
+
+
+ # Partition of Iris Data Set
+library(ggplot2)
+library(rpart)
+fit <- rpart( Species ~ . , iris)
+
+ggplot( data=iris, aes(x=Petal.Length, y=Petal.Width, color=Species)) +
+  geom_point( size=3, aes(symbol=Species) ) +
+  theme(
+    panel.background = element_rect(fill = "transparent",colour = NA) # or theme_blank()
+    , panel.grid.minor = element_blank()
+    , panel.grid.major = element_blank()
+  )
+
+ggplot( data=iris, aes(x=Petal.Length, y=Petal.Width, color=Species)) +
+  geom_point( size=3, aes(symbol=Species) ) +
+  geom_vline( xintercept = 2.45, line_type="dashed") +
+  geom_hline( yintercept = 1.75 ) + 
+  theme(
+    panel.background = element_rect(fill = "transparent",colour = NA) # or theme_blank()
+    , panel.grid.minor = element_blank()
+    , panel.grid.major = element_blank()
+  )
+
+ggsave()

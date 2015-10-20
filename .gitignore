@@ -1,2 +1,8 @@
+.RData
 .Rhistory
 .*answers.*
+students/*
+
+*/*answers*
+assignments/*answers*.Rmd
+
