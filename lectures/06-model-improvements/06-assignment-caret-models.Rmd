@@ -1,0 +1,70 @@
+---
+title: "Advanced Models"
+author: "Christopher Brown"
+date: "October 19, 2015"
+output: html_document
+---
+
+
+# General question
+
+Generically and regardless of model type, what is the function of the tuning parameters?
+
+```
+```
+
+This assignment demonstrates the use of caret for constructing models. Each model should be built and compared using using RSquared as the performance metric calculated using 10-fold repeated cross-validation with 3 folds.
+
+
+
+```{r}
+library(caret)
+# library(mlbench)
+data(cars, package="caret")
+```
+
+
+Using caret, 
+fit a linear regression model? 
+What is causing the warnings? What are some strategies for eliminating them?
+What is the differnece in performance between the first model and the erro free model?
+
+
+```{r}
+
+```
+
+
+# RPart
+fit a rpart model.
+How does this model compare to the 
+
+```{r}
+
+```
+
+
+Plot the tuning parameter, C_p against the "RMSE". Orient the plot  so that models get better as you move to the left. 
+
+```{r}
+```
+
+What does the plot tell you? 
+
+
+# CTREE
+
+Do the same for a `ctree` model.
+```{r}
+```
+
+Compare the three models?
+
+Which is best?  Why? 
+
+
+
+
+# Bagging 
+
+
