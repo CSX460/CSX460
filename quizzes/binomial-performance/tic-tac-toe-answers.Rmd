@@ -1,0 +1,99 @@
+---
+title: "quiz-binomial-performance-measures"
+author: "Christopher Brown"
+date: "October 12, 2015"
+output: html_document
+---
+
+
+```{r,echo=FALSE,results='hide'}
+
+# CREATE THE DATA
+dat <- read.csv( "quizzes/binomial-performance/tic-tac-toe.data", header=FALSE)
+names(dat) <- 
+  c( 'TL', 'TM', 'TR', 'ML', 'MM', 'MR', 'BL', 'BM', 'BR', 'outcome')
+
+set.seed(31415)
+wh <- sample.int( nrow(dat), nrow(dat) * .70)
+
+
+train <- dat[ sample(wh, replace=TRUE), c('TL', 'MM', 'outcome')] 
+  rownames(train) <- NULL
+  
+test <- dat[ sample(-wh, replace=TRUE), c('TL', 'MM', 'outcome')]
+  rownames(test) <- NULL
+  
+file="quizzes/binomial-performance/data.RData"
+save( test, train, file=file)
+```
+
+
+You have been selected by your peers to represent them in the TIC-TAC-TOE world championship. As part of your training, you plan to visit the TIC-TAC-TOE Hall of Fame and study the great plays, such as the middle-row gambit, three corners and middle out and the grand masters such as M. Broderick and A.Sheedy. Alas, the day before you were to arrive, a fire burned down the Hall.  Arson !?!!
+The only thing that was recovered after the fire was stack of old games, but you could only make out the Top Left (TL) and Center (MM) boxes and the outcome of that game.  
+
+Thinking quick and with only a day before the championship, you decide to analyze the games using you machine learning skills.  
+Using the `caret` package, create a logistic regression model on the 'train' set and predict it on the test set.
+
+
+The file: `quizzes/binomial-performance/data.RData`
+contains test and training data sets with the following columns
+TL - the value of the TOP LEFT SQUARE, either x, o or (b)lank
+MM - the value of the center square, either x, o or (b)lank
+
+```{r}
+set.seed(31415)
+
+file="quizzes/binomial-performance/data.RData"
+load(file)
+
+library(caret)
+
+
+ctrl <- trainControl(method = "repeatedcv", repeats = 3, classProbs = TRUE, summaryFunction = twoClassSummary
+)
+fit <- train( outcome ~ ., data=train, method="glm", family = "binomial", trControl = ctrl)
+
+```
+
+
+Based on your model and the test set, what is your disadvantage when O holds the middle square. (show your work)
+
+```{r]
+summary(fit)
+library(ml.plus)
+```
+
+- Using the 'model', create a contingency table for the predicted outcomes of the test set. (Resampling not necessary)
+
+
+```{r}
+fit$finalModel
+table( observed=test$outcome, predicted=predict(fit,test) )  
+  
+```
+
+- If your contingency table looks like this:
+
+          predicted
+observed   negative positive
+  negative       83       98
+  positive       66      296
+  
+  
+Calculate
+
+    FP          : 98
+    TP          : 296
+    Accuracy    : (296 + 83) / (296+83+98+66)
+    Sensitivity : (296)/(296+66)
+    Specificity : (83)/(98+83)
+    Recall      : 
+    TPR         : cf. Sensitivity
+    Prevalance  : (296+66)
+    Error Rate  : (98+66) / (296+83+98+66)
+
+
+
+# Extra Credit: (O pts)
+- What is the "only winning move"?
+
