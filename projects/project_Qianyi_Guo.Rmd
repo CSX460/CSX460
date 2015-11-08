@@ -1,0 +1,262 @@
+---
+title: "CS X460 Project"
+author: "Qianyi Guo"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+    pdf_document:
+        toc: true
+        number_sections: true
+fontsize: 11pt
+---
+
+# Introduction
+This project aims at making predictions about people's annual income using demographic data. Understanding how other characteristics influence people's income is important for government, enterprises, and employers. The United States Census is a decennial census mandated by the United States Constitution, and provides a wide range of demographic data from US population. In this project, we want to use the US Census data about a person to predict how much the person earns -- more specifically, whether the person earns more than 50,000 US dollars per year. In this project, we will analyze the dataset and build three types of models: logistic regression, classification and regression trees (CART), and random forests. Each model will be constructed using default parameters and improved later.
+
+# Data
+The data comes from the **UCI Machine Learning Repository**, which can be downloaded from <http://archive.ics.uci.edu/ml/datasets/Adult>. Extraction was done by Barry Becker from the 1994 Census database. A set of reasonably clean records was extracted using the following conditions: `((AAGE>16) && (AGI>100) && (AFNLWGT>1)&& (HRSWK>0))`.
+
+The dataset includes the following 13 variables:
+
+* `age` = the age of the individual in years
+* `workclass` = the classification of the individual's working status (does the person work for the federal government, work for the local government, work without pay, and so on)
+* `education` = the level of education of the individual (e.g., 5th-6th grade, high school graduate, PhD, so on)
+* `maritalstatus` = the marital status of the individual
+* `occupation` = the type of work the individual does (e.g., administrative/clerical work, farming/fishing, sales and so on)
+* `relationship` = relationship of individual to his/her household
+* `race` = the individual's race
+* `sex` = the individual's sex
+* `capitalgain` = the capital gains of the individual in 1994 (from selling an asset such as a stock or bond for more than the original purchase price)
+* `capitalloss` = the capital losses of the individual in 1994 (from selling an asset such as a stock or bond for less than the original purchase price)
+* `hoursperweek` = the number of hours the individual works per week
+* `nativecountry` = the native country of the individual
+* `over50k` = whether or not the individual earned more than $50,000 in 1994
+	
+First load the dataset from `census.csv`. Then split it into training and test set as usual.
+
+```{r}
+census = read.csv("census.csv")
+str(census)
+summary(census)
+set.seed(1234)
+library("caTools")
+spl = sample.split(census$over50k, SplitRatio = 0.7)
+train = subset(census, spl == TRUE)
+test = subset(census, spl == FALSE)
+```
+
+# Model Construction
+## Logistic Regression
+First, build a most straightforward logistic regression model. The model simply fits the `over50k` response variable using all available predictors.
+
+```{r warning=FALSE}
+logModel = glm(over50k ~ . , data = train, family = "binomial")
+summary(logModel)
+logPred = predict(logModel, newdata = test, type = "response")
+```
+
+Now we look into the predictions of this model. The accuracy of this model is given by
+
+```{r}
+logTable = table(test$over50k, logPred > 0.5)
+(logTable[[1]] + logTable[[4]]) / nrow(test)
+```
+
+Comparing with the "naive model" -- predicting annual income <= 50K for any people, the logistic regression model improves accuracy by about 10%. It is a decent progress, but we obviously want to do something more accurate.
+
+```{r}
+testTable = summary(test$over50k)
+testTable[[1]] / nrow(test)
+```
+
+Finally, visualize the relationship between false positive rate and true positive rate:
+
+```{r message=FALSE}
+library(ROCR)
+ROCRpred = prediction(logPred, test$over50k)
+ROCRperf = performance(ROCRpred, "tpr", "fpr")
+plot(ROCRperf)
+```
+
+The area under the ROC curve is
+
+```{r}
+auc = as.numeric(performance(ROCRpred, "auc")@y.values)
+auc
+```
+
+## Classification and Regression Trees
+Since the dataset includes lots of categorical variables, some advanced methods like classification and regression trees may produce a more accurate model.
+
+```{r}
+library("rpart")
+library("rpart.plot")
+CARTmodel = rpart(over50k ~ ., data = train, method = "class")
+CARTpred = predict(CARTmodel, newdata = test, type = "class")
+CARTtable = table(CARTpred, test$over50k)
+(CARTtable[[1]] + CARTtable[[4]]) / nrow(test)
+```
+
+The CART model is slightly worse than the logistic regression model in terms of accuracy. But it is much easier to interpret since only a few predictors are involved in the model, which can be demonstrated using a graph:
+
+```{r}
+prp(CARTmodel)
+```
+
+It looks like that `relationship`, `captialgain` and `education` are most important predictors in the CART model. But we can do better by appropriately tune the depth and number of splits in the tree, which will be discussed later. 
+
+Finally, visualize the relationship between false positive rate and true positive rate:
+
+```{r}
+CARTpredVal = predict(CARTmodel, newdata=test)[,2]
+ROCRpred = prediction(CARTpredVal, test$over50k)
+ROCRperf = performance(ROCRpred, "tpr", "fpr")
+plot(ROCRperf)
+```
+
+And the area under the ROC curve is
+
+```{r}
+auc = as.numeric(performance(ROCRpred, "auc")@y.values)
+auc
+```
+
+## Random Forests
+Since the performance of the CART model isn't that satisfactory, we will use a more sophisticated method known as random forests. It can correct the habit of decision trees to overfit the training set.
+
+```{r message=FALSE}
+library("randomForest")
+set.seed(3333)
+rfModel = randomForest(over50k ~., data = train)
+rfPred = predict(rfModel, newdata = test)
+```
+
+Building such a model is a bit time-consuming, but it can still be constructed within reasonable time on a personal computer. However, the random forests method actually decreases the accuracy.
+
+```{r}
+rfTable = table(test$over50k, rfPred)
+(rfTable[[1]] + rfTable[[4]]) / nrow(test)
+```
+
+It is even worse that we lose some of the interpretability that comes with CART -- seeing how predictions are made and which variables are important. Therefore, we need to calculate some metrics to tell us which variables are more important. For instance, we consider the number of times that a certain variable is selected for a split in all trees used in the random forest model.
+
+```{r}
+var_used = varUsed(rfModel, count=TRUE)
+var_used_sorted = sort(var_used, decreasing = FALSE, index.return = TRUE)
+dotchart(var_used_sorted$x, names(rfModel$forest$xlevels[var_used_sorted$ix]),
+         xlab="number of times", main="rfModel")
+```
+
+It looks like `age` is the most important predictor of a person's employment status, which is consistent with common sense. Other important predictors include `hoursperweek`, `occupation`, `education` and `workclass`, which are somewhat different from the CART model. Then, we use another metric for comparison -- mean decrease in inhomogeneity. In each tree in the forest, whenever we select a variable and perform a split, the inhomogeneity is reduced.
+
+```{r}
+varImpPlot(rfModel)
+```
+
+Four most important predictors are `captialgain`, `age`, `relationship` and `education`. We may use other metrics as well since there are no intuitive methods like the CART plot.
+
+# Model Improvements
+## Logistic Regression
+```{r warning=FALSE}
+logModelImp = glm(over50k ~ .-nativecountry, data = train, family = "binomial")
+summary(logModelImp)
+logPredImp = predict(logModelImp, newdata = test, type = "response")
+logTableImp = table(test$over50k, logPredImp > 0.5)
+(logTableImp[[1]] + logTableImp[[4]]) / nrow(test)
+```
+
+We attempt to remove some predictors seem to be less significant, expecting it may reduce overfitting of the training set. However, it doesn't work and only decreases the accuracy.
+
+## Classification and Regression Trees
+As discussed above, simply applying more advanced methods to dataset can't guarantee improvement of model performance. Therefore, we need to carefully tune some parameters to make our models better than simple logistic regression. Now, we use *k*-fold cross-validation ($k=10$) to find a optimal complexity parameter (`cp`) value for the CART model.
+
+```{r message=FALSE}
+library(caret)
+library(e1071)
+set.seed(1111)
+cp.grid = expand.grid( .cp = 2^seq(1, 10) * 0.0001)
+tr.control = trainControl(method = "repeatedcv", number = 10, repeats = 3)
+CARTCV = train(over50k ~ ., data = train, method = "rpart",
+               trControl = tr.control, tuneGrid = cp.grid)
+CARTCV
+plot(CARTCV)
+```
+
+From the plot, We found $0.0016$ seems to be the best `cp` value. Then we use this `cp` value to build a CART model and make predictions:
+
+```{r}
+CARTmodelCV = rpart(over50k ~ ., data = train, method = "class", cp = 0.0016)
+CARTpredCV = predict(CARTmodelCV, newdata = test, type = "class")
+CARTtableCV = table(test$over50k, CARTpredCV)
+(CARTtableCV[[1]] + CARTtableCV[[4]]) / nrow(test)
+```
+
+After tuning the complex parameter, the CART model has been improved by nearly 2% in accuracy, and becomes 1% better than the logistic regression model. However, it comes with a price -- the complexity of the tree increases significantly and become harder to interpret. It means we may still prefer the less accurate but simpler and more interpretable model.
+
+```{r}
+prp(CARTmodelCV)
+```
+
+## Random forests
+Then, we attempt to improve the random forests model. Unfortunately, cross-validation for random forests on the entire training set takes impratically long time on a personal computer. As a result, we have to pick a random sample from the training set for our cross-validation purpose. For random forests model, we want to find a optimal number of randomly selected predictors (`mtry`). Unfortunately, it means the optimal value of `mtry` may not be generalized to the entire dataset, and we have to modify it again later.
+
+```{r message=FALSE}
+set.seed(3333)
+train2000 = train[sample(nrow(train), 2000), ]
+
+mtry.grid = expand.grid( .mtry = seq(1, 10))
+tr.control = trainControl(method = "cv", number = 2)
+set.seed(3333)
+rfCV = train(over50k ~ ., data = train2000, method = "rf",
+               trControl = tr.control, tuneGrid = mtry.grid)
+rfCV
+plot(rfCV)
+```
+
+From the plot, We found $7$ seems to be the best `mtry` value. Then we use this `mtry` value to build a random forests model and make predictions. 
+
+```{r}
+set.seed(3333)
+rfModelCV = randomForest(over50k ~ ., data = train, mtry = 7)
+rfPredCV = predict(rfModelCV, newdata = test)
+rfTableCV = table(test$over50k, rfPredCV)
+(rfTableCV[[1]] + rfTableCV[[4]]) / nrow(test)
+```
+
+However, the result is worse than default (`mtry` = 3). The problem comes from the fact that we only use a small fraction of data from training set to tune our model. Therefore, we try to build models with `mtry` = 1-10 to check the model's performance. The result is `mtry` = 4 or 5 will improve the perfomance, while 4 is the optimal value.
+
+```{r}
+set.seed(3333)
+rfModelCV = randomForest(over50k ~ ., data = train, mtry = 4)
+rfPredCV = predict(rfModelCV, newdata = test)
+rfTableCV = table(test$over50k, rfPredCV)
+(rfTableCV[[1]] + rfTableCV[[4]]) / nrow(test)
+```
+
+This is only slightly better than the original random forests model before tuning, but still worse than the logistic regression model. The random forests model is actually good at finding appropriate parameters as the default values. Now look at the predictors involved in this model.
+
+```{r}
+varImpPlot(rfModelCV)
+```
+
+The most significant predictors are still `captialgain`, `age`, `relationship` and `education`, although the sort has changed a bit.
+
+# Conclusion
+The following table summarizes the major results of this project:
+
+| Model                               | Initial Accuracy | Improved Accuracy |
+|-------------------------------------|------------------|-------------------|
+| Logistic Regression                 | `r (logTable[[1]] + logTable[[4]]) / nrow(test)`        | N/A               |
+| Classification and Regression Trees | `r (CARTtable[[1]] + CARTtable[[4]]) / nrow(test)`        | `r (CARTtableCV[[1]] + CARTtableCV[[4]]) / nrow(test)`         |
+| Random Forests                      | `r (rfTable[[1]] + rfTable[[4]]) / nrow(test)`        | `r (rfTableCV[[1]] + rfTableCV[[4]]) / nrow(test)`         |
+
+Three models have quite similar accuracy, and it is extremely difficult to further improve them when the accuracy is already quite high. When choosing suitable models for a specific problem, we actually not only consider accuracy but also other aspects such as complexity and interpretability.
+
+# References
+Kuhn, M., & Johnson, K. (2013). *Applied Predictive Modeling*. New York: Springer.
+
+# Appendix
+The form and structure of this dataset are shown below:
+
+```{r}
+head(census, 20)
+```
