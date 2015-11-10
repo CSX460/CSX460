@@ -1,0 +1,45 @@
+# Loss Matrix
+
+```{r}
+library(magrittr)
+library(rpart)
+library(caret)
+library(partykit)
+```
+
+Retrieve skin data set
+
+```{r}
+url <- 
+  "https://archive.ics.uci.edu/ml/machine-learning-databases/00229/Skin_NonSkin.txt"
+
+dat <- read.delim( url(url), header=FALSE )
+names(dat) <- c('r', 'g', 'b', 'skin')
+
+# TRANSFORM DATA
+dat$skin <- (dat$skin - 1) %>% as.logical %>% as.factor
+```
+
+
+Fit model without custom loss function
+
+```{r}
+fit <- train( skin ~ . , data=dat, method="rpart" )
+fit$finalModel %>% as.party %>% plot
+confusionMatrix(fit)
+```
+
+
+Fit model with custom loss function, trying to eliminate
+
+```{r}
+
+L = c( 0,100, 1,0 ) %>% matrix(ncol=2)
+t(L)  # inverse
+
+fit2 <- train( skin ~ . , data=dat, method="rpart", parms=list(loss=L) )
+fit2$finalModel %>% as.party %>% plot
+confusionMatrix(fit2)
+```
+
+
