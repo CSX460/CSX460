@@ -1,0 +1,100 @@
+---
+title: "Boston Housing"
+author: "John (Yang Zhou)"
+date: "October 10th 2015"
+output: html_document
+---
+
+# Boston Housing
+
+The *mlbench* package contains the data set `BostonHousing`. 
+
+Create a linear regression model that predicts the medium home value of the census tract as a function of the relevant predictors. Please refer to the process diagram from class. Don't forget to examine the response and predictors variable using graphical and other means.  Show your work.
+
+This is a `rmarkdown` Document. You can use `rmarkdown` to produce a Word Doc
+file, a presentation, html file, etc. Please just submit the code.
+
+```{r}
+library(mlbench)
+library(magrittr)
+library(ggplot2)
+data(BostonHousing)
+```
+
+
+```{r}
+#View the effection that a certain feature of the data using the simple linear model
+model.1 <- lm( medv ~ .,data = BostonHousing )
+summary (model.1)
+
+#use the features that have the comparitively high effection
+model.2 <- lm( medv ~ . -indus - age - tax -crim, data = BostonHousing )
+summary(model.2)
+#see the efficiency of the model by viewint the rmse 
+rmse(model.1$fitted.values, BostonHousing$medv)
+rmse(model.2$fitted.values, BostonHousing$medv)
+
+
+## Compare Point Estimates
+ggplot( aes(x=medv, y=model.1$fitted.values), data=BostonHousing ) + geom_point() +
+  coord_equal( ylim=c(0,50), xlim=c(0,50) ) + 
+  geom_abline( slope=1, intercept=0, color="red") +
+  xlab( "BostonHousing") + 
+  ylab("Estimated BostonHousing") + 
+  theme( plot.background = element_blank() )
+
+ggplot( aes(x=medv, y=model.2$fitted.values), data=BostonHousing ) + geom_point() +
+  coord_equal( ylim=c(0,50), xlim=c(0,50) ) + 
+  geom_abline( slope=1, intercept=0, color="red") +
+  xlab( "BostonHousing") + 
+  ylab("Estimated BostonHousing") + 
+  theme( plot.background = element_blank() )
+
+#compare distributions 
+compare_dists <- function (...) 
+{
+    ll <- list(...)
+    nms_1 <- names(ll)
+    nms_2 <- as.character(dots(...))
+    if (is.null(nms_1)) 
+        nms_1 <- nms_2
+    nms_1[is.na(nms_1) | nms_1 == ""] <- nms_2[is.na(nms_1) | 
+        nms_1 == ""]
+    names(ll) <- nms_1
+    DF <- NULL
+    for (nm in names(ll)) {
+        df <- data.frame(dist = nm, value = ll[[nm]])
+        DF <- if (is.null(DF)) 
+            df
+        else rbind(DF, df)
+    }
+    ggplot(data = DF, aes(x = value, fill = dist)) + geom_histogram() + 
+        facet_grid(dist ~ .)
+}
+
+compare_dists( observed=model.1$medv, fitted=model$fitted.values ) +
+  theme(legend.position = "none") +
+  theme(
+    # panel.background = element_blank() # element_rect(fill = "transparent",colour = NA)#, # or element_blank()
+    # panel.grid.minor = element_blank(), 
+    # panel.grid.major = element_blank(),
+    plot.background  = element_rect(fill = "transparent",colour = NA)
+  )
+
+#step wise
+library(MASS)
+
+f <- stepAIC( model.1, scope=list(lower=FE~1, upper=FE~.), direction="backward" ) 
+```
+
+
+
+
+
+
+
+
+
+
+
+

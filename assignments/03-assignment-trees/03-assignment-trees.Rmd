@@ -18,7 +18,143 @@ In Applied Predictive Modeling (APM) read:
 
 - Excersizes, In APM: 
 
-8.1 (a) - (C)
-8.4 (a) - (b)
-14.2
+Excersize 8.1
+===============================
+
+```{r}
+library(mlbench)
+set.seed(200)
+simulated <- mlbench.friedman1(200, sd = 1)
+simulated <- cbind(simulated$x, simulated$y)
+simulated <- as.data.frame(simulated)
+colnames(simulated)[ncol(simulated)] <- "y"
+```
+
+(a)
+```{r}
+#Fit a random forest model to all of the predictors
+library(randomForest)
+library(caret)
+model1_rf <- randomForest(y ~ ., data = simulated, importance = TRUE, ntree = 1000)
+rf1_plot <- varImp(model1_rf, scale = FALSE)
+
+#predictor importance scores
+rf1_plot
+importance(model1_rf)
+#The model places most importance on predictors 1, 2, 4, and 5, and very little importance on 6 through 10.
+```
+
+(b)
+```{r}
+#add a highly correlated predictor and re-model the data
+model2_rf <- randomForest(y ~ ., data = simulated, importance = TRUE, ntree = 1000)
+rf2_plot <- varImp(model2, scale = FALSE)
+importance(model2_rf)
+
+vnames <- c('V1', 'V2', 'V3', 'V4', 'V5', 'V6', 'V7', 'V8', 'V9', 'V10', 'duplicate1')
+
+names(rf1_plot) <- "Original"
+rf1_plot$Variable <- factor(rownames(rf1_plot), levels = vnames)
+
+names(rf2_plot) <- "Extra"
+rf2_plot$Variable <- factor(rownames(rf2_plot), levels = vnames)
+
+rf_plot <- merge(rf1_plot, rf2_plot, all = TRUE)
+rownames(rf_plot) <- rf_plot$Variable
+rf_plot$Variable <- NULL
+
+```
+
+(c)
+```{r}
+library(party)
+set.seed(200)
+
+#build a conditional inference random forest for the original data set
+cforest1 <- cforest(y ~ ., data = simulated[, 1:11],controls = cforest_control(ntree = 1000))
+set.seed(200)
+cforest2 <- cforest(y ~ ., data = simulated,controls = cforest_control(ntree = 1000))
+
+cfImps1 <- varimp(cforest1)
+cfImps2 <- varimp(cforest2)
+cfImps3 <- varimp(cforest1, conditional = TRUE)
+cfImps4 <- varimp(cforest2, conditional = TRUE)
+
+cfImps1 <- data.frame(Original = cfImps1,Variable = factor(names(cfImps1), levels = vnames))
+
+cfImps2 <- data.frame(Extra = cfImps2,Variable = factor(names(cfImps2), levels = vnames))
+
+cfImps3 <- data.frame(CondInf = cfImps3,Variable = factor(names(cfImps3), levels = vnames))
+
+cfImps4 <- data.frame("CondInf Extra" = cfImps4,Variable = factor(names(cfImps4), levels = vnames))
+
+cfImps <- merge(cfImps1, cfImps2, all = TRUE)
+cfImps <- merge(cfImps, cfImps3, all = TRUE)
+cfImps <- merge(cfImps, cfImps4, all = TRUE)
+rownames(cfImps) <- cfImps$Variable
+cfImps$Variable <- factor(cfImps$Variable, levels = vnames)
+cfImps <- cfImps[order(cfImps$Variable),]
+cfImps$Variable <- NULL
+```
+
+####The conditional inference model has a similar pattern of importance as the random forest model from Part (a), placing most importance on predictors 1, 2, 4, and 5 and very little importance on 6 through 10. Adding a highly correlated predictor has a detrimenal effect on the importance for V1 dropping its importance rank to third.
+
+
+Excersize 8.4
+============================
+(a)
+```{r}
+data(solubility)
+
+train <- subset(solTrainXtrans,select="MolWeight")
+valid <- subset(solTestXtrans,select="MolWeight")
+
+set.seed(100)
+#the single tree performs the worst
+rpartTune <- train(train, solTrainY,method = "rpart2",tuneLength = 1)
+rpartTest <- data.frame(Method="RPart",Y=solTestY,X=predict(rpartTune,valid))
+```
+
+
+(2)
+```{r}
+#'The
+#'randomness and iterative process incorporated using Random Forest improves #'predictive ability when using just this one predictor
+rfTune <- train(train, solTrainY,method = "rf",tuneLength = 1)
+rfTest <- data.frame(Method = "RF",Y=solTestY,X=predict(rfTune,valid))
+```
+
+
+(3)
+```{r}
+#the no neighbor models perform better than the corresponding models that were tuned using multiple neighbors.
+cubistTune1.0 <- train(train, solTrainY,method = "cubist",verbose = FALSE,metric = "Rsquared",tuneGrid = expand.grid(committees = 1,neighbors = 0))
+cubistTest1.0 <- data.frame(Method = "Cubist1.0",Y=solTestY,X=predict(cubistTune1.0,valid))
+
+cubistTune1.n <- train(train, solTrainY,method = "cubist",verbose = FALSE,metric = "Rsquared",tuneGrid = expand.grid(committees = 1,neighbors = c(1,3,5,7)))
+cubistTest1.n <- data.frame(Method = "Cubist1.n",Y=solTestY,X=predict(cubistTune1.n,valid))
+
+#using multiple committees slightly improves the predictive ability of the models.
+cubistTune100.0 <- train(train, solTrainY,method = "cubist",verbose = FALSE,metric = "Rsquared",tuneGrid = expand.grid(committees = 100,neighbors = 0))
+cubistTest100.0 <- data.frame(Method = "Cubist100.0",Y=solTestY,X=predict(cubistTune100.0,valid))
+
+cubistTune100.n <- train(train, solTrainY,method = "cubist",verbose = FALSE,metric = "Rsquared",tuneGrid = expand.grid(committees = 100,neighbors = c(1,3,5,7)))
+cubistTest100.n <- data.frame(Method = "Cubist100.n",Y=solTestY,X=predict(cubistTune100.n,valid))
+
+
+#plot the predictor data versus the solubility results.
+plot(rpartTest)
+plot(cubistTest1.0)
+plot(cubistTest1.n)
+plot(cubistTest100.0)
+plot(cubistTest100.n)
+
+valid$rpartTest<-predict(rpartTest,valid)
+valid$cubistTest1.0<-predict(cubistTest1.0,valid)
+valid$cubistTest1.n<-predict(cubistTest1.n,valid)
+valid$cubistTest100.0<-predict(cubistTest100.0,valid)
+valid$cubistTest100.n<-predict(cubistTest100.n,valid)
+```
+
+
 

@@ -22,9 +22,8 @@ MM - the value of the center square: either x, o or (b)lank
 ```{r}
 set.seed(31415)
 library(caret)
-
-file="quizzes/binomial-performance/data.RData"
-load(file)
+library(magrittr)
+load("D:/学习资料/UCB上/Practical of machine learning in R/CSX460/quizzes/binomial-performance/data.RData")
 
 # place work here
 ```
@@ -33,14 +32,17 @@ load(file)
 Based on your model and the test set, what is your disadvantage when O holds the middle square. Express as a probability (show your work)
 
 ```{r}
-# place work here
+test[MM='o',outcome] #how many are good and how many are bad
 ```
 
 - Using the 'model', create a contingency table for the predicted outcomes of the test set. (Resampling not necessary)
 
 
 ```{r}
-# place work here
+fit.1 <- glm( outcome ~ . , data=train, family="binomial")
+fit.2 <- glm( outcome ~ (.)^2, data=train,  family="binomial")
+
+
 ```
 
 - If your contingency table looks like this:
