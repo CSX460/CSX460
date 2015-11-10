@@ -117,25 +117,72 @@ data(churn)
 ```
 
 (a)
-```{r}
+```{r message=FALSE}
+library(caret)
+library(rpart)
+library(rpart.plot)
 set.seed(12345)
-rpartmodel = train(churn ~., data=churnTrain, method = "rpart", tuneLength = 10)
+rpartmodel = train(churn ~., data = churnTrain, method = "rpart", tuneLength = 10)
+rpartmodel
 plot(rpartmodel)
 rpartpred = predict(rpartmodel, churnTest)
-table(churnTest$churn, rpartpred)
+rparttable = table(churnTest$churn, rpartpred)
+(rparttable[[1]] + rparttable[[4]]) / nrow(churnTest)
 ```
 
-(b)
+It is hard to interpret if using `cp` = 0.007246377. So we use some larger cp value (still with quite high accuracy).
 ```{r}
-#bagmodel = bag(churn ~. , data=churnTrain)
+rpartnew = rpart(churn ~., data = churnTrain, cp = 0.018)
+prp(rpartnew)
 ```
+It seems that `area_code` is a dummy variable since it doesn't appear in the graph. If you decreases `cp`, it may appear but the model will become too complicated to interpret.
+
+(b)
+```{r message=FALSE}
+library(ipred)
+set.seed(12345)
+rpart_bag = bagging(churn ~., data = churnTrain)
+rpartpred_bag = predict(rpart_bag, churnTest)
+rparttable_bag = table(churnTest$churn, rpartpred_bag)
+(rparttable_bag[[2]] + rparttable_bag[[3]]) / nrow(churnTest)
+```
+Improved slightly.
+
+```{r message=FALSE}
+library(adabag)
+set.seed(12345)
+rpart_boost = boosting(churn ~., data = churnTrain)
+rpartpred_boost = predict(rpart_boost, churnTest)
+rparttable_boost = table(churnTest$churn, rpartpred_boost$class)
+(rparttable_boost[[2]] + rparttable_boost[[3]]) / nrow(churnTest)
+```
+Improved slightly more.
 
 (c)
 ```{r}
-
+C50Model = C5.0(churn ~., data = churnTrain)
+C50pred = predict(C50Model, churnTest)
+C50table = table(churnTest$churn, C50pred)
+(C50table[[1]] + C50table[[4]]) / nrow(churnTest)
 ```
+The performance is better than simple CART (`cp` tuned), and between bagging and boosting.
 
 (d)
 ```{r}
+# library(BCA)
+# churn.rpart = rpartmodel
+# churn.bagging = rpart_bag
+# churn.boosting = rpart_boost
+# churn.C50 = C50Model
+# 
+# lift.chart(c("churn.rpart"), data=churnTest)
+
+pred = data.frame(test = churnTest$churn, 
+                  rpart = (predict(rpartmodel, churnTest, type = "prob"))$yes,
+                  bagging = (predict(rpart_bag, churnTest, type = "prob"))[,1],
+                  boosting = rpartpred_boost$prob[,1],
+                  C50 = (predict(C50Model, churnTest, type = "prob"))[,1])
+lift = lift(test ~ rpart + bagging + boosting + C50, data = pred)
+xyplot(lift, auto.key = list(columns = 4))
 
 ```
