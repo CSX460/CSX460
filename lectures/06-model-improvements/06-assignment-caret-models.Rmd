@@ -31,7 +31,9 @@ What is the differnece in performance between the first model and the erro free 
 
 
 ```{r}
-
+form = Price ~ . 
+ctrl <- trainControl(method = "repeatedcv", number = 3 )
+fit.lm <- train(form, data = cars, method = "lm", metric = c("Rsquared"), trControl = ctrl)
 ```
 
 
@@ -40,13 +42,16 @@ fit a rpart model.
 How does this model compare to the 
 
 ```{r}
-
+s <- seq(4,7,0.25)
+grid = data.frame( cp=1*10^-s)
+fit.rp <- train(form , data = cars, method = "rpart", trControl = ctrl, tuneGrid = grid, metric = "Rsquared")
 ```
 
 
 Plot the tuning parameter, C_p against the "RMSE". Orient the plot  so that models get better as you move to the left. 
 
 ```{r}
+plot(fit.rp, xTrans = function(x) - log(x), metric = "RMSE")
 ```
 
 What does the plot tell you? 
@@ -56,13 +61,14 @@ What does the plot tell you?
 
 Do the same for a `ctree` model.
 ```{r}
+fit.ct <- train(Price ~ . , data = cars, method = "ctree", metric = "Rsquared" )
 ```
 
 Compare the three models?
 
 Which is best?  Why? 
 
-
+ctree is better.
 
 
 # Bagging 

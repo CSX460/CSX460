@@ -27,6 +27,8 @@ file="quizzes/binomial-performance/data.RData"
 load(file)
 
 # place work here
+ctrl <- trainControl(method = "repeatedcv", repeats = 3, classProbs = TRUE, summaryFunction = twoClassSummary)
+fit <- train(outcome ~ ., data = train, method = "glm", family = "binomial", trControl = ctrl)
 ```
 
 
@@ -34,6 +36,7 @@ Based on your model and the test set, what is your disadvantage when O holds the
 
 ```{r}
 # place work here
+summary(fit)
 ```
 
 - Using the 'model', create a contingency table for the predicted outcomes of the test set. (Resampling not necessary)
@@ -41,6 +44,8 @@ Based on your model and the test set, what is your disadvantage when O holds the
 
 ```{r}
 # place work here
+fit$finalModel
+table(observed = test$outcome, predicted = predict(fit, test))  
 ```
 
 - If your contingency table looks like this:

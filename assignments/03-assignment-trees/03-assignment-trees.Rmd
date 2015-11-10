@@ -61,3 +61,15 @@ rfTune <- train(solTrainMW, solTrainY, method = "rf", tuneLength = 1)
 rfTest <- data.frame(Method = "RF",Y = solTestY, X = predict(rfTune,solTestMW))
 ```
 
+14.2
+```{r}
+library(caret)
+library(AppliedPredictiveModeling)
+library(pROC)
+library(C50)
+data(churn)
+set.seed(345)
+ctrl = trainControl(summaryFunction = twoClassSummary, classProbs = TRUE)
+rpart.grouped.classifier = train(X_grouped_categories, y, method = "rpart", tuneLength = 30, metric = "ROC", trControl = ctrl )
+rpart.grouped.predictions = predict(rpart.grouped.classifier, X_grouped_categories, type="prob" )
+```
