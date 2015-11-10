@@ -48,8 +48,11 @@ Don't forget to show your works, plots included.
 When speaking of Machine Learning, there are two functions or algorithms involved.
 Describe and differentiate the algorithms from the function.
 
+A function is a block of code in a computer program. An algorithm is an abstract concept that describes how to solve a problem.
 
 # 2. RMSE and MAE
 
 Why is RMSE preferrable to MAE?  
 When is MAE better? 
+
+Because RMSE is more sentive to errors and errors can be better measured.
