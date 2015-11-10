@@ -39,13 +39,17 @@ For questions requiring:
 Show all code used to arrive at the answers.
 
 
+## Finish in-class assignments
+
 
 ## ***APM*** 6.2 (a)-(d)
 
 ```{r}
 # Place your code here
-
-
+library(caret)
+library(AppliedPredictiveModeling)
+library(ggplot2)
+data(permeability)
 ```
 
 (a) No response required.
@@ -53,26 +57,71 @@ Show all code used to arrive at the answers.
 (b)   
 
 ```{r}
-# place R code here
+#plot the percent of total permeability
+plot(x=permeability , y = permeability/nrow(permeability))
+
+#Identify and remove near zero predictors
+nearzero_Fingerprints <- nearZeroVar(fingerprints)
+nonnearzero_Fingerprints <- fingerprints[,-nearzero_Fingerprints]
+
+
 ```
 
 (c)
 ```{r}
-# place R code here
+#Split data into training and test sets
+set.seed(200)
+trainingRows <- createDataPartition(permeability,p = 0.75,list = FALSE)
+
+trainFingerprints <- nonnearzero_Fingerprints[trainingRows,]
+trainPermeability <- permeability[trainingRows,]
+
+testFingerprints <- nonnearzero_Fingerprints[-trainingRows,]
+testPermeability <- permeability[-trainingRows,]
+
+#model training
+set.seed(200)
+ctrl <- trainControl(method = "LGOCV")
+
+plsTune <- train(x = trainFingerprints, y = log10(trainPermeability),method = "pls",tuneGrid = expand.grid(ncomp = 1:15),trControl = ctrl)
 ```
 
 (d) 
 ```{r}
-# place R code here
+figer_predict <- predict( plsTune,type='response')
 ```
 
-
-## ***APM*** 6.3 
 
 
 ## German Credit Data ## 
 
 The University of California, Irvine [Machine Learning Repository](https://archive.ics.uci.edu/ml/index.html). One popular data set is the [German Credit Data](https://archive.ics.uci.edu/ml/datasets/Statlog+%28German+Credit+Data). Using this data, create a logistic regression model. 
+
+```{r}
+library(ROCR)
+German <- read.csv(file.choose())
+
+#transform data
+German$Creditability <- (German$Creditability - 1) %>% as.logical
+
+fit.1<-glm(Creditability~.,data=German,family="binomial")
+summary(fit.1)
+
+fit.2<- glm(Creditability~.-Purpose -Age..years. -o.of.Credits.at.this.Bank 
+            -Occupation -No.of.dependents -Telephone -Guarantors
+           ,family="binomial")
+summary(fit.2)
+
+#Calculate RMSE
+rmse(fit.1$fitted.values, German$Creditability)
+rmse(fit.2$fitted.values, German$Creditability)
+
+#Get the predictions using the predict function
+German_predict <- predict( fit.2,type='response')
+
+qplot(German_predict)
+```
+
 
 
 
