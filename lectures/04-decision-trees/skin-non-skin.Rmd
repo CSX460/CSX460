@@ -8,6 +8,7 @@ output: html_document
 ```{r}
 set.seed(314159)
 library(ggplot2)
+url <- "https://archive.ics.uci.edu/ml/machine-learning-databases/00229/Skin_NonSkin.txt"
 ```
 
 Review the [skin/non-skin UCI dataset]("https://archive.ics.uci.edu/ml/machine-learning-databases/00229/Skin_NonSkin.txt")
@@ -23,7 +24,7 @@ Show All Work!
 ```{r}
 
 
-url <- "https://archive.ics.uci.edu/ml/machine-learning-databases/00229/Skin_NonSkin.txt"
+
 
 dat <- read.delim(url(url), header=FALSE )
 names(dat) <- c('r', 'g', 'b', 'skin') 
