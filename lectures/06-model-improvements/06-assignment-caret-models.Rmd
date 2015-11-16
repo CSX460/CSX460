@@ -9,6 +9,7 @@ output: html_document
 # General question
 
 Generically and regardless of model type, what is the function of the tuning parameters?
+trian function
 
 ```
 ```
@@ -19,7 +20,7 @@ This assignment demonstrates the use of caret for constructing models. Each mode
 
 ```{r}
 library(caret)
-# library(mlbench)
+library(mlbench)
 data(cars, package="caret")
 ```
 
@@ -31,7 +32,12 @@ What is the differnece in performance between the first model and the erro free 
 
 
 ```{r}
-
+inTrain <- createDataPartition(y = cars$Price,p = .75,list = FALSE)
+str(inTrain)
+training <- cars[ inTrain,]
+testing <- cars[-inTrain,]
+ctrl <- trainControl(method = "repeatedcv",repeats = 3)
+plsFit <- train(Price ~ .,data = training,method = "lm",metric=c("Rsquared"),trControl = ctrl)
 ```
 
 

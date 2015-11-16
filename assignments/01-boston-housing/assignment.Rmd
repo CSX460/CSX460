@@ -47,9 +47,11 @@ Don't forget to show your works, plots included.
 
 When speaking of Machine Learning, there are two functions or algorithms involved.
 Describe and differentiate the algorithms from the function.
-
+Function is mathmatical means of solving problem, they are blocks of computer program.
+Alogrithm is abstract concept of describing how people solve the problem, which include the specific steps of getting things done.
 
 # 2. RMSE and MAE
 
 Why is RMSE preferrable to MAE?  
+RMSE give weights to the points that are further away from the mean, which reflet the quality of the data better than the MAE. MAE
 When is MAE better? 
