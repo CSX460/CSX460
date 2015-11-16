@@ -14,21 +14,12 @@ library(caret, quietly = T, verbose = FALSE)
 library(plyr, quietly = T, verbose = FALSE)
 
 load("models.RData")
+# data(model)
 
-shinyServer(function(input, output) {
-
-#   output$distPlot <- renderPlot({
-#
-#     # generate bins based on input$bins from ui.R
-#     x    <- faithful[, 2]
-#     bins <- seq(min(x), max(x), length.out = input$bins + 1)
-#
-#     # draw the histogram with the specified number of bins
-#     hist(x, breaks = bins, col = 'darkgray', border = 'white')
-#
-#   })
+shinyServer( function(input, output) {
 
   newdat <- reactive({
+    # browser()
     df <- data.frame( petal.width = input$pw, petal.length = input$pl )
     df <- plyr::rbind.fill(df,proto)
     featurize(df)
@@ -37,6 +28,7 @@ shinyServer(function(input, output) {
   species <- reactive({
     predict(fit$finalModel,newdat(), type="class")
   })
+
   # READ AND ALTER INPUTS
   output$species <-
     renderText( paste0("The species is: ", species() ) )

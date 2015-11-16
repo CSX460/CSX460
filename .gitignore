@@ -6,3 +6,4 @@ students/*
 */*answers*
 assignments/*answers*.Rmd
 
+.Rproj.user

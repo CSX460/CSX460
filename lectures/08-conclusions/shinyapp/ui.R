@@ -4,10 +4,17 @@
 #
 # http://shiny.rstudio.com
 #
+slPL <- sliderInput("pl",
+            "Petal Length (inches)",
+            min = 0.40,
+            max = 2.72,
+            value = 0.40
+            )
+
 
 library(shiny)
 
-shinyUI(fluidPage(
+  shinyUI( fluidPage(
 
   # Application title
   titlePanel("RA Fischer's Iris Model"),
@@ -15,11 +22,8 @@ shinyUI(fluidPage(
   # Sidebar with a slider input for number of bins
   sidebarLayout(
     sidebarPanel(
-      sliderInput("pl",
-                  "Petal Length (inches)",
-                  min = 0.40,
-                  max = 2.72,
-                  value = 0.40),
+
+      slPL,
 
       sliderInput("pw",
                   "Petal Width (inches)",
@@ -32,8 +36,7 @@ shinyUI(fluidPage(
 
     # Show a plot of the generated distribution
     mainPanel(
-      h2(textOutput("species"))
-      # , plotOutput("distPlot")
+      h2( textOutput("species") )
     )
 
   )
