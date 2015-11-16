@@ -8,15 +8,41 @@ This is a `rmarkdown` Document. You can use `rmarkdown` to produce a Word Doc
 file, a presentation, html file, etc. Please just submit the code.
 
 
-```r
+```{r}
+# 1. Load the data and useful packages.
 library(mlbench)
 library(magrittr)
 library(ggplot2)
 data(BostonHousing)
 
-# Place your code here:
+# 2. Split the data into training and test set.
+library(caTools)
+set.seed(123456)
+split = sample.split(BostonHousing$medv, SplitRatio = 0.7)
+train = subset(BostonHousing, split==TRUE)
+test = subset(BostonHousing, split==FALSE)
 
+# 3. Create a linear regression model using the training set.
+linear_model = lm(medv ~ ., data=train)
+summary(linear_model)
+qplot(x=linear_model$fitted.values, y=train$medv) + geom_abline(m=1, b=0, color = "red")
 
+# 4. Make predictions for the test set using the linear model.
+linear_model.pred = predict(linear_model, newdata=test)
+linear_model.sse = sum((linear_model.pred - test$medv)^2)
+linear_model.sse
+
+# 5. Try other approaches. Create a CART model using the training set.
+library(rpart)
+library(rpart.plot)
+tree_model = rpart(medv ~ ., data=train)
+summary(tree_model)
+prp(tree_model)
+
+# 6. Make predictions for the test set using the CART model.
+tree_model.pred = predict(tree_model, newdata=test)
+tree_model.sse = sum((tree_model.pred - test$medv)^2)
+tree_model.sse
 ```
 
 

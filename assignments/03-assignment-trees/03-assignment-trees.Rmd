@@ -16,9 +16,173 @@ In Applied Predictive Modeling (APM) read:
 
 - Project Update. (I will put a template in the projects folder for you to report your status on.) 
 
-- Excersizes, In APM: 
+- Exercises, In APM: 
 
 8.1 (a) - (C)
 8.4 (a) - (b)
 14.2
 
+
+8.1
+```{r}
+library(mlbench)
+set.seed(200)
+simulated <- mlbench.friedman1(200, sd = 1)
+simulated <- cbind(simulated$x, simulated$y)
+simulated <- as.data.frame(simulated)
+colnames(simulated)[ncol(simulated)] <- "y"
+```
+
+(a)
+```{r}
+library(randomForest)
+library(caret)
+model1 = randomForest(y ~ ., data = simulated, importance = TRUE, ntree = 1000)
+rfImp1 = varImp(model1, scale = FALSE)
+
+model1
+rfImp1
+```
+No significant usage of uninformative predictors (`V6` - `V10`).
+
+(b)
+```{r}
+simulated$duplicate1 = simulated$V1 + rnorm(200) * .1
+cor(simulated$duplicate1, simulated$V1)
+
+model2 = randomForest(y ~ ., data = simulated, importance = TRUE, ntree = 1000)
+rfImp2 = varImp(model2, scale = FALSE)
+
+model2
+rfImp2
+```
+The importance score for `V1` decreases significantly when adding another predictor that is also highly correlated with `V1`.
+
+(c)
+```{r}
+library(party)
+
+set.seed(12345)
+cforest1 = cforest(y ~ ., data = simulated[, 1:11], controls = cforest_control(ntree = 1000))
+set.seed(12345)
+cforest2 = cforest(y ~ ., data = simulated, controls = cforest_control(ntree = 1000))
+
+cfImp1 = varimp(cforest1)
+cfImp2 = varimp(cforest2)
+# cfImp1con = varimp(cforest1, conditional = TRUE)
+# cfImp2con = varimp(cforest2, conditional = TRUE)
+
+cfImp1
+cfImp2
+# cfImp1con
+# cfImp2con
+```
+Yes, the pattern is almost the same. Also, conditional `varimp` is too slow to compute...
+
+8.4
+```{r}
+library(AppliedPredictiveModeling)
+data(solubility)
+```
+
+(a)
+```{r}
+# solTrain = solTrainXtrans[[209]]
+# solTest = solTestXtrans[[209]]
+solTrain = subset(solTrainXtrans, select="MolWeight")
+solTest = subset(solTestXtrans, select="MolWeight")
+
+set.seed(12345)
+rpartmodel = train(solTrain, solTrainY, method = "rpart", tuneLength = 1)
+rpartmodel
+rpartpred = predict(rpartmodel, solTest)
+rpartTest = data.frame(Method = "rpart", Y=solTestY, X=rpartpred)
+plot(rpartTest)
+```
+
+(b)
+```{r}
+set.seed(12345)
+rfmodel = train(solTrain, solTrainY, method = "rf", tuneLength = 1)
+rfmodel
+rfpred = predict(rfmodel, solTest)
+rfTest = data.frame(Method = "rf", Y=solTestY, X=rfpred)
+plot(rfTest)
+```
+
+14.2
+```{r}
+library(C50)
+data(churn)
+```
+
+(a)
+```{r message=FALSE}
+library(caret)
+library(rpart)
+library(rpart.plot)
+set.seed(12345)
+rpartmodel = train(churn ~., data = churnTrain, method = "rpart", tuneLength = 10)
+rpartmodel
+plot(rpartmodel)
+rpartpred = predict(rpartmodel, churnTest)
+rparttable = table(churnTest$churn, rpartpred)
+(rparttable[[1]] + rparttable[[4]]) / nrow(churnTest)
+```
+
+It is hard to interpret if using `cp` = 0.007246377. So we use some larger cp value (still with quite high accuracy).
+```{r}
+rpartnew = rpart(churn ~., data = churnTrain, cp = 0.018)
+prp(rpartnew)
+```
+It seems that `area_code` is a dummy variable since it doesn't appear in the graph. If you decreases `cp`, it may appear but the model will become too complicated to interpret.
+
+(b)
+```{r message=FALSE}
+library(ipred)
+set.seed(12345)
+rpart_bag = bagging(churn ~., data = churnTrain)
+rpartpred_bag = predict(rpart_bag, churnTest)
+rparttable_bag = table(churnTest$churn, rpartpred_bag)
+(rparttable_bag[[2]] + rparttable_bag[[3]]) / nrow(churnTest)
+```
+Improved slightly.
+
+```{r message=FALSE}
+library(adabag)
+set.seed(12345)
+rpart_boost = boosting(churn ~., data = churnTrain)
+rpartpred_boost = predict(rpart_boost, churnTest)
+rparttable_boost = table(churnTest$churn, rpartpred_boost$class)
+(rparttable_boost[[2]] + rparttable_boost[[3]]) / nrow(churnTest)
+```
+Improved slightly more.
+
+(c)
+```{r}
+C50Model = C5.0(churn ~., data = churnTrain)
+C50pred = predict(C50Model, churnTest)
+C50table = table(churnTest$churn, C50pred)
+(C50table[[1]] + C50table[[4]]) / nrow(churnTest)
+```
+The performance is better than simple CART (`cp` tuned), and between bagging and boosting.
+
+(d)
+```{r}
+# library(BCA)
+# churn.rpart = rpartmodel
+# churn.bagging = rpart_bag
+# churn.boosting = rpart_boost
+# churn.C50 = C50Model
+# 
+# lift.chart(c("churn.rpart"), data=churnTest)
+
+pred = data.frame(test = churnTest$churn, 
+                  rpart = (predict(rpartmodel, churnTest, type = "prob"))$yes,
+                  bagging = (predict(rpart_bag, churnTest, type = "prob"))[,1],
+                  boosting = rpartpred_boost$prob[,1],
+                  C50 = (predict(C50Model, churnTest, type = "prob"))[,1])
+lift = lift(test ~ rpart + bagging + boosting + C50, data = pred)
+xyplot(lift, auto.key = list(columns = 4))
+
+```

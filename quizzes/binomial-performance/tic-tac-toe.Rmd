@@ -23,10 +23,14 @@ MM - the value of the center square: either x, o or (b)lank
 set.seed(31415)
 library(caret)
 
-file="quizzes/binomial-performance/data.RData"
+file="data.RData"
 load(file)
 
 # place work here
+logmodel = train(outcome ~ ., data = train, method = "logreg")
+
+plot(logmodel)
+pred = predict(logmodel, newdata = test)
 ```
 
 
@@ -34,6 +38,8 @@ Based on your model and the test set, what is your disadvantage when O holds the
 
 ```{r}
 # place work here
+table(test$MM, test$outcome)/nrow(test)
+plot(test$MM, test$outcome)/nrow(test)
 ```
 
 - Using the 'model', create a contingency table for the predicted outcomes of the test set. (Resampling not necessary)
@@ -41,6 +47,16 @@ Based on your model and the test set, what is your disadvantage when O holds the
 
 ```{r}
 # place work here
+table(test$outcome, pred)
+plot(test$outcome, pred)
+
+cat("FP: ", 79/nrow(test))
+cat("TP: ", 282/nrow(test))
+cat("Accuracy: ", (102+282)/nrow(test))
+cat("Sensitivity = Recall = TPR: ", 282/(282+79))
+cat("Specificity: ", 102/(102+80))
+cat("Prevalance: ", (282+79)/nrow(test))
+cat("Error Rate: ", (79+80)/nrow(test))
 ```
 
 - If your contingency table looks like this:

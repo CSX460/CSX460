@@ -1,5 +1,5 @@
 ---
-title: "Reveiw Questions"
+title: "Review Questions"
 output: html_document
 ---
 
@@ -42,14 +42,23 @@ Assignments:
 # 1.  Do the boston-housing.Rmd assignment in github.
 Don't forget to show your works, plots included.
 
+> See boston-housing.html
+
 
 # 2. Algorithms and Functions
 
 When speaking of Machine Learning, there are two functions or algorithms involved.
 Describe and differentiate the algorithms from the function.
 
+> An algorithm are a general set of operations performed to solve some sort of problems. A function is an implementation of an algorithm that solves actual and specific problems.
 
-# 2. RMSE and MAE
 
-Why is RMSE preferrable to MAE?  
+# 3. RMSE and MAE
+
+Why is RMSE preferrable to MAE? 
+
+> Typically, we are more concerned about points far away from our prediction, because these outliers may seriously affect the validity of our model. Therefore, we put more weight on them by squaring the deviation.
+
 When is MAE better? 
+
+> Sometimes, twice far away from prediction is just twice bad, and there is no need to put more weight on far outliers. In this case, MAE is better and the computer can calculate the error faster than RMSE.

@@ -11,6 +11,7 @@ output: html_document
 Generically and regardless of model type, what is the function of the tuning parameters?
 
 ```
+Control for the bias-variance trade-off.
 ```
 
 This assignment demonstrates the use of caret for constructing models. Each model should be built and compared using using RSquared as the performance metric calculated using 10-fold repeated cross-validation with 3 folds.
@@ -26,12 +27,31 @@ data(cars, package="caret")
 
 Using caret, 
 fit a linear regression model? 
+```
+See below
+```
 What is causing the warnings? What are some strategies for eliminating them?
+```
+prediction from a rank-deficient fit may be misleading
+
+Drop some highly correlated predictors.
+```
 What is the differnece in performance between the first model and the erro free model?
+```
+New model is typically worse on training set and better on test set.
+```
 
 
-```{r}
-
+```{r warning=FALSE}
+library(caTools)
+set.seed(123456)
+split = sample.split(cars$Price, SplitRatio = 0.7)
+train = subset(cars, split==TRUE)
+test = subset(cars, split==FALSE)
+trc = trainControl(method = "repeatedcv", number = 10,  repeats = 3)
+lmfit = train(Price ~., data=train, method="lm", metric=c("Rsquared"), trControl = trc)
+#plot(lmfit)
+lmfit
 ```
 
 
@@ -39,29 +59,43 @@ What is the differnece in performance between the first model and the erro free 
 fit a rpart model.
 How does this model compare to the 
 
-```{r}
-
+```{r warning=FALSE}
+rpartfit = train(Price ~., data=train, method="rpart", metric=c("Rsquared"), preProc = c("center", "scale"), tuneLength = 10, trControl = trc)
+rpartfit
 ```
 
 
-Plot the tuning parameter, C_p against the "RMSE". Orient the plot  so that models get better as you move to the left. 
+Plot the tuning parameter, $C_p$ against the "RMSE". Orient the plot  so that models get better as you move to the left. 
 
 ```{r}
+plot(rpartfit)
 ```
 
 What does the plot tell you? 
+```
+The performance of the model is better with smaller complexity parameter $C_p$.
+```
 
 
 # CTREE
 
 Do the same for a `ctree` model.
-```{r}
+```{r warning=FALSE}
+ctreefit = train(Price ~., data=train, method="ctree", metric=c("Rsquared"), preProc = c("center", "scale"), tuneLength = 10, trControl = trc)
+plot(ctreefit)
+ctreefit
 ```
 
 Compare the three models?
+```
+RMSE: lm < rpart < ctree (minimum)
+rpart is worse than ctree when the parameters aren't choosed appropriately.
+```
 
 Which is best?  Why? 
-
+```
+lm. Lowest RMSE.
+```
 
 
 
