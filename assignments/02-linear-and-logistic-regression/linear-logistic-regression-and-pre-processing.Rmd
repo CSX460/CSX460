@@ -46,26 +46,39 @@ Show all code used to arrive at the answers.
 
 ```{r}
 # Place your code here
-
-
+library(AppliedPredictiveModeling)
+data(permeability)
 ```
 
 (a) No response required.
 
-(b)   
+(b) 388 left.  
 
 ```{r}
 # place R code here
+library(caret)
+nzvFingerprints <- nearZeroVar(fingerprints)
+noNzvFingerprints <- fingerprints[,-nzvFingerprints]
 ```
 
 (c)
 ```{r}
 # place R code here
+library(caTools)
+set.seed(123456)
+trainingRows <- createDataPartition(permeability, p = 0.75, list = FALSE)
+trainFingerprints <- noNzvFingerprints[trainingRows,]
+trainPermeability <- permeability[trainingRows,]
+testFingerprints <- noNzvFingerprints[-trainingRows,]
+testPermeability <- permeability[-trainingRows,]
 ```
 
 (d) 
 ```{r}
 # place R code here
+set.seed(614)
+ctrl <- trainControl(method = "LGOCV")
+plsTune <- train(x = trainFingerprints, y = log10(trainPermeability), method = "pls", tuneGrid = expand.grid(ncomp = 1:10), trControl = ctrl)
 ```
 
 
@@ -75,6 +88,12 @@ Show all code used to arrive at the answers.
 The University of California, Irvine [Machine Learning Repository](https://archive.ics.uci.edu/ml/index.html). One popular data set is the [German Credit Data](https://archive.ics.uci.edu/ml/datasets/Statlog+%28German+Credit+Data). Using this data, create a logistic regression model. 
 
 
-
-
+```{r}
+library(ROCR)
+data(GC)
+GC.lm <- glm(good_bad~.,data=GC,family=binomial())
+summary(GC,lm)
+pred <- predict( GC.lm, type = 'response')
+GC_pred <- prediction(pred, GC$good_bad)
+```
 

@@ -22,3 +22,54 @@ In Applied Predictive Modeling (APM) read:
 8.4 (a) - (b)
 14.2
 
+8.1 (a)
+```{r}
+library(randomForest)
+library(caret)
+fit <- randomForest(y ~ ., data = simulated, importance = TRUE, ntree = 1000)
+rfImp <- varImp(fit, scale = FALSE)
+```
+
+(b)
+```{r}
+set.seed(600)
+simulated$duplicate1 <- simulated$V1 + rnorm(200) * .1
+cor(simulated$duplicate1, simulated$V1)
+fit2 <- randomForest(y ~ ., data = simulated, importance = TRUE, ntree = 1000)
+rfImp2 <- varImp(fit2, scale = FALSE)
+vnames <- c('V1', 'V2', 'V3', 'V4', 'V5', 'V6', 'V7', 'V8', 'V9', 'V10', 'duplicate1')
+```
+
+(c)
+```{r}
+library(party)
+set.seed(147)
+cforest1 <- cforest(y ~ ., data = simulated[, 1:11], controls = cforest_control(ntree = 1000))
+set.seed(147)
+cforest2 <- cforest(y ~ ., data = simulated, controls = cforest_control(ntree = 1000))
+```
+
+8.4 (a), (b)
+```{r}
+data(solubility)
+solTrainMW <- subset(solTrainXtrans, select = "MolWeight")
+solTestMW <- subset(solTestXtrans, select = "MolWeight")
+set.seed(100)
+rpartTune <- train(solTrainMW, solTrainY, method = "rpart2", tuneLength = 1)
+rpartTest <- data.frame(Method = "RPart",Y = solTestY, X = predict(rpartTune,solTestMW))
+rfTune <- train(solTrainMW, solTrainY, method = "rf", tuneLength = 1)
+rfTest <- data.frame(Method = "RF",Y = solTestY, X = predict(rfTune,solTestMW))
+```
+
+14.2
+```{r}
+library(caret)
+library(AppliedPredictiveModeling)
+library(pROC)
+library(C50)
+data(churn)
+set.seed(345)
+ctrl = trainControl(summaryFunction = twoClassSummary, classProbs = TRUE)
+rpart.grouped.classifier = train(X_grouped_categories, y, method = "rpart", tuneLength = 30, metric = "ROC", trControl = ctrl )
+rpart.grouped.predictions = predict(rpart.grouped.classifier, X_grouped_categories, type="prob" )
+```
