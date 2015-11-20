@@ -1,0 +1,57 @@
+
+# Does the bootstrap make better estimates of a parameter?
+
+library(magrittr)
+library(dp.misc)
+library(data.table)
+library(microbenchmark)
+library(lineprof)
+
+#' Returns mean, mean.est, mean.boot
+draw <- function( size.pop=30, fun=rnorm) {
+  x <- fun(size.pop) # population
+
+  mean.x = mean(x)  # -0.04749366
+
+  # Create observed
+  size.sam = floor(size.pop/2)
+  x. <- x[1:size.sam] # -0.1219938
+
+  mean.est <- mean(x.)
+  mean.boot <- mean( sapply( 1:1e4, function(x) mean( sample(x.,size.sam,replace=TRUE) ) ) )
+  diff.est  = abs(mean.x-mean.est)
+  diff.boot = abs(mean.x-mean.boot)
+
+  c(
+      mean.x=mean.x
+    , mean.est=mean.est, mean.boot=mean.boot
+    , diff.est=diff.est, diff.boot=diff.boot
+    , boot.wins = if( diff.boot < diff.est ) 1 else 0
+  )
+
+}
+
+
+cl <- makeCluster(3)
+clusterExport(cl,"draw")
+system.time({
+  draws <- parLapply(cl, 1:5000, function(dn) draw() ) %>% Reduce( rbind, .)
+})
+
+
+rownames(draws) <- NULL
+draws <- draws %>% as.data.frame
+draws %>% setDT
+
+draws[ , list( diff.est = mean(diff.est), diff.boot = mean(diff.boot) )]
+( sum( draws$boot.wins ) / nrow(draws) ) %>% percent %>% message
+
+# Determine significance
+  binom.test( sum(draws$boot.wins), nrow(draws), alternative = "greater")
+
+
+# How many samples needed to be significant?
+#
+#' @seealso
+#' [Sample Size Determination](https://en.wikipedia.org/wiki/Sample_size_determination)
+
