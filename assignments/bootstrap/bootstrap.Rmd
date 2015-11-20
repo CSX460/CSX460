@@ -1,57 +1,102 @@
-
-# Does the bootstrap make better estimates of a parameter?
-
+```{r, echo=FALSE, render=FALSE}
 library(magrittr)
 library(dp.misc)
 library(data.table)
 library(microbenchmark)
 library(lineprof)
+```
 
-#' Returns mean, mean.est, mean.boot
-draw <- function( size.pop=30, fun=rnorm) {
-  x <- fun(size.pop) # population
+# Bootstrap 
 
-  mean.x = mean(x)  # -0.04749366
 
-  # Create observed
-  size.sam = floor(size.pop/2)
-  x. <- x[1:size.sam] # -0.1219938
+Does the bootstrap make better estimates of a parameter? 
 
-  mean.est <- mean(x.)
-  mean.boot <- mean( sapply( 1:1e4, function(x) mean( sample(x.,size.sam,replace=TRUE) ) ) )
-  diff.est  = abs(mean.x-mean.est)
-  diff.boot = abs(mean.x-mean.boot)
+To deter
+
+
+```{r}
+#' Returns mean, mean.std, mean.boot, err.std, err.boot
+
+#' @param size.pop integer; the size of the population
+#' @param sample.fraction
+#' @param fun.dist function; the function that will generate the distribution
+#' @param statistic function; the function that calculates a univariate statistic
+#'
+#' @return
+#'  A numeric vector with the population metic, a standard calculation of 
+#'  statistic from a sample, a bootstrap estimate of the statistic from a sample, #'  and the errors associated with each.
+#'
+#' @examples
+#'  draw()  
+draw <- 
+  function(size.pop=300, sample.fraction=0.1, fun.dist=rnorm, statistic=mean) {
+
+  # Create the population
+  pop <- fun.dist(size.pop)     # population
+
+  statistic.pop = statistic(pop)  
+
+  # Create sample from the population
+  n.samp = floor(size.pop*sample.fraction)
+  samp <- sample(pop, n.samp)         # sample w/o replacement
+
+  # Calculate std statistic
+  statistic.std <- statistic(samp)
+  
+  # Calculate boot.strap statistic
+  statistic.boot <- statistic( 
+    sapply( 
+        1:1e4 
+      , function(dn) statistic( sample(samp,replace=TRUE) ) ) 
+  )
+  
+  # boot::boot(samp, function(x,...) statistic(samp, na.rm=TRUE), R=3)
+  err.std  = abs(statistic.pop-statistic.std)
+  err.boot = abs(statistic.pop-statistic.boot)
 
   c(
-      mean.x=mean.x
-    , mean.est=mean.est, mean.boot=mean.boot
-    , diff.est=diff.est, diff.boot=diff.boot
-    , boot.wins = if( diff.boot < diff.est ) 1 else 0
+      statistic.pop=statistic.pop
+    , statistic.std=statistic.std, statistic.boot=statistic.boot
+    , err.std=err.std, err.boot=err.boot
+    , boot.wins = 
+      if( err.boot < err.std ) 1 else 
+        if( err.boot == err.std ) 0.5 else 0
   )
 
 }
 
+# Create a cluster for parallel execution
+  closeAllConnections()
+  cl <- makeCluster( parallel::detectCores() - 1)
+  clusterExport(cl,"draw")
 
-cl <- makeCluster(3)
-clusterExport(cl,"draw")
-system.time({
-  draws <- parLapply(cl, 1:5000, function(dn) draw() ) %>% Reduce( rbind, .)
-})
+# Make N-Draws 
+  system.time({
+    draws <- 
+      parLapplyLB(cl, 1:500, function(dn,...) draw(...), statistic=mean ) %>%
+      Reduce( rbind, .)
+  })
 
 
-rownames(draws) <- NULL
-draws <- draws %>% as.data.frame
-draws %>% setDT
+  rownames(draws) <- NULL
+  draws <- draws %>% as.data.frame
+  draws %>% setDT
+  
+  draws %>% round(4)
+  draws[ , list( err.std = mean(err.std), err.boot = mean(err.boot) )]
 
-draws[ , list( diff.est = mean(diff.est), diff.boot = mean(diff.boot) )]
-( sum( draws$boot.wins ) / nrow(draws) ) %>% percent %>% message
+  ( sum( draws$boot.wins ) / nrow(draws) ) %>% percent %>% message
+
+
 
 # Determine significance
   binom.test( sum(draws$boot.wins), nrow(draws), alternative = "greater")
 
 
 # How many samples needed to be significant?
-#
+#'
 #' @seealso
 #' [Sample Size Determination](https://en.wikipedia.org/wiki/Sample_size_determination)
+
+```
 
