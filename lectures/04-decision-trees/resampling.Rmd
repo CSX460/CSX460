@@ -8,9 +8,12 @@ output: html_document
 
 ```{r}
 set.seed(314159)
-install.packages('plyr')
-# library(plyr)
-data(baseball,package="plyr")
+library(ggplot2)
+install.packages("plyr")
+library(plyr)
+data(baseball, package = "plyr")
+View(baseball)
+hist(baseball$ab)
 ```
 
 
@@ -24,17 +27,26 @@ A very simple model to predict the number of at-bats/game **each** player has pe
 - Show that this is a bad:
 
 ```{r}
+attach(baseball)
+library(ggplot2)
 
-abpg = with( baseball, sum(ab)/sum(g) )
+q_err <- quote(ab/g-abpg)
+q_abpg <- quote(sum(ab)/sum(g))
 
+mean( eval(q_err.baseball), na.rm = TRUE ) # -0.65
+hist( eval(q_err.baseball) )
+
+# residuals are not mean 0
 ```
 
 
 
-- Create a better model using only number of games (g) as a predictor
+- Create a better model using only number of games as a predictor
 
 ```{r}
 
+any(g==0)
+baseball <- baseball[g!=0]
 
 ```
 
@@ -57,4 +69,3 @@ Using only Recreate the model, providing a new estimate for `ab/g` and the RMSE,
 
 
 ```
-
