@@ -22,9 +22,23 @@ MM - the value of the center square: either x, o or (b)lank
 ```{r}
 set.seed(31415)
 library(caret)
+library(magrittr)
+library(ggplot2)
+f = file.choose()
 
-file="quizzes/binomial-performance/data.RData"
-load(file)
+file <- f
+r <- load(file)
+test 
+train 
+names(test)
+names(train)
+
+
+nrow(train)
+nrow(test)
+train$outcome <- as.factor(ifelse(train$outcome=="positive",1,0))
+test$outcome <- as.factor(ifelse(test$outcome=="positive",1,0))
+
 
 # place work here
 ```
@@ -34,6 +48,19 @@ Based on your model and the test set, what is your disadvantage when O holds the
 
 ```{r}
 # place work here
+
+# FIT MODEL
+  fit <- glm( outcome ~ . , data=train, family="binomial")
+  summary(fit)
+
+  
+test$fit <-    predict(fit, test, type="response") # > 0.5 
+
+  
+#qplot( x=fit, data=test, fill=skin )
+#qplot( x=fit, data=test, fill=skin ) + facet_grid( outcome ~ . )
+  
+
 ```
 
 - Using the 'model', create a contingency table for the predicted outcomes of the test set. (Resampling not necessary)
@@ -41,6 +68,37 @@ Based on your model and the test set, what is your disadvantage when O holds the
 
 ```{r}
 # place work here
+
+test$fit.class <- predict(fit, test, type="response") > 0.5 
+
+( tab <- table( test$outcome, test$fit.class ) )
+
+
+attach(test)
+tab <- tab
+
+test$outcome <- as.numeric(as.character(test$outcome))
+outcome <- as.numeric((as.character(outcome)))
+sum(test$outcome)/nrow(test)                        # prevalence
+( accuracy = sum(diag(tab))/sum(tab) )      # accuracy  
+1- accuracy                                 # error rate
+sum( outcome == fit.class & outcome )/sum(outcome) # TPR
+detach(test)
+
+tpr <- function(x,y) sum(x==y & x ) /sum(x) 
+fpr <- function(x,y) sum(x!=y & !x) /sum(!x)  
+tnr <- function(x,y) sum(y==x & !x) /sum(!x)
+fnr <- function(x,y) sum(x!=y & x ) /sum(x)
+
+
+tpr(test$outcome,test$fit.class) 
+tnr(test$outcome,test$fit.class)  # Specificity
+fpr(test$outcome,test$fit.class)# 0.5414365
+fnr(test$outcome,test$fit.class)#0.1823204
+
+
+
+
 ```
 
 - If your contingency table looks like this:
@@ -53,15 +111,15 @@ observed   negative positive
   
 Calculate
 
-    FP          :
+    FP          :0.5414365
     TP          :
-    Accuracy    :
+    Accuracy    :0.6979742
     Sensitivity :
-    Specificity :
+    Specificity :0.4585635
     Recall      : 
-    TPR         :
-    Prevalance  :
-    Error Rate  :
+    TPR         :0.8176796
+    Prevalance  :0.6666667
+    Error Rate  :0.3020258
 
 
 
