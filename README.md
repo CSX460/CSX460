@@ -4,7 +4,7 @@ This repository contains materials for Practical Machine Learning with R (CSX460
 
 ## Course Description
 
-This course provides an introduction to machine learning using R, the open source, statistical programming language. Once a niche set of tools for statisticians, programmers and quants, machine learning (sometimes also called data mining, statistical learning) has spread in popularity to a wide variety of applications and disciplines. This course teaches the fundamentals of machine learning without delving into the theory.  The course will teach practical aspects of machine learning so that the students will be able to apply lessons to solve problems using machine learning in their own fields.
+This course provides an introduction to machine learning using R, the open source, statistical programming language. Once a niche set of tools for statisticians, programmers and quants, machine learning (sometimes also called data mining or statistical learning) has spread in popularity to a wide variety of applications and disciplines. This course teaches the fundamentals of machine learning without delving into the theory.  The course will teach practical aspects of machine learning so that the students will be able to apply lessons to solve problems using machine learning in their own fields.
  
 
 ## Course Learning Objectives
@@ -15,7 +15,7 @@ When students have completed this course, they will know how to:
 - Frame problems to make the suitable for solution via machine learning
 - Train machine learning models
 - Evaluate machine learning models
-- Deploy machine learning models in to operations
+- Deploy machine learning models
 - Build models for prediction, categorization and recommendations
 - Collaborate in a group using tools for collaborative/social programming
 - Generate high quality, graphical and textual results 
@@ -41,34 +41,46 @@ Anyone wishing to get hands-on experience building machine learning models.
 
 Reading Requirements for the Course
 
-    Applied Predicative Modeling  
+    **Applied Predicative Modeling**  
     ISBN-13: 978-1461468486 ISBN-10: 1461468485 
     Kuhn, Max and Johnson, Kjell
     Springer Science+Business
     2013 
 
 
-
 ## Google Group
 
-There is an analogous group for this class: ***CSX460***
+There is an google group for this class: ***CSX460***
 
 
 ## Session by Session Summary
 
 
-1.	Introduction to R, setting up the ML developers environment
- a.	Installing R
- b.	Installing R Studio 
- c.	Installing packages from CRAN, Bioconductor and Github
- d.	Exercises
+1. Introduction to R, setting up the ML developers environment
+ a.	Installing R/R Studio
+ c. Using git/Github
+ c.	Installing packages from CRAN and Github 
+ e. Building First Models
 
-2.	Fundamentals of Machine Learning
+Reading:
+- Chapters 1-2 of **Applied Predictive Modeling**
+  
+Exercise(s): 
+- TBD
+
+
+2. Fundamentals of Machine Learning
  a.	Machine learning overview
  b.	Regression and classification
  c.	Supervised, unsupervised, and semi-supervised 
  d.	Algorithm types and requirements
- e.	Exercises
+ 
+ Reading:
+ -
+
+Exercise(s):
+- 
+
 
 3.	Linear Regression (2 sessions)
  a.	OLS Regression
@@ -76,9 +88,19 @@ There is an analogous group for this class: ***CSX460***
  c.	Model evaluation and tuning 
  d.	Exercises
 
+Reading: 
+
+Exercise(s):
+
+
 4.	Logistic Regression 
  a.	Logistic Regression
  b.	Exercises
+
+Reading:
+
+Exercise(s):
+
 
 5.	Advanced Techniques: Partitioning Methods
  a.	CART/Regression Trees
@@ -86,10 +108,20 @@ There is an analogous group for this class: ***CSX460***
  c.	K Nearest Neighbors
  d.	Exercises
 
+Reading:
+
+Exercise(s):
+
+
 6.	Advanced Techniques
  a.	 Bagging
  b.	Bagged Trees / Random Forests 
  c.	Exercises
+
+Reading:
+
+Exercise(s):
+
 
 7.	Advanced Techniques: Boosting
  a.	Boosting
@@ -97,10 +129,20 @@ There is an analogous group for this class: ***CSX460***
  c.	Support Vector Machines
  d.	Exercises
 
+Reading:
+
+Exercise(s):
+
+
 8.	Deployment 
  a.	Diving into the data lake
  b.	Optimization 
  c.	Delivery and Production
+
+Reading:
+
+Exercise(s):
+
 
 9.	Final Lecture
  a.	Exercises
