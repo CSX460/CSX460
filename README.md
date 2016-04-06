@@ -9,16 +9,27 @@ This course provides an introduction to machine learning using R, the open sourc
 
 ## Course Learning Objectives
 
-When students have completed this course, they will know how to:
+Students of this class will learn:
 
-- Distinguish fundamental aspects of machine learning algorithms
-- Frame problems to make the suitable for solution via machine learning
-- Train machine learning models
-- Evaluate machine learning models
-- Deploy machine learning models
-- Build models for prediction, categorization and recommendations
+- Fundamental concepts in ML
+- The differnece between supervised, unsupervised, semi-supervised, adaptive/reinforcement learning
+- The three prerequisites of ML algorithms/models
+  - Loss function
+  - Restricted class of functions
+  - Search methodology for training
+- How to evaluate and compare ML model performance
+- How to pre-process data and build features
+- How to train ML models for prediction, categorization and recommendations
+- How to apply ML models on new data
+- How to use resampling techniques to calculate model performance
+- What the bootstrap is and how it works?
+- What Bagging is and how and why it improves model performance
+- What Boosting is and how and why it improves model performance 
+- How to implement/deploy ML models for use by a wider audience
+- How to frame questions to be answered using ML techniques
 - Collaborate in a group using tools for collaborative/social programming
 - Generate high quality, graphical and textual results 
+
 
 
 ## Intended Audience
@@ -53,10 +64,14 @@ Reading Requirements for the Course
 There is an google group for this class: ***CSX460***
 
 
-## Session by Session Summary
 
+## Class Syllabus 
 
-1. Introduction to R, setting up the ML developers environment
+Current Term: Spring 2016
+
+This provides a session by session overview of CS-X460 (Practical Machine Learning).  
+
+### 1. Introduction to R, setting up the ML developers environment
  a.	Installing R/R Studio
  c. Using git/Github
  c.	Installing packages from CRAN and Github 
@@ -69,7 +84,7 @@ Exercise(s):
 - TBD
 
 
-2. Fundamentals of Machine Learning
+### 2. Fundamentals of Machine Learning
  a.	Machine learning overview
  b.	Regression and classification
  c.	Supervised, unsupervised, and semi-supervised 
@@ -82,7 +97,7 @@ Exercise(s):
 - 
 
 
-3.	Linear Regression (2 sessions)
+### 3. Linear Regression (2 sessions)
  a.	OLS Regression
  b.	Data partitioning
  c.	Model evaluation and tuning 
@@ -93,7 +108,7 @@ Reading:
 Exercise(s):
 
 
-4.	Logistic Regression 
+### 4. Logistic Regression 
  a.	Logistic Regression
  b.	Exercises
 
@@ -102,7 +117,7 @@ Reading:
 Exercise(s):
 
 
-5.	Advanced Techniques: Partitioning Methods
+### 5.	Advanced Techniques: Partitioning Methods
  a.	CART/Regression Trees
  b.	Clustering
  c.	K Nearest Neighbors
@@ -113,7 +128,7 @@ Reading:
 Exercise(s):
 
 
-6.	Advanced Techniques
+### 6.	Advanced Techniques
  a.	 Bagging
  b.	Bagged Trees / Random Forests 
  c.	Exercises
@@ -123,7 +138,7 @@ Reading:
 Exercise(s):
 
 
-7.	Advanced Techniques: Boosting
+### 7.	Advanced Techniques: Boosting
  a.	Boosting
  b.	Neural Networks 
  c.	Support Vector Machines
@@ -134,7 +149,7 @@ Reading:
 Exercise(s):
 
 
-8.	Deployment 
+### 8.	Deployment 
  a.	Diving into the data lake
  b.	Optimization 
  c.	Delivery and Production
@@ -144,6 +159,3 @@ Reading:
 Exercise(s):
 
 
-9.	Final Lecture
- a.	Exercises
- b.	Exam 
