@@ -1,6 +1,6 @@
 # CSX460 
 
-This repository contains materials for Practical Machine Learning with R (CSX460) at the University of California, Berkeley. The most recent class is/was `Fall 2015`. 
+This repository contains materials for Practical Machine Learning with R (CSX460) at the University of California, Berkeley. The most recent class is/was `Spring 2015`. 
 
 ## Course Description
 
@@ -64,7 +64,6 @@ Reading Requirements for the Course
 There is an google group for this class: ***CSX460***
 
 
-
 ## Class Syllabus 
 
 Current Term: Spring 2016
@@ -72,36 +71,42 @@ Current Term: Spring 2016
 This provides a session by session overview of CS-X460 (Practical Machine Learning).  
 
 ### 1. Introduction to R, setting up the ML developers environment
- a.	Installing R/R Studio
- c. Using git/Github
- c.	Installing packages from CRAN and Github 
- e. Building First Models
+
+- Installing R/R Studio
+- Using git/Github
+- Installing packages from CRAN and Github  
+- Overview of Maching Learning 
+- Building First Models
 
 Reading:
 - Chapters 1-2 of **Applied Predictive Modeling**
   
 Exercise(s): 
-- TBD
+- Finish in-class exercises
 
 
 ### 2. Fundamentals of Machine Learning
- a.	Machine learning overview
- b.	Regression and classification
- c.	Supervised, unsupervised, and semi-supervised 
- d.	Algorithm types and requirements
- 
- Reading:
- -
+
+- Supervised, unsupervised, and semi-supervised 
+- Regression and classification
+- Measuring model error(s)
+- Machine learning prerequisites
+- Algorithm types 
+- Data processing 
+
+Reading:
+-
 
 Exercise(s):
 - 
 
 
-### 3. Linear Regression (2 sessions)
- a.	OLS Regression
- b.	Data partitioning
- c.	Model evaluation and tuning 
- d.	Exercises
+### 3. Linear Regression 
+
+- OLS Regression
+- Data partitioning
+- Model evaluation and tuning 
+- Exercises
 
 Reading: 
 
@@ -109,8 +114,9 @@ Exercise(s):
 
 
 ### 4. Logistic Regression 
- a.	Logistic Regression
- b.	Exercises
+
+- Logistic Regression
+- Exercises
 
 Reading:
 
@@ -118,10 +124,11 @@ Exercise(s):
 
 
 ### 5.	Advanced Techniques: Partitioning Methods
- a.	CART/Regression Trees
- b.	Clustering
- c.	K Nearest Neighbors
- d.	Exercises
+
+- CART/Regression Trees
+- Clustering
+- K Nearest Neighbors
+- Exercises
 
 Reading:
 
@@ -129,9 +136,9 @@ Exercise(s):
 
 
 ### 6.	Advanced Techniques
- a.	 Bagging
- b.	Bagged Trees / Random Forests 
- c.	Exercises
+- Bagging
+- Bagged Trees / Random Forests 
+- Exercises
 
 Reading:
 
@@ -139,10 +146,11 @@ Exercise(s):
 
 
 ### 7.	Advanced Techniques: Boosting
- a.	Boosting
- b.	Neural Networks 
- c.	Support Vector Machines
- d.	Exercises
+
+-Boosting
+- Neural Networks  
+- Support Vector Machines
+- Exercises
 
 Reading:
 
@@ -150,12 +158,11 @@ Exercise(s):
 
 
 ### 8.	Deployment 
- a.	Diving into the data lake
- b.	Optimization 
- c.	Delivery and Production
+
+- Diving into the data lake
+- Optimization 
+- Delivery and Production
 
 Reading:
 
 Exercise(s):
-
-
