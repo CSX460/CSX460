@@ -22,12 +22,9 @@ Write a function (f) that takes a vector of numbers, **x**, and returns a vector
 ### Solution 
 
 ```{r}
-f <- function(x) {
-  
-  # ...
-  
+f <- function(x) {prod(x)/x
 }
-
+f(c(1,5,2,8))
 ```
     
 
@@ -49,8 +46,9 @@ Write a function f(x) to accept an integer vector, and returns a vector with tho
 ### Solution
 
 ```{r}
-f <- function(x) {
-  # ...
-  
+f <- function(x)
+{
+ifelse((x%%15) == 0,"BUZZFIZZ",ifelse((x%%5) == 0,"FIZZ",ifelse((x%%3) == 0,"BUZZ",x)))
 }
+f(1:45)
 ```
