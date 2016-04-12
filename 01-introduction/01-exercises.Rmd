@@ -35,15 +35,13 @@ for (i in 1:length(x)) {
 # arr <- x/prod(x)
 return(arr) 
 }
-
-  # ...
-  
-}
-g <- function(x) prod(x)/x
-
 ```
-    
-
+Test cases:
+```{r}
+f(c( 1, 5, 2, 8 ))
+f(c( 1, 0, 2, 8 ))
+f(c( 1, 0, 0, 1 ))
+```
 
 ## Exercise 2
 
@@ -64,11 +62,17 @@ Write a function f(x) to accept an integer vector, and returns a vector with tho
 ```{r}
 
 f <- function(x) {
-# main problem was data types in vector changing!
+# main problem was data types in vector changing (warnings suppressed)!
+options(warn=-1)
 temp <- replace(x, x %% 3 == 0 & x %% 5 == 0, 'FizzBuzz')
 temp <- replace(temp, as.numeric(temp) %% 3 == 0, 'Fizz')
 temp <- replace(temp, as.numeric(temp) %% 5 == 0, 'Buzz')
+options(warn=0)
 return(temp)
 }
+```
+
+Test case:
+```{r}
 f(1:35)
 ```
