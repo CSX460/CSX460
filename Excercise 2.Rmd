@@ -1,0 +1,23 @@
+---
+title: "Excercise2"
+author: "MariaDelgado"
+date: "April 13, 2016"
+output: html_document
+---
+ for (x in 1:20) {
+     if (x %% 15 == 0) {
+         print(paste("Fizz Buzz"))
+         }
+         else if (x %% 3 == 0) {
+             print(paste("Fizz"))
+         }
+         else if (x %% 5 == 0) {
+             print(paste("Buzz"))
+         }
+         else {
+             print(x)
+         }
+ next
+ print(x)
+ }
+ 
