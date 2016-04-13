@@ -20,13 +20,15 @@ Write a function (f) that takes a vector of numbers, **x**, and returns a vector
 
 
 ### Solution 
-
 ```{r}
 f <- function(x) {
   
-  # ...
+  prod(x)/(x)
   
 }
+x<-c(1,5,2,8)
+f(x)
+
 
 ```
     
@@ -47,10 +49,14 @@ Write a function f(x) to accept an integer vector, and returns a vector with tho
 
 
 ### Solution
-
 ```{r}
 f <- function(x) {
-  # ...
-  
+ x[which((x%%5==0) & (x%%3==0))] <- "FizzBuzz"
+x[which(as.numeric(x)%%3==0)] <- "Fizz"
+x[which(as.numeric(x)%%5==0)] <- "Buzz"
+print(x)
 }
+
+x <- 1:20
+f(x)
 ```
