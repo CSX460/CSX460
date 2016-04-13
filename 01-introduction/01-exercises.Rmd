@@ -2,7 +2,7 @@
 title: "01-exercises"
 author: "Christopher Brown"
 date: "April 6, 2016"
-output: html_document
+output: word_document
 ---
 
 
@@ -23,14 +23,10 @@ Write a function (f) that takes a vector of numbers, **x**, and returns a vector
 
 ```{r}
 f <- function(x) {
-  
-  # ...
-  
+  ifelse(x!=0, prod(x)/x, prod(x)/1)
 }
 
 ```
-    
-
 
 ## Exercise 2
 
@@ -50,7 +46,9 @@ Write a function f(x) to accept an integer vector, and returns a vector with tho
 
 ```{r}
 f <- function(x) {
-  # ...
+  ifelse ((x/15 == floor(x/15)), print("FizzBuzz"),  
+        ifelse((x/5) == floor(x/5), print ("Buzz"), 
+          ifelse((x/3) == floor(x/3), print ("Fizz"), print (x))))
   
 }
 ```
