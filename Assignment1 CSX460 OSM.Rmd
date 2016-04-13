@@ -18,7 +18,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 myf <- function(x) {
 
-  return(prod(ifelse(x==0,1,x)))
+  return(prod(ifelse(x==0,1,x))/ifelse(x==0,1,x))
 }
 ```
 
@@ -27,7 +27,7 @@ myf <- function(x) {
 
 > myf(x)
 
-[1] 720
+[1] 720 720 360 240 180 144 120
 
 
 
