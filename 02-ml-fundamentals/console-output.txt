@@ -1,0 +1,373 @@
+model <- lm(FE ~ EngDispl)
+model <- lm(FE ~ EngDispl, dat)
+if( ! 'AppliedPredictiveModeling' %in% installed.packages()[,1]  )
+install.packages('AppliedPredictiveModeling')
+library(AppliedPredictiveModeling)
+library(ggplot2)
+library(magrittr)
+library(dplyr)
+data(FuelEconomy)
+packs <-  c('AppliedPredictiveModeling', 'ggplot2', 'magrittr', 'dplyr')
+for( nm in packs ) {
+if( ! nm  %in% installed.packages()[,1]  ) install.packages(nm)
+library(nm)
+}
+# Load data set into environment
+data(FuelEconomy)
+dat <- dplyr::bind_rows(cars2010, cars2011, cars2012)    # Define Da
+naive_guess <- dat$fe %>% mean
+qplot( y=dat$FE, x=dat$EngDispl )
+?geom_abline
+naive_guess <- dat$fe %>% mean
+dat$FE
+naive_guess <- dat$FE %>% mean
+naive_guess
+qplot( y=dat$FE, x=dat$EngDispl )
+qplot( y=dat$FE, x=dat$EngDispl ) + geom_hline(yintercept=naive_guess)
+qplot( y=dat$FE, x=dat$EngDispl ) + geom_hline(yintercept=naive_guess, color="red")
+gg + geom_hline(yintercept=naive_guess, color="red")
+set.seed(314)
+samp <- dat %>% sample_n(10)
+samp
+gg <- samp %>%
+ggplot( aes(x=EngDispl,y=FE) ) +
+geom_point(size=2.5) +
+scale_x_continuous( limits=c(0,10) )
+gg
+gg + geom_hline(yintercept=naive_guess, color="red")
+model <- lm(FE ~ EngDispl, dat)
+model
+fit.2010 <- lm( FE ~ EngDispl, data=cars2010 )
+y.2011 <- predict( fit.2010, data=cars2011 )
+rmse <- function(y,yhat) {
+(y - yhat)^2 %>% mean %>% sqrt
+}
+fit.2010 %>% predict(cars2010)
+y.2010 <- fit.2010 %>% predict(cars2010)
+rmse <- function(y,yhat) {
+(y - yhat)^2 %>% mean %>% sqrt
+}
+rmse( 4,2)
+rmse( c(4,2),c(2,1)
+)
+rmse( 2,1)
+summary(fit.2010)
+fit.2010 <- . lm( FE ~ EngDispl, data=cars2010 )
+... = NULL
+... = NULL
+f(...) 1
+f <- function(x,...)
+list(...)
+f(1)
+list(NULL)
+y.2010 <- fit.2010 %>% predict(cars2010)
+y.2011 <- fit.2010 %>% predict(cars2011)
+y.2012 <- fit.2010 %>% predict(cars2012)
+ng', 'ggplot2', 'magrittr', 'dplyr')
+for( nm in packs ) {
+if( ! nm  %in% installed.packages()[,1]  ) install.packages(nm)
+library(nm)
+}
+for( nm in packs ) {
+message(nm)
+if( ! nm  %in% installed.packages()[,1]  ) install.packages(nm)
+library(nm)
+}
+?library
+nm
+for( nm in packs ) {
+message(nm)
+if( ! nm  %in% installed.packages()[,1]  ) install.packages(nm)
+library(nm, character.only = TRUE)
+}
+lm( FE ~ . , cars2010)
+lm( FE ~ . , cars2010)  %>% summary()
+?mean
+?mean
+help(mean)
+??Control
+??meaen
+?mean
+??mean
+apropos(mean)
+apropos(mean)
+apropos('mean')
+li <- list( a=1, b=2, c=3)
+li$a
+li$b
+li$c
+ve <- c( a=1, b=2, c=3)
+ve$a
+li
+nm = "a"
+li[[nm]]
+li[['a']]
+li[[1]]
+li[[2]]
+li[[3]]
+li[[4]]
+li[1:2]
+li[1:2]  %>% list()
+li[[1]]  %>% list()
+li[1:2]  %>% class
+li[[1]]  %>% class
+1:4L
+0.24
+letters
+c(T,F)
+li[1:2]
+li[c('a','b')]
+c(1,2,3)
+c(1.0,2,3)
+c(1.1,2,3)
+c(TRUE, FALSE, TRUE)
+c('a','b')
+c(1)
+list( a=1, b="sds", c=TRUE)
+list( a=1, b="sds", c=TRUE)  %>% lapply(class)
+class('a')
+data.frame( a=1:3, b=letters[1:3], c=LETTERS[24:26])
+df <- data.frame( a=1:3, b=letters[1:3], c=LETTERS[24:26])
+df$a
+df[['a']]
+nm
+df[[nm]]
+# df[ , ]
+d[ 1,]
+df[ 1,]
+df[ 2,]
+df[ 1:2,]
+`:`
+1:10
+df[ 1:2, 1:2 ]
+df[ 1:2, c('a','b') ]
+library(data.table)
+# install.packages('data.table')
+library(data.table)
+df  %>% setDT()
+class(df)
+dt <= df  %>% setDT()
+dt <- df  %>% setDT()
+a = 1
+a <- 1
+dt[ 1:2 ]
+dt[ 1:2, c ]
+dt[ 1:2, paste(a,b) ]
+library(magrittr)
+1:3  %>% add(1)
+1:3  %>% add(1)  %>% subtract(2)
+library(magrittr)
+install.packages(magrittr)
+# install.packages('magrittr')
+df <- data.frame( a=1:3, b=letters[1:3], c=LETTERS[24:26])
+df[ df$a < 2 , ]
+df$a < 2
+df[ df$a < rnorm(3) , ]
+df[ df$a < 2 , ]
+dt <-df  %>% setDT
+dt[ dt$a < 2 , ]
+dt[ a < 2 , ]
+?"data.table"
+dt[ by=a<2, ,sum(A) ]
+dt[ by=a<2, ,sum(A) ]
+dt[ by=a<2, ,sum(a) ]
+dt[ by=a<2, ,mean(a) ]
+df  %>% select(a<2)
+df  %>% select("a<2")
+df  %>% filter(a<2)
+df  %>% filter(a<2)  %>% select(b:c)
+pipeline <- .  %>% filter(a<2)  %>% select(b:c)
+df  %>% pipeline
+pipeline(df)
+library(magrittr)
+install.library('dplyr')
+install.packages('dplyr')
+library(devtools)
+package.skeleton(name="mypackage")
+getwd()
+setwd("../..")
+getwd()
+package.skeleton(name="mypackage")
+search()
+f <- function(x) {
+ifelse(x==0,0,prod(x)/x)
+}
+x <- c( 1, 5, 2, 8)
+ans1 <- f(x)
+aans1
+ans1
+x <- c( 1, 5, 2, 8, 0)
+ans1 <- f(x)
+ans1
+f <- function(x) {
+ifelse(x!=0,0,prod(x)/x)
+}
+ans1 <- f(x)
+ans1
+f <- function(x) {
+ifelse( x %% 15 == 0, "FizzBuzz",
+ifelse( x %% 3 == 0, "Fizz",
+ifelse( x %% 5 == 0, "Buzz", x ) ) )
+}
+f(1:20)
+packs <-  c('AppliedPredictiveModeling', 'ggplot2', 'magrittr', 'dplyr')
+for( nm in packs ) {
+# message(nm)
+if( ! nm  %in% installed.packages()[,1]  ) install.packages(nm)
+library(nm, character.only = TRUE)
+}
+# Load data set into environment
+data(FuelEconomy)
+rm( list=ls())
+packs <-  c('AppliedPredictiveModeling', 'ggplot2', 'magrittr', 'dplyr')
+for( nm in packs ) {
+# message(nm)
+if( ! nm  %in% installed.packages()[,1]  ) install.packages(nm)
+library(nm, character.only = TRUE)
+}
+# Load data set into environment
+data(FuelEconomy)
+... = NULL  # Needed for aesthetics
+View(cars2010)
+?cars2010
+dat <- bind_rows( cars2010, cars2011, cars2012)    # Define
+dat  %>% nrow()
+nrows( cars2010)
+nrow( cars2010)
+nrow( cars2011)
+nrow( cars2012)
+ncol(dat)
+dim(cars2010)
+class(dat)
+dat
+dat
+qplot(dat$FE)
+mean(dat$FE)
+naive_guess <- median(dat$FE)
+naive_guess
+qplot(dat$FE, binwidth=1)
+qplot(dat$FE, binwidth=5)
+qplot(dat$FE, binwidth=2.5)
+set.seed(314)
+samp <- dat %>% sample_n(10)
+samp
+samp  %>% ggplot( aes(x=EngDispl, y=FE) )
+samp  %>% ggplot( aes(x=EngDispl, y=FE) ) + geom_point()
+samp  %>% ggplot( aes(x=EngDispl, y=FE) ) + geom_point() + geom_line()
+samp  %>% ggplot( aes(x=EngDispl, y=FE) ) + geom_point()
+naive_guess
+naive_guess <- mean(dat$FE)
+naive_guess
+samp  %>% ggplot( aes(x=EngDispl, y=FE) ) + geom_point() + geom_hline(yintercept=naive_guess)
+samp  %>% ggplot( aes(x=EngDispl, y=FE) ) + geom_point() + geom_hline(yintercept=naive_guess, color="red")
+samp  %>% ggplot( aes(x=EngDispl, y=FE) ) + geom_point() + geom_hline(yintercept=naive_guess, color="red") + stat_smooth( y ~ x, method="lm")
+samp  %>% ggplot( aes(x=EngDispl, y=FE) ) + geom_point() + geom_hline(yintercept=naive_guess, color="red") + stat_smooth( aes(y ~ x), method="lm")
+samp  %>% ggplot( aes(x=EngDispl, y=FE) ) + geom_point() + geom_hline(yintercept=naive_guess, color="red") + stat_smooth(  method="lm")
+samp  %>% ggplot( aes(x=EngDispl, y=FE) ) + geom_point() + geom_hline(yintercept=naive_guess, color="red") + stat_smooth(  method="lm", se =FALSE)
+dat$FE - naive_guess
+qplot( dat$FE - naive_guess )
+( dat$FE - naive_guess )  %>% sum
+( samp$FE - naive_guess )  %>% qplot
+( samp$FE - naive_guess )  %>% qplot(.)
+( samp$FE - naive_guess )  %>% {qplot(.)}
+plot( samp$FE - naive_guess )  %>%
+plot( samp$FE - naive_guess )
+qplot( samp$FE - naive_guess )
+qplot( samp$FE - naive_guess )
+qplot( samp$FE - naive_guess )
+plot( samp$FE - naive_guess )
+qplot( samp$FE - naive_guess )
+qplot( dat$FE - naive_guess )
+( dat$FE - naive_guess )
+( samp$FE - naive_guess )
+( samp$FE - naive_guess )   %>% sum()
+( dat$FE - naive_guess )   %>% sum()
+( dat$FE - naive_guess )^2
+( dat$FE - naive_guess )^2  %>% sum
+( dat$FE - naive_guess )^2  %>% sum   %>% sqrt
+( dat$FE - naive_guess )^2  %>% mean   %>% sqrt
+RMSE
+( dat$FE - naive_guess )  %>% abs  %>% mean
+rmse <- function(y,yhat) {
+( y - yhat )^2  %>% mean   %>% sqrt
+}
+?lm
+fit.dat <- lm( FE ~ EngDispl, data=dat )
+fit.dat
+fit.dat <- lm( FE ~ EngDispl + NumCyl, data=dat )
+dat  %>% names
+fit.dat <- lm( FE ~ EngDispl + NumCyl, data=dat )
+fit.dat
+dat
+fit.dat <- lm( FE ~ EngDispl + NumCyl + NumGears, data=dat )
+fit.dat
+fit.dat <- lm( FE ~ . , data=dat )
+fit.day
+fit.dat
+fit.dat <- lm( FE ~ CarlineClassicDesc , data=dat )
+fit.dat <- lm( FE ~ CarlineClassDesc , data=dat )
+fit.dat <- lm( FE ~ CarlineClassDesc + EngDispl, data=dat )
+fit.dat
+# fit.dat <- lm( FE ~ CarlineClassDesc , data=dat )
+# fit.dat <- lm( FE ~ CarlineClassDesc + EngDispl, data=dat )
+dat  %>% select( CarlineClassDesc )
+dat  %>% select( CarlineClassDesc )  %>% table
+fit_dat
+fit.dat <- lm( FE ~ NumCyl + EngDispl, data=dat )
+fit  %>% summary()
+fit.dat  %>% summary()
+resid(fit.dat)  %>% qplot
+resid(fit.dat)  %>% qplot
+resid(fit.dat)
+resid(fit.dat)    %>% plot
+resid(fit.dat)    %>% hist
+resid(fit.dat)    %>% truehist
+resid(fit.dat)    %>% qplot
+resid(fit.dat)    %>% class()
+resid(fit.dat)    %>% qplot(x=.)
+resid(fit.dat)-> r
+r
+qplot(r)
+r
+r  %>% length()
+rmse(dat$FE, fit.dat$fitted.values)
+fit  %>% summary()
+fit.dat  %>% summary()
+rmse(dat$FE, fit.dat$fitted.values)
+fit.dat <- lm( FE ~ NumCyl + EngDispl + AirAspirationMethod, data=dat )
+fit.dat  %>% summary()
+fit.dat <- lm( FE ~ ., data=dat )
+fit.dat  %>% summary()
+??stepAIC
+fit.dat <- lm( FE ~ NumCyl + EngDispl + AirAspirationMethod, data=dat )
+yhat <- predict( fit.dat, data=cars2012 )
+yhat
+qplot( x=cars2012$FE, y=yhat)
+yhat <- predict( fit.dat, data=cars2012 )
+yhat
+yhat  %>% lenght
+yhat  %>% length
+nrow(cars2012)
+yhat <- predict( fit.dat, data=cars2012 )
+yhat
+yhat  %>% length
+yhat <- predict.lm( fit.dat, data=cars2012 )
+yhat <- predict.lm( fit.dat, newdata = cars2012 )
+qplot( x=cars2012$FE, y=yhat)
+qplot( y=cars2012$FE, x=yhat)
+qplot( y=cars2012$FE, x=yhat) + geom_abline(yintercept=0, slope=1)
+fit.dat  %>% str
+fit.dat  %>% str  %>% names
+fit.dat  %>% names()
+coefficients(fit.dat)
+dat
+factor( 1,2,3)
+factor( "a", "b", "c", "a")
+factor( c("a", "b", "c", "a"))
+fit.dat  %>% summary()
+save.history(file="console-output.txt")
+?history
+savehistory(file="console-output.txt")
+getwd()
+history()
+savehistory("~/csx460/instructor/lectures/02-ml-fundamentals/console-output.txt")

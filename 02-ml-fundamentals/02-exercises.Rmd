@@ -36,14 +36,14 @@ Hint: See `?cars2010`
 - After the **Fuel Economy** data is loaded, combine three data sets into one data set. (Note: The name `dat` is very often used in these situations, `data` is a reserved R word.)  
 
 ```{r}
-dat <- ... # cars2010, cars2011, cars2012)    # Define 
+dat <- bind_rows( cars2010, cars2011, cars2012)    # Define 
 ```
 
 
 - What is a good "naive guess" of FE? Show your work
 
 ```{r}
-naive_guess <- ...
+naive_guess <- mean(dat$FE)
 ```
 
 
@@ -62,7 +62,7 @@ naive_guess <- ...
 set.seed(314) 
 
 # Sample 
-samp <- .... 
+samp <- dat %>% dplyr::sample_n(10) 
 
 # Plots 
 ...
@@ -85,7 +85,7 @@ All functions should accept two arguments:
 ```{r}
 
 rmse <- function(y,yhat) {
-  # ...
+  ( y - yhat )^2  %>% mean   %>% sqrt 
 }
 
 mae <- function(y, yhat) {

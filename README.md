@@ -72,11 +72,14 @@ This provides a session by session overview of CS-X460 (Practical Machine Learni
 
 ### 1. Introduction to R, setting up the ML developers environment
 
-- Installing R/R Studio
-- Using git/Github
+- Welcome 
+- Class Book, Materials, etc.
+- Setting up your environment
+  - Installing R/R Studio
+  - Installing git and using Github
 - Installing packages from CRAN and Github  
 - Overview of Maching Learning 
-- Building First Models
+
 
 Reading:
 - Chapters 1-2 of **Applied Predictive Modeling**
@@ -87,18 +90,30 @@ Exercise(s):
 
 ### 2. Fundamentals of Machine Learning
 
+- Building First Models
 - Supervised, unsupervised, and semi-supervised 
 - Regression and classification
 - Measuring model error(s)
 - Machine learning prerequisites
-- Algorithm types 
-- Data processing 
+- Algorithm types
+- Data processing
 
 Reading:
--
+- **APM** Chapters 3.2-3.7, skim 3.8, Chapters 6.2 and 6.3   
+- Optional:
+  - [Introduction to dplyr](https://cran.r-project.org/web/packages/dplyr/vignettes/introduction.html)
+  - [Introduction to data.table](https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.pdf)
+
+R Packages:
+- General awesomeness: magrittr
+- Reading data: readr, data.table::fread
+  - From the web: httr, rvest
+- Changing data orientation: tidyr
+- Data Manipulation: dplyr, data.table
+
 
 Exercise(s):
-- 
+- Finish in-class exercises
 
 
 ### 3. Linear Regression 
