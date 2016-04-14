@@ -1,6 +1,6 @@
 ---
 title: "01-exercises"
-author: "Christopher Brown"
+author: "Bo Wu"
 date: "April 6, 2016"
 output: word_document
 ---
