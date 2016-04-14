@@ -36,14 +36,14 @@ Hint: See `?cars2010`
 - After the **Fuel Economy** data is loaded, combine three data sets into one data set. (Note: The name `dat` is very often used in these situations, `data` is a reserved R word.)  
 
 ```{r}
-dat <- ... # cars2010, cars2011, cars2012)    # Define 
+dat <- bind_rows(cars2010, cars2011, cars2012)    # Define 
 ```
 
 
 - What is a good "naive guess" of FE? Show your work
 
 ```{r}
-naive_guess <- ...
+naive_guess <- median(dat $FE)
 ```
 
 
@@ -51,6 +51,7 @@ naive_guess <- ...
 
 ```{r}
 # ... ggplot2  
+qplot(dat$FE)
 ```
 
 - Sample 10 observations from `dat`
@@ -62,13 +63,15 @@ naive_guess <- ...
 set.seed(314) 
 
 # Sample 
-samp <- .... 
+samp <- dat %>% sample_n(10) 
 
 # Plots 
 ...
-
+samp %>% ggplot( aes(x=EngDispl, y=FE)) + geom_point() + geom_hline(yintercept = naive_guess, color="red") + stat_smooth(method="lm", se = FALSE)
 
 ```
+plot(samp$FE - naive_guess)
+
 
 
 ## Exercise 2:
@@ -85,15 +88,15 @@ All functions should accept two arguments:
 ```{r}
 
 rmse <- function(y,yhat) {
-  # ...
+  (y - yhat) ^ 2 %>%  mean %>% sqrt
 }
 
 mae <- function(y, yhat) {
-  # ...
+  (y - yhat) %>%  abs %>%  mean
 }
 
 medae <- function(y, yhat) { 
-  # ...
+  (y - yhat) %>% abs %>% median
 }
 
 ```
@@ -109,13 +112,17 @@ Use these functions to evaluate the loss/performance of:
 
 
 ```{r}
-fit.2010 <- ... 
+fit.2010 <- lm(FE ~ EngDispl, data=cars2010) 
 ```
 
 - Use your functions to evaluate the training error
 - Use your model to:
 -- predict the FE for 2011. What is the RMSE errors associated with the predictions.
 -- predict the FE for 2012. What is the RMSE errors associated with the predictions.
+
+yhat <- predict (fit.dat, newdata=car2011)
+gplot( y=cars2012$FE, x=yhat) + geom_abline(yintercept = 0, slope=1)
+fit.dat %>% summary ()
 
 ```{r}
 
@@ -145,6 +152,6 @@ rmse.2012
 
 
 ```{r}
-fit.2010 <- ...
+fit.2011 <- lm(FE ~ EngDispl + NumCycl + VarValve, data=cars2011)
 betas <- ...
 ```
