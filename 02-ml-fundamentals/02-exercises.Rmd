@@ -27,7 +27,6 @@ data(FuelEconomy)
 ```
 
 
-
 ## Exercise 1
 
 Hint: See `?cars2010`
@@ -36,14 +35,17 @@ Hint: See `?cars2010`
 - After the **Fuel Economy** data is loaded, combine three data sets into one data set. (Note: The name `dat` is very often used in these situations, `data` is a reserved R word.)  
 
 ```{r}
-dat <- ... # cars2010, cars2011, cars2012)    # Define 
-```
+data(FuelEconomy)
+dat <- bind_rows(cars2010,cars2011,cars2012) # cars2010, cars2011, cars2012)    # Define 
 
+```
 
 - What is a good "naive guess" of FE? Show your work
 
 ```{r}
-naive_guess <- ...
+naive_guess <- median(dat$FE)
+naive_guess
+qplot(dat$FE-naive_guess)
 ```
 
 
@@ -51,6 +53,7 @@ naive_guess <- ...
 
 ```{r}
 # ... ggplot2  
+samp %>% ggplot(aes(x=EngDispl,y=FE)) + geom_point() + geom_hline(yintercept = naive_guess)
 ```
 
 - Sample 10 observations from `dat`
@@ -62,11 +65,12 @@ naive_guess <- ...
 set.seed(314) 
 
 # Sample 
-samp <- .... 
+samp <-  dat %>%  dplyr::sample_n(10) 
 
 # Plots 
-...
+samp %>% ggplot(aes(x=EngDispl,y=FE)) + geom_point() + geom_hline(yintercept = naive_guess)
 
+(dat$FE -naive_guess)^2 %>% sum %>% sqrt #this is the root mean squared 308.4249
 
 ```
 
@@ -85,18 +89,20 @@ All functions should accept two arguments:
 ```{r}
 
 rmse <- function(y,yhat) {
-  # ...
+  (y - yhat)^2 %>% mean %>% sqrt
 }
 
 mae <- function(y, yhat) {
-  # ...
+  mean(abs(y-yhat))
 }
 
 medae <- function(y, yhat) { 
-  # ...
+  median(abs(y-yhat))
 }
 
 ```
+y
+yhat
 
 Use these functions to evaluate the loss/performance of:
 - the naive guess
@@ -109,24 +115,33 @@ Use these functions to evaluate the loss/performance of:
 
 
 ```{r}
-fit.2010 <- ... 
+#fit. 2010 <- ...
+fit.dat_2010 <- lm(formula = FE ~ EngDispl, data=cars2010)
+fit.dat_2011 <- lm(formula = FE ~ EngDispl, data=cars2011)
+fit.dat_2012 <- lm(formula = FE ~ EngDispl, data=cars2012)
+#fit.dat <- lm(formula = FE ~ EngDispl+CarlineClassDesc+NumGears, data=dat)
+#dat %>% select(CarlineClassDesc) %>% table
+yhat_2010 = predict.lm(fit.dat_2010, newdata = cars2010)
+yhat_2011 = predict.lm(fit.dat_2011, newdata = cars2011)
+yhat_2012 = predict.lm(fit.dat_2012, newdata = cars2012)
+qplot(y=cars2010$FE,x=yhat_2010)
+qplot(y=cars2010$FE,x=yhat_2010)+geom_abline(intercept=0,slope = 1)
+
 ```
 
 - Use your functions to evaluate the training error
 - Use your model to:
 -- predict the FE for 2011. What is the RMSE errors associated with the predictions.
 -- predict the FE for 2012. What is the RMSE errors associated with the predictions.
+dat
 
 ```{r}
-
-y.2010 <- ... 
-y.2011 <- ... 
-y.2012 <- ...
-
-rmse.2010 <- ...
-rmse.2011 <- ...
-rmse.2012 <- ... 
-
+y.2010 <- cars2010$FE
+y.2011 <- cars2011$FE 
+y.2012 <- cars2012$FE
+rmse.2010 <- rmse(y.2010,yhat_2010)
+rmse.2011 <- rmse(y.2011,yhat_2011)
+rmse.2012 <- rmse(y.2012,yhat_2012) 
 ```
 
 
@@ -137,7 +152,6 @@ rmse.2011
 rmse.2012
 ```
 
-
 ## Exercise 4: 
 
 - Model the fuel economy (`FE`) as a function of `EngDispl`, `NumCyl` and `VarValve` using the `cars2011` data set.  
@@ -145,6 +159,12 @@ rmse.2012
 
 
 ```{r}
-fit.2010 <- ...
-betas <- ...
+fit.2011 <- lm(formula = FE ~ EngDispl+NumCyl+VarValveTiming, data=cars2011)
+fit.2011
+yhat_fit2011 = predict.lm(fit.2011, newdata = cars2011)
+qplot(y=cars2011$FE,x=yhat_fit2011)
+qplot(y=cars2011$FE,x=yhat_fit2011)+geom_abline(intercept=0,slope = 1)
+
+betas <- c(-3.906,-1.110,3.594)
+
 ```
