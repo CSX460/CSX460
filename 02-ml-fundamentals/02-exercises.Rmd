@@ -1,6 +1,6 @@
 ---
 title: "02-exercises"
-author: "Christopher Brown"
+author: "Bo Wu"
 date: "April 13, 2016"
 output: html_document
 ---
@@ -51,7 +51,7 @@ naive_guess <- median(dat $FE)
 
 ```{r}
 # ... ggplot2  
-qplot(dat$FE)
+qplot( dat$EngDispl, dat$FE)+ geom_hline(yintercept = naive_guess, color="red")
 ```
 
 - Sample 10 observations from `dat`
@@ -69,8 +69,9 @@ samp <- dat %>% sample_n(10)
 ...
 samp %>% ggplot( aes(x=EngDispl, y=FE)) + geom_point() + geom_hline(yintercept = naive_guess, color="red") + stat_smooth(method="lm", se = FALSE)
 
-```
 plot(samp$FE - naive_guess)
+```
+
 
 
 
@@ -103,8 +104,9 @@ medae <- function(y, yhat) {
 
 Use these functions to evaluate the loss/performance of:
 - the naive guess
-
-
+RMSE = 8.108
+MAE = 6.305
+MEDAE = 5.4
 
 ## Exercise 3: Linear Model and Model Performance 
 
@@ -126,13 +128,13 @@ fit.dat %>% summary ()
 
 ```{r}
 
-y.2010 <- ... 
-y.2011 <- ... 
-y.2012 <- ...
+y.2010 <- predict (fit.2010, newdata=cars2011) 
+y.2011 <- predict (fit.2010, newdata=cars2011) 
+y.2012 <- predict (fit.2010, newdata=cars2012)
 
-rmse.2010 <- ...
-rmse.2011 <- ...
-rmse.2012 <- ... 
+rmse.2010 <- rmse(cars2010$FE, y.2010)
+rmse.2011 <- rmse(cars2011$FE, y.2011)
+rmse.2012 <- rmse(cars2012$FE, y.2012) 
 
 ```
 
@@ -152,6 +154,6 @@ rmse.2012
 
 
 ```{r}
-fit.2011 <- lm(FE ~ EngDispl + NumCycl + VarValve, data=cars2011)
-betas <- ...
+fit.2011 <- lm(FE ~ EngDispl + NumCyl + IntakeValvePerCyl, data=cars2011)
+betas <- coefficients(fit.2011)
 ```
