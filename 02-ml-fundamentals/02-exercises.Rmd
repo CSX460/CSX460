@@ -22,7 +22,7 @@ for( nm in packs ) {
 
 # Load data set into environment
 data(FuelEconomy)
-... = NULL  # Needed for aesthetics 
+#>?? ... = NULL  # Needed for aesthetics 
 
 ```
 
@@ -103,9 +103,11 @@ Use these functions to evaluate the loss/performance of:
 - the naive guess
 
 ```{r}
-print(cat('RMSE naive:', as.character(rmse(y,yhat))))
-print(cat('MAE naive:', as.character(mae(y,yhat))))
-print(cat('MEDAE naive:', as.character(medae(y,yhat))))
+y <- samp$FE
+yhat <- naive_guess
+paste('RMSE naive:', format(round(rmse(y,yhat), 2), nsmall = 2))
+paste('MAE naive:', format(round(mae(y,yhat), 2), nsmall = 2))
+paste('MEDAE naive:', format(round(medae(y,yhat), 2), nsmall = 2))
 ```
 
 ## Exercise 3: Linear Model and Model Performance 
@@ -137,7 +139,7 @@ rmse.2012 <- rmse(cars2012$FE, y.2012)
 ```
 
 
-```{r}
+```{r, echo=TRUE}
 # DO NOT EDIT 
 rmse.2010 
 rmse.2011
@@ -156,5 +158,7 @@ fit.multivar <- lm(FE ~ EngDispl + NumCyl + VarValveLift, data = cars2011)
 summary(fit.multivar)
 # kill VarValveLift - insignificant predictor. replace with VarValveTiming:
 fit.multivar <- lm(FE ~ EngDispl + NumCyl + VarValveTiming, data = cars2011)
+summary(fit.multivar)
 betas <- fit.multivar$coefficients
+print(betas)
 ```
