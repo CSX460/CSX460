@@ -1,0 +1,150 @@
+---
+title: "02-exercises"
+author: "Christopher Brown"
+date: "April 13, 2016"
+output: html_document
+---
+
+This exercise uses the **Fuel Economy** data set from the **AppliedPredicitiveModeling** package.
+
+Note: The following will set-up your environment for this exercise. If you get an error stating that the packages have not been found, you need to install those packages.
+
+
+```{r,echo=FALSE}
+
+packs <-  c('AppliedPredictiveModeling', 'ggplot2', 'magrittr', 'dplyr')
+
+for( nm in packs ) { 
+  # message(nm)
+  if( ! nm  %in% installed.packages()[,1]  ) install.packages(nm)
+  library(nm, character.only = TRUE)
+}
+
+# Load data set into environment
+data(FuelEconomy)
+... = NULL  # Needed for aesthetics 
+
+```
+
+
+
+## Exercise 1
+
+Hint: See `?cars2010`
+
+
+- After the **Fuel Economy** data is loaded, combine three data sets into one data set. (Note: The name `dat` is very often used in these situations, `data` is a reserved R word.)  
+
+```{r}
+dat <- bind_rows( cars2010, cars2011, cars2012)    # Define 
+```
+
+
+- What is a good "naive guess" of FE? Show your work
+
+```{r}
+naive_guess <- mean(dat$FE)
+```
+
+
+- plot FE (Fuel Econonomy) vs. EngDisp. Plot the naive guess.
+
+```{r}
+# ... ggplot2  
+```
+
+- Sample 10 observations from `dat`
+- Plot this data. Add a line for the naive_guess. 
+
+
+```{r}
+
+set.seed(314) 
+
+# Sample 
+samp <- dat %>% dplyr::sample_n(10) 
+
+# Plots 
+...
+
+
+```
+
+
+## Exercise 2:
+
+
+Write a loss functions for calculating:
+- Root Mean Square Error
+- Mean Absolute Error
+- Median Absolute Error
+
+All functions should accept two arguments: 
+
+
+```{r}
+
+rmse <- function(y,yhat) {
+  ( y - yhat )^2  %>% mean   %>% sqrt 
+}
+
+mae <- function(y, yhat) {
+  # ...
+}
+
+medae <- function(y, yhat) { 
+  # ...
+}
+
+```
+
+Use these functions to evaluate the loss/performance of:
+- the naive guess
+
+
+
+## Exercise 3: Linear Model and Model Performance 
+
+- Use `lm` to create a linear model fitting the relationship between FE and EngDispl for the cars2010 data set
+
+
+```{r}
+fit.2010 <- ... 
+```
+
+- Use your functions to evaluate the training error
+- Use your model to:
+-- predict the FE for 2011. What is the RMSE errors associated with the predictions.
+-- predict the FE for 2012. What is the RMSE errors associated with the predictions.
+
+```{r}
+
+y.2010 <- ... 
+y.2011 <- ... 
+y.2012 <- ...
+
+rmse.2010 <- ...
+rmse.2011 <- ...
+rmse.2012 <- ... 
+
+```
+
+
+```{r}
+# DO NOT EDIT 
+rmse.2010 
+rmse.2011
+rmse.2012
+```
+
+
+## Exercise 4: 
+
+- Model the fuel economy (`FE`) as a function of `EngDispl`, `NumCyl` and `VarValve` using the `cars2011` data set.  
+- Provide betas
+
+
+```{r}
+fit.2010 <- ...
+betas <- ...
+```
