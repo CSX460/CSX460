@@ -95,8 +95,8 @@ Exercise(s):
 - Regression and classification
 - Measuring model error(s)
 - Machine learning prerequisites
-- Algorithm types
-- Data processing
+- Algorithm types 
+- Data processing 
 
 Reading:
 - **APM** Chapters 3.2-3.7, skim 3.8, Chapters 6.2 and 6.3   
