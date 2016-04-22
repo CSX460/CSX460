@@ -1,0 +1,175 @@
+GermanCredit  %>% names
+data("GermanCredit")
+fit
+library(MASS)
+fit.fe <- lm( FE ~ . , fe )
+fe <- dplyr::bind_rows(cars2010, cars2011, cars2012)    # Define Da
+data(FuelEconomy)     # See ?cars2010
+fe <- dplyr::bind_rows(cars2010, cars2011, cars2012)    # Define Da
+fit.fe <- lm( FE ~ . , fe )
+fit.fe
+fit.fe2 <- stepAIC( fit.fe, direction="both")
+summary(fit)
+summary(fit.fe2)
+fit.fe  %>% summary()
+summary(fit.fe2)
+fit.fe  %>% summary()
+summary(fit.fe)
+summary(fit.fe)  %>% coef()
+lm( FE ~ 0, fe)
+lm( FE ~ `, fe)
+lm( FE ~ 1, fe)
+fe$FE  %>% mean
+fit.simple <- lm( FE ~ 1, data=fe )
+fit.fe <- lm( FE ~ 1, data=fe )
+fit.forward <- stepAIC(fit.fe, direction = "forward")
+?stepAIC
+fit.forward <- stepAIC(fit.fe, scope=FE ~ . , direction = "forward")
+fit.forward <- stepAIC(fit.fe, scope=list( lower=FE ~ 1, upper=FE ~ . ), direction = "forward")
+fit.forward <- stepAIC(fit.fe, scope=list( lower=FE ~ 1, upper=FE ~ . ), direction = "both")
+fit.forward <- stepAIC(fit.fe, scope=list( lower= ~ 1, upper= ~ . ), direction = "both")
+fit.fe <- lm( FE ~ ., data=fe )
+fit.forward <- stepAIC(fit.fe, scope=list( lower= ~ 1, upper= ~ . ), direction = "both")
+fit.forward <- stepAIC(fit.fe, scope=list( lower= ~ 1, upper= ~ . ), direction = "backward")
+fit.forward <- stepAIC(fit.fe, scope=list( lower= ~ 1, upper= ~ . ), direction = "forward")
+fit.forward <- stepAIC(fit.fe, scope=list( lower= ~ 1, upper= ~ . ), direction = "backward")
+fit.fe <- lm( FE ~ ., data=fe )
+fe$NumCyl
+fit.fe <- lm( FE ~ NumCyl+1, data=fe )
+fit.forward <- stepAIC(fit.fe,
+scope= ~ .
+, direction = "both")
+fit.forward <- stepAIC(fit.fe,
+scope= list( lower= ~ ., upper ~. )
+, direction = "both")
+fit.forward <- stepAIC(fit.fe,
+scope= list( lower= ~ 1, upper ~. )
+, direction = "both")
+function (..., list = character(), package = NULL, lib.loc = NULL,
+fit.fe <- lm( FE ~ 1, data=fe )
+summary(fit.fe)
+summary(fit.fe)
+fit.fe  %>% RMSE()
+RMSE
+fit.fe <- lm( FE ~ 1, data=fe )
+fit.fe
+fit.min  <- lm( FE ~ 1, data=fe )
+fit.full <- lm( FE ~ . , data = fe )
+fit.forward <- stepAIC(fit.fe,
+scope= list( lower= ~ 1, upper ~. )
+, direction = "both")
+fit.forward <- stepAIC(fit.full,
+scope= list( lower= ~ 1, upper ~. )
+, direction = "both")
+names(FE)
+names(fe)
+names(fe)  %>% as.formula
+names(fe)  %>% catr
+names(fe)  %>% cat
+names(fe)  %>% cat(sep="+")
+names(fe)  %>% cat(sep=" + ")
+form <- EngDispl + NumCyl + Transmission + AirAspirationMethod + NumGears +
+CarlineClassDesc + VarValveTiming + VarValveLift
+TransLockup + TransCreeperGear + DriveDesc + IntakeValvePerCyl + ExhaustValvesPerCyl +
+form = FE ~  EngDispl + NumCyl + Transmission + AirAspirationMethod + NumGears +
+TransLockup + TransCreeperGear + DriveDesc + IntakeValvePerCyl + ExhaustValvesPerCyl +
+CarlineClassDesc + VarValveTiming + VarValveLift
+fit.min  <- lm( FE ~ 1, data=fe )
+fit.min.forward <- stepAIC( fit.min, scope=form, "forward")
+form =  ~  EngDispl + NumCyl + Transmission + AirAspirationMethod + NumGears +
+TransLockup + TransCreeperGear + DriveDesc + IntakeValvePerCyl + ExhaustValvesPerCyl +
+CarlineClassDesc + VarValveTiming + VarValveLift
+fit.min.forward <- stepAIC( fit.min, scope=form, "forward")
+fit.min.forward <- stepAIC( fit.min, scope=form, direction="forward")
+summary(fit.min.forward)
+fit.full.backward <- stepAIC(fit.full, scope= ~ 1, direction = "backward" )
+coef(fit.min.forward)
+coef(fit.full.backward)
+a = coef(fit.full.backward)
+b = coef(fit.min.forward)
+names(a)
+names(b)
+summary(fit.min.forward)
+.Options  %>% names
+?chooseCRANmirror
+setRepositories()
+options("repos")
+getOption("repos")
+q()
+cor(1:10, rnorm(10))
+?cor
+fe
+fe[-FE]
+fe[,-FE]
+names(FE)
+names(fe)
+iris
+iris[,-5]
+iris[,-5]  %>% cor()
+f <- function(x) 50.5 - 4.52 * x
+curve( f, 0,5 )
+fit.fe
+?stat_function
+fe
+lm( FE ~ EngDisp )
+lm( FE ~ EngDisp, fe )
+fe  %>% names
+lm( FE ~ EngDispl, fe )
+lm( FE ~ (EngDispl)^2, fe )
+lm( FE ~ EngDispl + EngDispl^2, fe )
+lm( FE ~ EngDispl + EngDispl^2, fe )  %>% summary()
+lm( FE ~ 1 + EngDispl^2, fe )  %>% summary()
+lm( FE ~ 1 + EngDispl^2 + NumCyl, fe )  %>% summary( )
+lm( FE ~ 1 + EngDispl^2 + NumCyl^2, fe )  %>% summary( )
+lm( FE ~ 1 + EngDispl +  NumCyl + EngDispl:NumCyl, fe )  %>% summary( )
+lm( FE ~ 1 + ( EngDispl +  NumCyl ) ^ 2, fe )  %>% summary( )
+lm( FE ~ 1 + ( EngDispl +  NumCyl + NumGears ) ^ 2, fe )  %>% summary( )
+?lm
+fe
+cars2010
+fit$fitted.values
+fit.2010 <- lm( FE ~ EngDispl, data=cars2010 )
+rmse( cars2010$FE, fit.2010$fitted.values)
+rmse <- function(y,yhat) {
+(y - yhat)^2 %>% mean %>% sqrt
+}
+rmse( cars2010$FE, fit.2010$fitted.values)
+rmse( predict(fit.2010, cars2011), fit.2010$fitted.values )
+rmse( predict(fit.2010, cars2011), fit.2011$FE )
+rmse( predict(fit.2010, cars2011), cars2011$FE )
+fit.2010 <- lm( FE ~ ., data=cars2010 )
+fit.2010  %>% summary()
+fit.min <- lm( FE ~ . , fe )
+fit.min <- lm( FE ~ 1, fe )
+fit.min
+fe$FE  %>% mean
+?stepAIC
+fit
+fit.min
+stepAIC( fit.min, scope = ~ 1 + EngDispl + NumCyl, direction = "forward" )
+library(MASS)
+names(fe)
+stepAIC( fit.min, scope = ~ 1 + EngDispl + NumCyl + Transmission, direction = "forward" )
+stepAIC( fit.min, scope = ~ ., direction = "forward" )
+fe  %>% names  %>% cat( sep=" + " )
+form <- ~ EngDispl + NumCyl + Transmission + AirAspirationMethod + NumGears + TransLockup + TransCreeperGear + DriveDesc + IntakeValvePerCyl + ExhaustValvesPerCyl + CarlineClassDesc + VarValveTiming + VarValveLift
+stepAIC( fit.min, scope = form, direction = "forward" )
+stepAIC( fit.min, scope = form, direction = "forward" ) -> fit.min.forward
+summary(fit.min.forward)
+stepAIC( fit.min.forward, scope = ~ 1, direction = "backward")
+```
+stepAIC( fit.min.forward, scope = ~ 1, direction = "backward")
+stepAIC( fit.min.forward, scope = ~ 1, direction = "backward") -> fit.min.forward.backward
+fit.full <- lm( FE ~ ., fe )
+stepAIC( fit.full, score = ~ 1, direction = "backward")
+stepAIC( fit.full, score = ~ 1, direction = "backward") -> fit.full.backward
+stepAIC( fit.full, score = ~ 1, direction = "both") -> fit.full.backward
+stepAIC( fit.full, score = ~ 1, direction = "both", trace = TRUE ) -> fit.full.backward
+?trace
+?stepAIC
+stepAIC( fit.full, scope = ~ 1, direction = "both", trace = TRUE ) -> fit.full.backward
+stepAIC( fit.full, scope = ~ 1, direction = "both", trace = 10 ) -> fit.full.backward
+coef(fit.min)
+?AIC
+fit.min.forward  %>% summary()
+savehistory("../class/03-logistic-regression/console-output.txt")
