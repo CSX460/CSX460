@@ -48,9 +48,20 @@ Write a function f(x) to accept an integer vector, and returns a vector with tho
 
 ### Solution
 
-```{r}
-f <- function(x) {
-  # ...
-  
-}
-```
+ for (x in 1:20) {
+     if (x %% 15 == 0) {
+         print(paste("Fizz Buzz"))
+         }
+         else if (x %% 3 == 0) {
+             print(paste("Fizz"))
+         }
+         else if (x %% 5 == 0) {
+             print(paste("Buzz"))
+         }
+         else {
+             print(x)
+         }
+ next
+ print(x)
+ }
+ 
