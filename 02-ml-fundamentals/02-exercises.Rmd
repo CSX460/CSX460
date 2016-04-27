@@ -36,7 +36,7 @@ Hint: See `?cars2010`
 - After the **Fuel Economy** data is loaded, combine three data sets into one data set. (Note: The name `dat` is very often used in these situations, `data` is a reserved R word.)  
 
 ```{r}
-dat <- bind_rows( cars2010, cars2011, cars2012)    # Define 
+dat <- bind_rows( cars2010, cars2011, cars2012)    # combine data sets for all years and store in dat
 ```
 
 
@@ -50,7 +50,18 @@ naive_guess <- mean(dat$FE)
 - plot FE (Fuel Econonomy) vs. EngDisp. Plot the naive guess.
 
 ```{r}
-# ... ggplot2  
+# ... ggplot2
+qplot( y=dat$FE, x=dat$EngDispl ) #quick plot of Fuel Efficiency and Engine Displacement
+qplot( y=dat$FE, x=dat$EngDispl ) + geom_hline(yintercept=naive_guess) #quick plot with mean line (i.e. naive guess)
+set.seed(314) # create a random set of 314 numbers
+samp <- dat %>% sample_n(10) #create a sample set samp of 10 random rows from the dat dataset
+samp
+gg <- samp %>%
+ggplot( aes(x=EngDispl,y=FE) ) +
+geom_point(size=2.5) +
+scale_x_continuous( limits=c(0,10) )
+gg
+gg + geom_hline(yintercept=naive_guess, color="red")
 ```
 
 - Sample 10 observations from `dat`
