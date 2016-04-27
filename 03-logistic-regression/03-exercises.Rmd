@@ -57,14 +57,19 @@ Using Fuel Economy data set from the **AppliedPredictiveModeling** Package.
 - USe MASS::StepAIC to improve the model using backward stepwise regression 
 
 ```{r}
-
  # Your work here
+fit.simp <- lm( EngDispl ~ FE, data=fe) #simplest possible model using lm
+plot(fit.simp)
+summary (fit.simp)
+frwdstep.reg <- stepAIC(fit.simp, direction=c("forward"))
+plot(frwdstep.reg)
+fit.full <- lm( EngDispl ~ ., data=fe) #full model using lm
+summary (fit.full)
+plot (fit.full)
 
 ```
 
 - Are they the same model? If not why?  Which is better?
-
-
 
 
 ## Logsitic and Inverse Logistic Transformation 
@@ -84,16 +89,34 @@ Using Fuel Economy data set from the **AppliedPredictiveModeling** Package.
 ```{r}
 
 logistic <- function(x) { 
-  ... # Your work here  
+  ... # Your work here
+
+#x <- c( -Inf:Inf )
+x <- c(-10:10)
+yintercept = 1
+slope = 0
+y <- 1 / (1 + exp((slope + yintercept*x)))
+
+#curve(qlogis(x),-10,10)
+#curve(dlogis(x),-10,10)
+#curve(logit(x))
+#plot(qnorm) #same as curve(logit(x))
+#plot(qlogis) #y at -4,+4
 }
 
-qplot( ... )
+qplot(x,y )
+
 
 logistic_inv <- function(y) { 
-  ... # Your work  
+  ... # Your work
+x <- c(-10:10)
+yintercept = 1
+slope = 0
+y <- exp((slope + yintercept*x)) / (1 + exp((slope + yintercept*x)))
+
 }
 
-qplot(...) 
+qplot(x,y) 
 
 ```
 
@@ -113,6 +136,24 @@ c(0,0.5,1) %>% logistic_inv
 Using the GermanCredit data from the **Caret** package/ UCI Machine Learning Library, create a model for `Class` ("Good" vs. "Bad" ). Show your model performance.  
 
 ```{r}
+library (magrittr)
+library (MASS)
+data(german_credit)
+gm <- tbl_df(german_credit)
+gm
+as.data.frame(gm)
+data(GermanCredit)
+lm(~ ., data=GermanCredit) # place data frame in table
+#find most significant predictors to use for model
+#summary(german_credit)
+#gm %>% data(german_credit)
+dat.train <- dplyr::sample_n(data(gm), 500) #Randomly sample of 500 rows from german_credit
+dat.test <- dplyr::sample_n(data(gm), 500) #Randomly sample of 500 rows from german_credit
+lm( Class ~ Amount, data=GermanCredit ) #produce a linear regression
+
+#Build model using Resampling via caret package
+
+#Build model using Resampling via caret package knn3 to assess proportions of neighbors
 
 
 ```
