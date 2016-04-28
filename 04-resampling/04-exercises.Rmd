@@ -1,0 +1,140 @@
+---
+title: "Sensitivity and Specificity"
+author: "Your Name Here"
+date: "October 5, 2015"
+output: html_document
+---
+
+
+## Readings
+
+***APM***
+
+- ***Chapter 5 Measuring Performance in Regression Models*** (esp. ***5.2 The Variance Bias Trade-Off***)  (5 pages)
+- ***Chapter 11 Measuring Performance in Classification Models*** (~20 pages)
+- ***Chapter 7.4 K-Nearest Neighbors (regression)*** (2 pages)
+- ***Chapter 13.5 K-Nearest Neighbors (classification)*** (3 pages)
+
+
+```{r, echo=FALSE, results='hide', warning=FALSE }
+packs <-  c('ggplot2', 'magrittr', 'dplyr', 'caret', 'AppliedPredictiveModeling')
+
+for( nm in packs ) { 
+  # message(nm)
+  if( ! nm  %in% installed.packages()[,1]  ) install.packages(nm)
+  library(nm, character.only = TRUE)
+}
+
+.. = NULL  # For Aesthetics
+
+```
+
+
+## EXERCISE 1: Resampling
+
+`x` is a random variable. We want to not only know what the `mean(x)` is but want to calculate the uncertainty of `mean(x)`.  Measuring the uncertainty requires repeated measurements of `mean(x)`.
+
+- Calculate the mean of `x`.
+- Calculte the `sd( mean(x) )` using the **using 10-fold cross-validation**.  Create your own folds, show your work. (An example is for the Bootstrap is given as a hint. )
+
+
+```{r}
+set.seed(1) 
+x <- runif(20,1,20)
+
+x_mean = mean(x)
+
+k=10
+
+# CROSS-VALIDATION
+# ... YOUR WORK HWEW
+
+sd_cv <- .. # YOUR ANSWER HERE
+
+
+# BOOTSTRAP (EXAMPLE)
+sd_boot <- sapply(1:k, function(i) sample(x,replace=TRUE) %>% mean ) %>% sd
+
+```
+
+
+- sd_cv   is: `r sd_cv`
+- sd_boot is: `r sd_boot`
+
+
+
+# Exercise 2: Binomial Metrics
+
+Here's a really simple Model of Versicolor iris based on the **iris** data :
+
+```{r}
+set.seed(1)
+data(iris)
+
+qplot( data=iris, x=Petal.Length, y=Sepal.Length, color=Species )
+
+# Create Dependent Variable
+iris$Versicolor <- 
+  ifelse( iris$Species == 'versicolor', "versicolor", "other" ) %>% as.factor
+iris$Species = NULL 
+
+wh <- sample.int( nrow(iris), size=nrow(iris)/2 )
+train <- iris[ wh,]
+test <- iris[ -wh, ]
+
+
+fit.glm <- glm( Versicolor ~ . - Sepal.Length, data=train, family=binomial )
+```
+
+
+Use the models to and write functions to calculate:
+
+* Prevalence 
+* Accuracy
+* Error Rate / Misclassification Rate
+* True Positive Rate  
+* False Positive Rate
+* True Negative Rate  
+* False Negative Rate 
+* Sensitivity 
+* Specificity 
+* Recall 
+* Precision
+
+The functions should take two logical vectors of the same length, `y` and `yhat`
+
+```{r}
+
+prevalence = function(y,yhat) {}
+accuracy   =  .. 
+error_rate = ..
+tpr = ..
+fpr = ..      # See Example
+tnr = ..
+sensitivity = ..
+specificity = ..
+recall = .. 
+precision = ..
+
+# EXAMPLE: fpr
+# The FPR is THE NUMBER OF FALSE POSITIVES / NEGATIVES (TN+FP)
+
+threshold = 0.5 
+y = test$Versicolor == 'versicolor'
+yhat = predict(fit.glm, test, type="response") > threshold
+
+
+fpr = function(y,yhat)
+  sum(y & (y != yhat) ) / # FP
+  sum(! y)                # N
+
+fpr(y,yhat)
+
+```
+
+- What is wrong with the modeling approach used?
+
+
+
+
+
