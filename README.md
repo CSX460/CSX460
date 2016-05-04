@@ -72,11 +72,14 @@ This provides a session by session overview of CS-X460 (Practical Machine Learni
 
 ### 1. Introduction to R, setting up the ML developers environment
 
-- Installing R/R Studio
-- Using git/Github
+- Welcome 
+- Class Book, Materials, etc.
+- Setting up your environment
+  - Installing R/R Studio
+  - Installing git and using Github
 - Installing packages from CRAN and Github  
 - Overview of Maching Learning 
-- Building First Models
+
 
 Reading:
 - Chapters 1-2 of **Applied Predictive Modeling**
@@ -85,8 +88,9 @@ Exercise(s):
 - Finish in-class exercises
 
 
-### 2. Fundamentals of Machine Learning
+### 2. Fundamentals of Machine Learning / Linear Regression
 
+- Building First Models
 - Supervised, unsupervised, and semi-supervised 
 - Regression and classification
 - Measuring model error(s)
@@ -95,32 +99,47 @@ Exercise(s):
 - Data processing 
 
 Reading:
--
+- **APM** Chapters 3.2-3.7, skim 3.8, Chapters 6.2 and 6.3   
+- Optional:
+  - [Introduction to dplyr](https://cran.r-project.org/web/packages/dplyr/vignettes/introduction.html)
+  - [Introduction to data.table](https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.pdf)
+
+R Packages:
+- General awesomeness: magrittr
+- Reading data: readr, data.table::fread
+  - From the web: httr, rvest
+- Changing data orientation: tidyr
+- Data Manipulation: dplyr, data.table
+
 
 Exercise(s):
-- 
+- Finish in-class exercises
 
 
-### 3. Linear Regression 
+### 3. Linear Regression / Logistic Regression
 
-- OLS Regression
-- Data partitioning
-- Model evaluation and tuning 
-- Exercises
+Reading;
+- **APM** Chapter 4 "Over Fitting and Model Tuning"
+- **APM** Chapter 12.2 "Logisitic Regression""
 
-Reading: 
+Exercise(s):
+- Finish in-class exercises
+
+
+### 4. Logistic Regression / Classification Errors
+
+#### READING: 
+
+***APM***
+
+- ***Chapter 5 Measuring Performance in Regression Models*** (esp. ***5.2 The Variance Bias Trade-Off***)  (5 pages)
+- ***Chapter 11 Measuring Performance in Classification Models*** (~20 pages)
+- ***Chapter 7.4 K-Nearest Neighbors (regression)*** (2 pages)
+- ***Chapter 13.5 K-Nearest Neighbors (classification)*** (3 pages)
 
 Exercise(s):
 
-
-### 4. Logistic Regression 
-
-- Logistic Regression
-- Exercises
-
-Reading:
-
-Exercise(s):
+- Finish in-class exercise(s)
 
 
 ### 5.	Advanced Techniques: Partitioning Methods

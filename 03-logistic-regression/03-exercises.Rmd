@@ -1,0 +1,188 @@
+---
+title: "03-exercises"
+author: "Your Name Here"
+date: "April 20, 2016"
+output: html_document
+---
+
+## Readings
+
+***APM***
+
+- Chapter 4 "Over Fitting and Model Tuning"
+- Chapter 12.2 "Logisitic Regression""
+
+
+## Miscellaneous
+
+I am still struggling with names ...
+
+- Please send me your picture
+
+
+## Assignment 
+
+Note: The following will set-up your environment for this exercise. If you get an error stating that the packages have not been found, you need to install those packages.
+
+
+```{r,echo=FALSE, warning=FALSE, message=FALSE}
+
+packs <-  c('AppliedPredictiveModeling', 'ggplot2', 'magrittr', 'dplyr', 'caret', 'MASS')
+
+for( nm in packs ) { 
+  # message(nm)
+  if( ! nm  %in% installed.packages()[,1]  ) install.packages(nm)
+  library(nm, character.only = TRUE)
+}
+
+# Load data set into environment
+data(FuelEconomy)     # See ?cars2010
+fe <- dplyr::bind_rows(cars2010, cars2011, cars2012)    # Define Da
+
+
+data("GermanCredit")  # see GermanCredit
+
+... = NULL  # Needed for aesthetics 
+
+```
+
+
+## StepAIC
+
+
+Using Fuel Economy data set from the **AppliedPredictiveModeling** Package.
+- fit the simplest possible model using lm
+- Use MASS::StepAIC to improve the model using forward stepwise regression
+- Fit the "full" model using lm
+- USe MASS::StepAIC to improve the model using backward stepwise regression 
+
+```{r}
+
+form <- ~ EngDispl + NumCyl + Transmission + AirAspirationMethod + NumGears + TransLockup + TransCreeperGear + DriveDesc + IntakeValvePerCyl + ExhaustValvesPerCyl + CarlineClassDesc + VarValveTiming + VarValveLift
+
+ # Your work here
+ fit.min <- lm( FE ~ 1, fe )
+
+ 
+ stepAIC( fit.min.forward, scope = ~ 1, direction = "backward")
+ 
+ 
+ fit.full <- lm( FE ~ ., fe )
+ stepAIC( fit.full, score = ~ 1, direction = "backward")
+```
+
+- Are they the same model? If not why?  Which is better? JUstify your answer.
+
+
+
+## Logsitic and Inverse Logistic Transformation 
+
+- Write an R function for the logistic function. The function should accept a `numeric` vector with values `[-Inf,Inf]` and produce a numeric vector in the the range `[0,1]`.
+
+- Plot the logistic function from  `[-10,10]`
+
+- Write a R function for the inverse logistic function. The function should accept a `numeric` vector with values `[0,1]` and prodcuce a numeric vector in the range `[-Inf,Inf]`
+
+- Plot the Inverse Logistic function from `[0,1]`
+
+
+**Hint:** For plotting curves see `?graphics::curve` or `?ggplot2::stat_function`
+
+
+```{r}
+
+logistic <- function(x) { 
+  ... # Your work here  
+}
+
+qplot( ... )
+
+logistic_inv <- function(y) { 
+  ... # Your work  
+}
+
+qplot(...) 
+
+```
+
+**NOTE"** These functions are quite handy, in evaluating logistic regression results. You may want to save these functions in your own package.  
+
+```{r}
+# DO NOT EDIT
+c(-Inf,0,Inf) %>% logistic
+
+c(0,0.5,1) %>% logistic_inv
+
+```
+
+
+## German Credit Model
+
+Using the GermanCredit data from the **Caret** package/ UCI Machine Learning Library, create a model for `Class` ("Good" vs. "Bad" ). Show your model performance.  
+
+```{r}
+
+fit.min.forward
+```
+
+
+
+## Iterative Correlated Feature Removal 
+
+- Implement Kuhn's iterative feature removal function described in **APM** Section 3.5, page 47
+
+
+
+## Synthetic Data (Optional)
+
+Sometimes it is useful to "synthesize" feature data for to understand how a certain model behaves. 
+Sythesize the following features 1000-element vectors: 
+
+- x1: a normally distributed variable with `mean = 20` and standard deviation = 20 (`sd=8`).
+- x2: a log-normally distributed feature with `meanlog = 1`, `sdlog=1.2`
+- x3: a uniformly distributed feature with `min=0` and `max=50`. 
+
+```{r}
+nsamples = 20
+
+x1 <- rnorm(nsamples,20,20)  
+x2 <- rlnorm(nsamples, meanlog=1, sdlog = 1.2)
+x3 <- runif(nsamples,0,50)
+
+```
+
+Next synthesis a response, `y` using the betas provided and an intercept that is normally distributed at 20 with standard deviation of 2. (**Hint:**  The betas thought of can be a vector or matrix)
+
+
+
+```{r}
+
+beta0 <- rnorm(nsamples,0,15)  # intercept!
+beta1 <- 2.3
+beta2 <- 4
+beta3 <- 7
+
+betas <- matrix( c(2.5, 4, 7), nrow=1  )  # 1x4 matrix
+
+# x0 <- rep(1,nsamples) 
+
+X  <- cbind(x1,x2,x3)  # 1000x4
+
+y <- betas %*% t(X) %>% t
+y <- y + beta0
+
+qplot(y)
+dat <- data.frame(y,X)
+
+fit <- lm( y ~ . , dat )
+
+coef(fit)
+
+fit
+```
+
+- Did you recover the betas? 
+- Is the model good?
+- What happens if increase the value of `nsamples`? Decrease it?
+- What transformations would you apply to x1? x2? x3? 
+
