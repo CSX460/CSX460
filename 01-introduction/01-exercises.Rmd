@@ -1,56 +1,62 @@
 ---
-title: "01-exercises"
-author: "Christopher Brown"
-date: "April 6, 2016"
+title: "Assignment 1"
+author: "Octavio Suarez Munist"
+date: "April 11, 2016"
 output: html_document
 ---
 
-
-## Exercise 1:
-
-Write a function (f) that takes a vector of numbers, **x**, and returns a vector of numbers such that each element containing the product of every element of x except the element of x with the same index. 
-
-
-### Example 
-
-    > x <- c( 1, 5, 2, 8 ) 
-    > f(x) 
-    [1] 80 16 40 10
-    # 5*2*8, 1*2*8, 1*5*8, 1*2*5  
-
-
-### Solution 
-
-```{r}
-f <- function(x) {
-  
-  # ...
-  
-}
-
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
 ```
-    
+
+# Assigment 1 CSX460 Spring 2016
 
 
-## Exercise 2
+## Problem 1
 
-Write a function f(x) to accept an integer vector, and returns a vector with those numbers … except for: 
-   multiples of 3 = “Fizz” 
-   multiples of 5 = “Buzz”. 
-   multiples of 3 and 5 = “FizzBuzz”
-   
-### Example
+### R Code
+```
+myf <- function(x) {
 
-    > x <- 1:20
-    > f(1:20) 
-    # 1 2 Fizz 4 Buzz Fizz 7 8 Fizz Buzz 11 Fizz 13 14 FizzBuzz 16 17 Fizz 19 Buzz
-
-
-### Solution
-
-```{r}
-f <- function(x) {
-  # ...
-  
+  return(prod(ifelse(x==0,1,x))/ifelse(x==0,1,x))
 }
 ```
+
+### Output
+> x <- 0:6
+
+> myf(x)
+
+[1] 720 720 360 240 180 144 120
+
+
+
+## Problem 2
+
+It could be a bit more readable, but too many years doing C...
+
+###R Code
+```
+myfizzbuzz <- function(x) {
+  
+  return(
+    ifelse((x %% 5==0) & (x %% 3==0) ,"FizzBuzz",
+      ifelse((x %% 3==0),"Fizz",
+        ifelse((x %% 5==0),"Buzz",x)
+      )
+    )
+  )
+}
+```
+
+### Output
+> x <- 0:30
+
+> myfizzbuzz(x)
+
+ [1] "FizzBuzz" "1"        "2"        "Fizz"     "4"        "Buzz"    
+ [7] "Fizz"     "7"        "8"        "Fizz"     "Buzz"     "11"      
+[13] "Fizz"     "13"       "14"       "FizzBuzz" "16"       "17"      
+[19] "Fizz"     "19"       "Buzz"     "Fizz"     "22"       "23"      
+[25] "Fizz"     "Buzz"     "26"       "Fizz"     "28"       "29"      
+[31] "FizzBuzz"

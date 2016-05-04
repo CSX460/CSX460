@@ -1,9 +1,11 @@
 ---
-title: "02-exercises"
-author: "Christopher Brown"
-date: "April 13, 2016"
+title: "Assignment 2 CSX460 Spring 2016"
+author: "Octavio Suarez Munist"
+date: "April 19, 2016"
 output: html_document
 ---
+
+
 
 This exercise uses the **Fuel Economy** data set from the **AppliedPredicitiveModeling** package.
 
@@ -21,8 +23,7 @@ for( nm in packs ) {
 }
 
 # Load data set into environment
-data(FuelEconomy)
-... = NULL  # Needed for aesthetics 
+dat <-data(FuelEconomy) # Needed for aesthetics ??
 
 ```
 
@@ -35,8 +36,8 @@ Hint: See `?cars2010`
 
 - After the **Fuel Economy** data is loaded, combine three data sets into one data set. (Note: The name `dat` is very often used in these situations, `data` is a reserved R word.)  
 
-```{r}
-dat <- bind_rows( cars2010, cars2011, cars2012)    # Define 
+```{r}    
+dat <- rbind(cars2010,cars2011,cars2012) # Define 
 ```
 
 
@@ -50,7 +51,7 @@ naive_guess <- mean(dat$FE)
 - plot FE (Fuel Econonomy) vs. EngDisp. Plot the naive guess.
 
 ```{r}
-# ... ggplot2  
+ggplot (data=dat ,aes(x=EngDispl, y=FE))+geom_point()+geom_hline(aes(yintercept=naive_guess))+ stat_smooth(method="lm", se = FALSE)  
 ```
 
 - Sample 10 observations from `dat`
@@ -62,10 +63,10 @@ naive_guess <- mean(dat$FE)
 set.seed(314) 
 
 # Sample 
-samp <- dat %>% dplyr::sample_n(10) 
+samp <- dat[sample(nrow(dat), 10), ] 
 
 # Plots 
-...
+ggplot (data=samp ,aes(x=EngDispl, y=FE))+geom_point()+geom_hline(aes(yintercept=naive_guess))+ stat_smooth(method="lm", se = FALSE) 
 
 
 ```
@@ -85,15 +86,15 @@ All functions should accept two arguments:
 ```{r}
 
 rmse <- function(y,yhat) {
-  ( y - yhat )^2  %>% mean   %>% sqrt 
+  sqrt(mean((yhat-y)^2))
 }
 
 mae <- function(y, yhat) {
-  # ...
+  mean(abs(yhat-y))
 }
 
 medae <- function(y, yhat) { 
-  # ...
+  median(abs(yhat-y))
 }
 
 ```
@@ -109,7 +110,7 @@ Use these functions to evaluate the loss/performance of:
 
 
 ```{r}
-fit.2010 <- ... 
+fit.2010 <- lm(FE ~ EngDispl, data=cars2010) 
 ```
 
 - Use your functions to evaluate the training error
@@ -118,14 +119,13 @@ fit.2010 <- ...
 -- predict the FE for 2012. What is the RMSE errors associated with the predictions.
 
 ```{r}
+y.2010 <- predict(fit.2010,cars2010) 
+y.2011 <- predict(fit.2010,cars2011) 
+y.2012 <- predict(fit.2010,cars2012)
 
-y.2010 <- ... 
-y.2011 <- ... 
-y.2012 <- ...
-
-rmse.2010 <- ...
-rmse.2011 <- ...
-rmse.2012 <- ... 
+rmse.2010 <- rmse(cars2010$FE,y.2010)
+rmse.2011 <- rmse(cars2011$FE,y.2011)
+rmse.2012 <- rmse(cars2012$FE,y.2012) 
 
 ```
 
@@ -140,11 +140,16 @@ rmse.2012
 
 ## Exercise 4: 
 
-- Model the fuel economy (`FE`) as a function of `EngDispl`, `NumCyl` and `VarValve` using the `cars2011` data set.  
+- Model the fuel economy (`FE`) as a function of `EngDispl`, `NumCyl` and `VarValve???` using the `cars2011` data set.  
 - Provide betas
 
 
 ```{r}
-fit.2010 <- ...
-betas <- ...
+fit.dat <-lm(FE ~ EngDispl+ NumCyl + VarValveLift, data=cars2011)
+betas <- coef(fit.dat)
 ```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
