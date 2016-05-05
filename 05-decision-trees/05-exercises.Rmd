@@ -1,0 +1,76 @@
+---
+title: "05-exercises"
+author: "Your Name Here"
+date: "2016-05-xx"
+output: html_document
+---
+
+## Reading:
+- **APM** Chapter 8.1-8.5 "Regression Trees and Rule-Based Models" (25 pages)
+- **APM** Chapter 14.1-14.5 "Classification Trees and Rule-Based"  
+
+```{r, echo=FALSE, results='hide', warning=FALSE }
+packs <-  c('ggplot2', 'magrittr', 'dplyr', 'caret', 'AppliedPredictiveModeling')
+
+for( nm in packs ) { 
+  # message(nm)
+  if( ! nm  %in% installed.packages()[,1]  ) install.packages(nm)
+  library(nm, character.only = TRUE)
+}
+
+.. = NULL  # For Aesthetics
+
+```
+
+
+## Exercise 1: GermanCredit
+
+Revisit the GermanCredit data. Use `caret` to build models of `Class` using the following techniques:
+
+- glm
+- rpart
+- knn
+- party::ctree
+- randomForest
+- A method of your choice from the Caret Model List (you will need to install any dependencies)
+
+Save the caret objects with the names provided.
+
+```{r}
+
+# Your work here. 
+
+fit.glm <- ..
+fit.knn <- ..
+fit.rpart <- ..
+fit.rf <- ..
+fit.myown <- ..
+
+
+````
+
+
+- Compare the models using `caret::confusionMatrix`
+- Comparing the models Using the `pROC` packages
+  - create ROC curves for the models 
+  
+Show your work! 
+
+```{r}
+
+.. # YOUR WORK HERE
+
+```
+
+
+Q: Which models would you select based on these tools?
+
+Q: If you assume that a `Class=="bad""` is 10 more costly than `Class=="good"`, determine your threshold for the model of your choice.  Show your work.
+
+
+```{r}
+
+.. # YOUR WORK HERE
+
+
+```
