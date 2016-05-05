@@ -1,0 +1,223 @@
+---
+title: "GermanCredit Example"
+author: "Christopher Brown"
+date: "May 4, 2016"
+output: html_document
+---
+
+## German Credit Model
+
+```{r, echo=FALSE,render=FALSE}
+library(caret)
+library(magrittr)
+library(MASS)
+data(GermanCredit)
+gc <- GermanCredit
+```
+
+
+Using the GermanCredit data from the **Caret** package/ UCI Machine Learning Library, create a model for `Class` ("Good" vs. "Bad" ). Show your model performance.  
+
+## Step 1: Data Set
+
+`r gc %>% dim` 
+
+Rows: `r nrow(gc)`
+COls: `r ncol(gc)`
+Column Names: `r gc %>% names`
+
+Column Types: 
+
+```{r}
+library(hash)
+cls = gc %>% sapply(class) %>% hash %>% invert
+
+cls[['factor']]
+cls[['integer']]
+cls[['numeric']]
+```
+
+
+View the data
+```{r, render=FALSE} 
+gc %>% View
+```
+
+## Step 1: Response 
+
+The predictor is `Class`, see `?GermanCredit`. It is a factor and has values `Bad` and `Good`. This is a classification problem, though we might be interested in using the probabilities rather than the class predictions. Now, take a look at the distribution of values
+
+```{r}
+
+# dn <- c( gc$Class, rep(NA_character_,100) )
+table(dn, useNA="ifany")
+gc$Class %>% table( useNA="ifany" )
+qplot(gc$Class) + xlab("Class")
+
+```
+
+
+## Naive Guess:
+
+Since this is a classification model, we will take the most frequently occuring value:
+
+```{r}
+gc$Class %>% table %>% sort  %>% rev  %>% names  %>% extract2(1)
+```
+
+This occurs 70% of the time. Oh, okay. If we said all observation were good, we would
+be correct 70% of the time. Our model accuracy should be better than 70%
+
+
+## Find a single good predictor:
+
+Intuition tells me that `Amount` might be a good predictor. Let's look:
+
+
+```{r}
+class(gc$Amount)
+var(gc$Amount)
+qplot(gc$Amount)  # positive, skewed
+qplot(gc$Amount %>% log %>% scale )  # Normalized
+```
+
+
+### Plot with response:
+
+```{r}
+ggplot( data=gc, aes(x=log(Amount), fill=Class)) + geom_histogram()
+```
+
+```{r}
+fit <- glm( Class ~  Amount, data=gc, family=binomial )
+
+# Seems to work, let's try caret
+# 
+
+ctrl <- trainControl( method="boot", number=5
+                      , classProb=TRUE, savePrediction=TRUE )
+
+fit <- train(Class ~ Amount, data=gc, method="glm", family="binomial", trControl=ctrl)
+
+fit   # Caret output
+fit$finalModel  %>% summary  # Model output
+fit  %>% confusionMatrix( positive="Bad")  # Confusion Matrix
+
+
+# CONFUSION MATRIX
+table(fit$pred$pred, fit$pred$obs) %>% confusionMatrix()
+
+```
+
+Hmmm. Accuracy is about the same as the naive guess. Accuracy is not good. `Kappa < 0.30`. Therefore this is not a strong predictor, but at least the sign is correct and it is significant.  Passes the test.
+
+IN theory, this works!
+
+
+### Apply Transformations 
+
+`Amount` was skewed. We might be able to improve it. `log`?  `sqrt`?  `scale`
+ Nope. Leave unchanged for now.
+
+
+## Add `Duration`
+
+```{r}
+class(gc$Duration)
+var(gc$Duration)
+qplot(gc$Duration)  # Fairly uniform
+```
+
+```{r}
+fit <- train( Class ~ Amount + Duration, data=gc, trControl=ctrl
+              , method="glm", family="binomial" )
+
+fit   # Caret output
+fit$finalModel  %>% summary  # Model output
+fit  %>% confusionMatrix( positive="Bad")  # Confusion Matrix
+
+table(fit$pred$pred, fit$pred$obs) %>% confusionMatrix()
+
+```
+
+Performance got worse! This is going to be complex.  
+
+
+
+## Add full model 
+
+Fit the full
+
+```{r}
+set.seed(1)
+fit <- train( Class ~ ., data=gc, trControl=ctrl
+              , method="glm", family="binomial" )
+
+
+
+
+fit   # Caret output
+fit$finalModel  %>% summary  # Model output
+table(fit$pred$pred, fit$pred$obs) %>% confusionMatrix()
+
+
+```
+
+## STEPAIC
+
+Use `stepAIC` as feature selection, but this takes a long time.
+
+```{r, render=FALSE, echo=TRUE, cache=TRUE}
+# fit.step <- fit <- 
+#   train( Class ~ ., data=gc, trControl=ctrl
+#          , method="glmStepAIC", family="binomial", direction="both")
+# save(fit.step, file="fit.step.RDS")
+```
+
+
+## Diagnostics
+
+```{r}
+library(pROC)
+roc <- roc(fit$pred$obs, fit$pred$Bad, auc=TRUE )
+roc %>% plot( print.auc=TRUE, grid=TRUE)
+
+```
+
+Okay, model is performing -- let's refine our features.
+
+
+## TRY OTHER METHODS
+
+```{r}
+fit.knn <- train( Class ~ ., data=gc, trControl=ctrl
+              , method="knn", tuneGrid=data.frame( k=c(40,50,60)))
+
+fit.rpart <- rpart( Class ~ . , data=gc, cp=0.02 )
+fit.rpart %>% maptree::draw.tree(nodeinfo = T ) 
+
+library(maptree)
+fit.rpart <- train( Class ~ ., data=gc, trControl=ctrl
+              , method="rpart", tuneLength=20) 
+fit.rpart
+
+fit.rpart$finalModel %>% draw.tree( )
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
