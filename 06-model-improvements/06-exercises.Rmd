@@ -1,0 +1,111 @@
+---
+title: "05-exercises"
+author: "Your Name Here"
+date: "2016-05-xx"
+output: html_document
+---
+
+## Reading:
+- **APM** Chapter 8.6 and 8.8 
+- **APM** Chapter 14.8 
+- **APM** Chapter 7.1 & 7.3 "Non-Linear Regression Models"
+- **APM** Chapter 13.2 & 13.4 "Non-Linear Classifcation Models"
+
+
+```{r,echo=FALSE}
+
+packs <-  c('AppliedPredictiveModeling', 'ggplot2', 'magrittr', 'dplyr')
+
+for( nm in packs ) { 
+  # message(nm)
+  if( ! nm  %in% installed.packages()[,1]  ) install.packages(nm)
+  library(nm, character.only = TRUE)
+}
+
+# Load data set into environment
+data(FuelEconomy)
+.. = NULL  # Needed for aesthetics 
+
+FE <- dplyr::bind_rows(cars2010, cars2011, cars2012)    # Define Da
+
+```
+
+## Fuel Economy 
+
+
+This week we return to the Fuel Economy Data having learned much about model building. This assignment is to go through the process of building several regression models and pick the most predictive model. Use the `FE` data set created for you above.
+
+
+Start by making choosing a metric and making a naive guess of model performance: 
+
+Metric: _______________
+Naive Guess: _______________
+Expected Model Performance (based on Naive Guess): _______________
+
+Show your work below for the calculations
+
+```{r} 
+
+  
+naive_guess = ..
+
+err_naive_guess = ..
+
+```
+
+
+Based only your intuition, how low do your think you can get your metric: ___________
+
+
+## Examine your data
+
+ * Plot your response/outcome 
+
+ * Make a guess of a strong predictor: _________________  
+ * Plot your response vs your predictor. 
+
+```{r}
+
+.. # Your work here
+
+```
+
+
+
+## Build Simple Models
+
+Using **caret**, build a simple linear model and a simple tree model. 
+
+```{r}
+
+fit.lm <- .. # Your model here
+fit.rp <- .. # Your model here
+
+```
+
+
+What did you learn about the data from these models.
+
+
+
+## Build More Advanced Models
+
+Now refine your models. Use **caret** to build advanced models:
+- one that uses model averaging (bagging) 
+- one that uses boosting 
+
+```{r}
+
+# Your work here.
+fit.bag   <- .. # bagging model 
+
+fit.boost <- .. # boosting model
+
+
+```
+
+
+## Conclusion 
+
+Which model would you use and why?  Under different circumstances why would you choose one of the other models.
+

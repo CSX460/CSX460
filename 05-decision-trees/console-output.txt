@@ -1,0 +1,158 @@
+library(caret)
+library(magrittr)
+library(MASS)
+data(GermanCredit)
+gc <- GermanCredit
+gc %>% dim
+gc %>% names
+gc  %>% sapply(class)
+library(hash)
+cls = gc %>% sapply(class) %>% hash %>% invert
+cls
+cls[['factor']]
+cls[['integer']]
+cls[['numeric']]
+gc %>% View
+gc  %>% head(20)  %>% View
+gc$Class %>% table
+gc$Class %>% table( useNA="ifany" )
+qplot(gc$Class) + xlab("Class")
+dn <- c( gc$Class, rep(NA,100) )
+gc$Class %>% table( useNA="ifany" )
+table(dn)
+dn <- c( gc$Class, rep(NA_character_,100) )
+table(dn)
+table(dn, useNA="always")
+table(dn, useNA="ifany")
+qplot(gc$Class) + xlab("Class")
+gc$Class %>% table %>% sort  %>% rev  %>% names  %>% extract2(1)
+gc$Class %>% table %>% sort  %>% rev  %>% names  %>% extract2(1)
+gc$Class %>% table # %>% sort  %>% rev  %>% names  %>% extract2(1)
+gc$Class %>% table %>% sort # %>% rev  %>% names  %>% extract2(1)
+gc$Class %>% table %>% sort %>% rev  %>% names  %>% extract2(1)
+gc$Class %>% table %>% sort %>% rev  # %>% names  %>% extract2(1)
+gc$Class %>% table %>% sort %>% rev  %>% names # %>% extract2(1)
+gc$Class %>% table %>% sort %>% rev  %>% names %>% extract2(1)
+class(gc$Amount)
+var(gc$Amount)
+qplot(gc$Amount)  # positive, skewed
+qplot(gc$Amount %>% log %>% scale())  # Normalized
+qplot(gc$Amount %>% log )  # Normalized
+qplot(gc$Amount %>% scale )  # Normalized
+qplot(gc$Amount %>% log %>% scale )  # Normalized
+ggplot( data=gc, aes(x=log(Amount), fill=Class)) + geom_histogram()
+fit <- glm( Class ~  Amount, data=gc, family=binomial )
+fit  %>% summary()
+?trainControl
+fit <- train(Class ~ Amount, data=gc, method="glm", family="binomial", trControl=ctrl)
+fit   # Caret output
+names(fit)
+?train
+fit$finalModel
+fit$finalModel   %>% summary()
+fit$finalModel  %>% summary  # Model output
+fit  %>% confusionMatrix( positive="Bad")  # Confusion Matrix
+fit$pred  %>% head
+table(fit$pred$pred, fit$pred$obs)
+table(fit$pred$pred, fit$pred$obs) %>% confusionMatrix()
+fit$pred$Resample  %>% unique()
+table(fit$pred$pred, fit$pred$obs)
+fit$pred$rowIndex  %>% table  %>% sort  %>% rev
+fit$pred$rowIndex  %>% table  %>% sort
+class(gc$Duration)
+class(gc$Duration)
+var(gc$Duration)
+qplot(gc$Duration)  # Fairly uniform
+fit <- train( Class ~ Amount + Duration, data=gc, trControl=ctrl
+, method="glm", family="binomial" )
+fit   # Caret output
+fit$finalModel  %>% summary  # Model output
+fit  %>% confusionMatrix( positive="Bad")  # Confusion Matrix
+table(fit$pred$pred, fit$pred$obs) %>% confusionMatrix()
+set.seed(1)
+fit <- train( Class ~ ., data=gc, trControl=ctrl
+, method="glm", family="binomial" )
+fit   # Caret output
+fit$finalModel  %>% summary  # Model output
+table(fit$pred$pred, fit$pred$obs) %>% confusionMatrix()
+fit <- train( Class ~ ., data=gc, trControl=ctrl
+, method="rpart" )# , family="binomial" )
+fit
+plot(fit$finalModel)
+text(fit$finalModel)
+fit   # Caret output
+fit$finalModel  %>% summary  # Model output
+fit <- train( Class ~ ., data=gc, trControl=ctrl
+, method="glm", family="binomial" )
+fit   # Caret output
+fit$finalModel  %>% summary  # Model output
+table(fit$pred$pred, fit$pred$obs) %>% confusionMatrix()
+fit$pred
+fit$pred  %>% head
+table(fit$pred$pred, fit$pred$obs) %>% confusionMatrix()
+library(pROC)
+fit$pred
+fit$pred  %>% head
+roc <- roc(fit$pred$obs, fit$pred$Bad, auc=TRUE )
+roc
+roc %>% plot( print.auc=TRUE, grid=TRUE)
+? trainControl
+fit.knn <- train( Class ~ ., data=gc, trControl=ctrl
+, method="knn")
+fit.knn
+fit.knn <- train( Class ~ ., data=gc, trControl=ctrl
+, method="knn", tuneLength=7)
+fit.knn
+fit.knn <- train( Class ~ ., data=gc, trControl=ctrl
+, method="knn", tuneLength=data.frame( k=c(17,25,32)))
+fit.knn <- train( Class ~ ., data=gc, trControl=ctrl
+, method="knn", tuneGrid=data.frame( k=c(17,25,32)))
+fit.knn
+fit.knn <- train( Class ~ ., data=gc, trControl=ctrl
+, method="knn", tuneGrid=data.frame( k=c(40,50,60)))
+fit.knn
+data.frame( k=c(40,50,60))
+data.frame( k=c(40,50,60), k2=1:3)
+expand.grid( k=c(40,50,60), k2=1:3)
+fit.rpart <- train( Class ~ ., data=gc, trControl=ctrl
+, method="rpart")
+fit.rpart
+fit.rpart <- train( Class ~ ., data=gc, trControl=ctrl
+, method="rpart", tuneLength=10)
+fit.rpart
+?rpart
+?rpart.control
+fit.rpart <- rpart( Class ~ . , data=gc )
+fit.rpart
+summary(rpart
+)
+summary(rpart)
+summary(fit.rpart)
+library(maptree)
+fit.rpart  %>% draw.tree()
+library(rpart.tools)
+draw.tree(fit.rpart)
+draw.tree(fit.rpart, nodeinfo = F,print.levels = FALSE)
+fit.rpart <- rpart( Class ~ . , data=gc, cp=0.1 )
+fit.rpart %>% drawtree
+fit.rpart %>% drawtree
+fit.rpart %>% maptree::draw.tree()
+fit.rpart <- rpart( Class ~ . , data=gc, cp=0.1 )
+fit.rpart %>% maptree::draw.tree()
+fit.rpart
+fit.rpart <- rpart( Class ~ . , data=gc, cp=0.01 )
+fit.rpart %>% maptree::draw.tree()
+fit.rpart <- rpart( Class ~ . , data=gc, cp=0.02 )
+fit.rpart %>% maptree::draw.tree()
+fit.rpart %>% maptree::draw.tree(nodeinfo = T)
+fit.rpart %>% maptree::draw.tree(nodeinfo = T )
+fit.rpart <- train( Class ~ ., data=gc, trControl=ctrl
+, method="rpart", tuneLength=10)
+fit.rpart
+fit.rpart <- train( Class ~ ., data=gc, trControl=ctrl
+, method="rpart", tuneLength=20)
+fit.rpart
+fit.rpart$finalModel %>% draw.tree( )
+fit.rpart$pred  %>% head
+getwd()
+savehistory(file="instructor/lectures/05-recursive-partitioning/console-output.txt")
