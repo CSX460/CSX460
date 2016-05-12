@@ -2,7 +2,7 @@
 title: "05-exercises"
 author: "Octavio Suarez Munist"
 date: "2016-05-xx"
-output: 
+output:  
   html_document: 
     keep_md: yes
 ---

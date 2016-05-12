@@ -197,27 +197,27 @@ table(fit.glm$pred$pred, fit.glm$pred$obs) %>% confusionMatrix()
 ## 
 ##       
 ##         Bad Good
-##   Bad    36   21
-##   Good  509 1270
-##                                        
-##                Accuracy : 0.7113       
-##                  95% CI : (0.69, 0.732)
-##     No Information Rate : 0.7032       
-##     P-Value [Acc > NIR] : 0.2299       
-##                                        
-##                   Kappa : 0.0672       
-##  Mcnemar's Test P-Value : <2e-16       
-##                                        
-##             Sensitivity : 0.06606      
-##             Specificity : 0.98373      
-##          Pos Pred Value : 0.63158      
-##          Neg Pred Value : 0.71388      
-##              Prevalence : 0.29684      
-##          Detection Rate : 0.01961      
-##    Detection Prevalence : 0.03105      
-##       Balanced Accuracy : 0.52489      
-##                                        
-##        'Positive' Class : Bad          
+##   Bad    37   21
+##   Good  479 1249
+##                                           
+##                Accuracy : 0.72            
+##                  95% CI : (0.6986, 0.7408)
+##     No Information Rate : 0.7111          
+##     P-Value [Acc > NIR] : 0.2096          
+##                                           
+##                   Kappa : 0.0749          
+##  Mcnemar's Test P-Value : <2e-16          
+##                                           
+##             Sensitivity : 0.07171         
+##             Specificity : 0.98346         
+##          Pos Pred Value : 0.63793         
+##          Neg Pred Value : 0.72280         
+##              Prevalence : 0.28891         
+##          Detection Rate : 0.02072         
+##    Detection Prevalence : 0.03247         
+##       Balanced Accuracy : 0.52758         
+##                                           
+##        'Positive' Class : Bad             
 ## 
 ```
 
@@ -231,27 +231,27 @@ table(fit.rpart$pred$pred, fit.rpart$pred$obs) %>% confusionMatrix()
 ## 
 ##       
 ##          Bad  Good
-##   Bad   1536  2619
-##   Good  9004 23501
-##                                           
-##                Accuracy : 0.683           
-##                  95% CI : (0.6782, 0.6877)
-##     No Information Rate : 0.7125          
-##     P-Value [Acc > NIR] : 1               
-##                                           
-##                   Kappa : 0.0555          
-##  Mcnemar's Test P-Value : <2e-16          
-##                                           
-##             Sensitivity : 0.1457          
-##             Specificity : 0.8997          
-##          Pos Pred Value : 0.3697          
-##          Neg Pred Value : 0.7230          
-##              Prevalence : 0.2875          
-##          Detection Rate : 0.0419          
-##    Detection Prevalence : 0.1133          
-##       Balanced Accuracy : 0.5227          
-##                                           
-##        'Positive' Class : Bad             
+##   Bad   1187  2296
+##   Good  9333 23664
+##                                          
+##                Accuracy : 0.6812         
+##                  95% CI : (0.6764, 0.686)
+##     No Information Rate : 0.7116         
+##     P-Value [Acc > NIR] : 1              
+##                                          
+##                   Kappa : 0.0304         
+##  Mcnemar's Test P-Value : <2e-16         
+##                                          
+##             Sensitivity : 0.11283        
+##             Specificity : 0.91156        
+##          Pos Pred Value : 0.34080        
+##          Neg Pred Value : 0.71716        
+##              Prevalence : 0.28838        
+##          Detection Rate : 0.03254        
+##    Detection Prevalence : 0.09548        
+##       Balanced Accuracy : 0.51219        
+##                                          
+##        'Positive' Class : Bad            
 ## 
 ```
 
@@ -264,27 +264,27 @@ table(fit.rf$pred$pred, fit.rf$pred$obs) %>% confusionMatrix()
 ## 
 ##       
 ##        Bad Good
-##   Bad  193  360
-##   Good 374  902
-##                                           
-##                Accuracy : 0.5987          
-##                  95% CI : (0.5758, 0.6213)
-##     No Information Rate : 0.69            
-##     P-Value [Acc > NIR] : 1.0000          
-##                                           
-##                   Kappa : 0.0555          
-##  Mcnemar's Test P-Value : 0.6313          
-##                                           
-##             Sensitivity : 0.3404          
-##             Specificity : 0.7147          
-##          Pos Pred Value : 0.3490          
-##          Neg Pred Value : 0.7069          
-##              Prevalence : 0.3100          
-##          Detection Rate : 0.1055          
-##    Detection Prevalence : 0.3024          
-##       Balanced Accuracy : 0.5276          
-##                                           
-##        'Positive' Class : Bad             
+##   Bad  191  384
+##   Good 376  915
+##                                         
+##                Accuracy : 0.5927        
+##                  95% CI : (0.57, 0.6151)
+##     No Information Rate : 0.6961        
+##     P-Value [Acc > NIR] : 1.0000        
+##                                         
+##                   Kappa : 0.0411        
+##  Mcnemar's Test P-Value : 0.7996        
+##                                         
+##             Sensitivity : 0.3369        
+##             Specificity : 0.7044        
+##          Pos Pred Value : 0.3322        
+##          Neg Pred Value : 0.7088        
+##              Prevalence : 0.3039        
+##          Detection Rate : 0.1024        
+##    Detection Prevalence : 0.3081        
+##       Balanced Accuracy : 0.5206        
+##                                         
+##        'Positive' Class : Bad           
 ## 
 ```
 
@@ -297,27 +297,27 @@ table(fit.myown$pred$pred, fit.myown$pred$obs) %>% confusionMatrix()
 ## 
 ##       
 ##         Bad Good
-##   Bad    42   32
-##   Good  492 1246
-##                                           
-##                Accuracy : 0.7108          
-##                  95% CI : (0.6893, 0.7316)
-##     No Information Rate : 0.7053          
-##     P-Value [Acc > NIR] : 0.3132          
-##                                           
-##                   Kappa : 0.0716          
-##  Mcnemar's Test P-Value : <2e-16          
-##                                           
-##             Sensitivity : 0.07865         
-##             Specificity : 0.97496         
-##          Pos Pred Value : 0.56757         
-##          Neg Pred Value : 0.71692         
-##              Prevalence : 0.29470         
-##          Detection Rate : 0.02318         
-##    Detection Prevalence : 0.04084         
-##       Balanced Accuracy : 0.52681         
-##                                           
-##        'Positive' Class : Bad             
+##   Bad    32   21
+##   Good  494 1289
+##                                         
+##                Accuracy : 0.7195        
+##                  95% CI : (0.6983, 0.74)
+##     No Information Rate : 0.7135        
+##     P-Value [Acc > NIR] : 0.2948        
+##                                         
+##                   Kappa : 0.0613        
+##  Mcnemar's Test P-Value : <2e-16        
+##                                         
+##             Sensitivity : 0.06084       
+##             Specificity : 0.98397       
+##          Pos Pred Value : 0.60377       
+##          Neg Pred Value : 0.72294       
+##              Prevalence : 0.28649       
+##          Detection Rate : 0.01743       
+##    Detection Prevalence : 0.02887       
+##       Balanced Accuracy : 0.52240       
+##                                         
+##        'Positive' Class : Bad           
 ## 
 ```
 
@@ -332,8 +332,8 @@ roc(fit.glm$pred$obs, fit.glm$pred$Bad, auc=TRUE )  %>% plot( print.auc=TRUE, gr
 ## Call:
 ## roc.default(response = fit.glm$pred$obs, predictor = fit.glm$pred$Bad,     auc = TRUE)
 ## 
-## Data: fit.glm$pred$Bad in 545 controls (fit.glm$pred$obs Bad) > 1291 cases (fit.glm$pred$obs Good).
-## Area under the curve: 0.554
+## Data: fit.glm$pred$Bad in 516 controls (fit.glm$pred$obs Bad) > 1270 cases (fit.glm$pred$obs Good).
+## Area under the curve: 0.5542
 ```
 
 ```r
@@ -348,8 +348,8 @@ roc(fit.rpart$pred$obs, fit.rpart$pred$Bad, auc=TRUE )  %>% plot( print.auc=TRUE
 ## Call:
 ## roc.default(response = fit.rpart$pred$obs, predictor = fit.rpart$pred$Bad,     auc = TRUE)
 ## 
-## Data: fit.rpart$pred$Bad in 10540 controls (fit.rpart$pred$obs Bad) < 26120 cases (fit.rpart$pred$obs Good).
-## Area under the curve: 0.4617
+## Data: fit.rpart$pred$Bad in 10520 controls (fit.rpart$pred$obs Bad) < 25960 cases (fit.rpart$pred$obs Good).
+## Area under the curve: 0.4698
 ```
 
 ```r
@@ -363,8 +363,8 @@ roc(fit.rf$pred$obs, fit.rf$pred$Bad, auc=TRUE )  %>% plot( print.auc=TRUE, grid
 ## Call:
 ## roc.default(response = fit.rf$pred$obs, predictor = fit.rf$pred$Bad,     auc = TRUE)
 ## 
-## Data: fit.rf$pred$Bad in 567 controls (fit.rf$pred$obs Bad) > 1262 cases (fit.rf$pred$obs Good).
-## Area under the curve: 0.5479
+## Data: fit.rf$pred$Bad in 567 controls (fit.rf$pred$obs Bad) > 1299 cases (fit.rf$pred$obs Good).
+## Area under the curve: 0.5224
 ```
 
 ```r
@@ -378,8 +378,8 @@ roc(fit.myown$pred$obs, fit.myown$pred$Bad, auc=TRUE )  %>% plot( print.auc=TRUE
 ## Call:
 ## roc.default(response = fit.myown$pred$obs, predictor = fit.myown$pred$Bad,     auc = TRUE)
 ## 
-## Data: fit.myown$pred$Bad in 534 controls (fit.myown$pred$obs Bad) > 1278 cases (fit.myown$pred$obs Good).
-## Area under the curve: 0.5537
+## Data: fit.myown$pred$Bad in 526 controls (fit.myown$pred$obs Bad) > 1310 cases (fit.myown$pred$obs Good).
+## Area under the curve: 0.5438
 ```
 
 
