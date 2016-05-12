@@ -2,7 +2,9 @@
 title: "05-exercises"
 author: "Octavio Suarez Munist"
 date: "2016-05-xx"
-output: html_document
+output: 
+  html_document: 
+    keep_md: yes
 ---
 
 ## Reading:
@@ -83,9 +85,9 @@ roc(fit.myown$pred$obs, fit.myown$pred$Bad, auc=TRUE )  %>% plot( print.auc=TRUE
 
 Q: Which models would you select based on these tools?
 
-A: base on AUC, GLM is the best, with also the best Accuracy, but sensitivity is the worse of a bad lot. 
+A: base on AUC, GLM is the best, with also the second-best Accuracy, but sensitivity is the worse of a bad lot. 
 
-Q: If you assume that a `Class=="bad""` is 10 more costly than `Class=="good"`, determine your threshold for the model of your choice.  Show your work.
+Q: If you assume that a `Class=="bad""` is 10 more costly than `Class=="good"`, determine your threshold for the model of your choice.  
 
 A: First thought would be to lower threshold by a factor of 10, to 0.05. But maybe adjust for proportion of bad.
 
