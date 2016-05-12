@@ -1,0 +1,62 @@
+---
+title: "Assignment 1"
+author: "Octavio Suarez Munist"
+date: "April 11, 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Assigment 1 CSX460 Spring 2016
+
+
+## Problem 1
+
+### R Code
+```
+myf <- function(x) {
+
+  return(prod(ifelse(x==0,1,x))/ifelse(x==0,1,x))
+}
+```
+
+### Output
+> x <- 0:6
+
+> myf(x)
+
+[1] 720 720 360 240 180 144 120
+
+
+
+## Problem 2
+
+It could be a bit more readable, but too many years doing C...
+
+###R Code
+```
+myfizzbuzz <- function(x) {
+  
+  return(
+    ifelse((x %% 5==0) & (x %% 3==0) ,"FizzBuzz",
+      ifelse((x %% 3==0),"Fizz",
+        ifelse((x %% 5==0),"Buzz",x)
+      )
+    )
+  )
+}
+```
+
+### Output
+> x <- 0:30
+
+> myfizzbuzz(x)
+
+ [1] "FizzBuzz" "1"        "2"        "Fizz"     "4"        "Buzz"    
+ [7] "Fizz"     "7"        "8"        "Fizz"     "Buzz"     "11"      
+[13] "Fizz"     "13"       "14"       "FizzBuzz" "16"       "17"      
+[19] "Fizz"     "19"       "Buzz"     "Fizz"     "22"       "23"      
+[25] "Fizz"     "Buzz"     "26"       "Fizz"     "28"       "29"      
+[31] "FizzBuzz"

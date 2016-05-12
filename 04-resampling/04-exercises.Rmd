@@ -39,17 +39,17 @@ for( nm in packs ) {
 
 
 ```{r}
+
+
+# CROSS-VALIDATION
 set.seed(1) 
 x <- runif(20,1,20)
-
+x <-x[order(rnorm(20))]
 x_mean = mean(x)
 
 k=10
 
-# CROSS-VALIDATION
-# ... YOUR WORK HWEW
-
-sd_cv <- .. # YOUR ANSWER HERE
+sd_cv <- sapply(1:k, function(i) x [! x %in% x[(2*(i-1)+1):(2*i)] ]  %>% mean) %>% sd 
 
 
 # BOOTSTRAP (EXAMPLE)
@@ -78,7 +78,6 @@ iris$Versicolor <-
   ifelse( iris$Species == 'versicolor', "versicolor", "other" ) %>% as.factor
 iris$Species = NULL 
 
-wh <- sample.int( nrow(iris), size=nrow(iris)/2 )
 train <- iris[ wh,]
 test <- iris[ -wh, ]
 
@@ -105,16 +104,16 @@ The functions should take two logical vectors of the same length, `y` and `yhat`
 
 ```{r}
 
-prevalence = function(y,yhat) {}
-accuracy   =  .. 
-error_rate = ..
-tpr = ..
-fpr = ..      # See Example
-tnr = ..
-sensitivity = ..
-specificity = ..
-recall = .. 
-precision = ..
+prevalence =  function(y,yhat) {sum(y)/length(y) }
+accuracy   =  function(y,yhat) {sum(y==yhat)/length(y) } 
+error_rate =  function(y,yhat) {sum(y!=yhat )/length(y) }
+tpr =         function(y,yhat) {sum(y & (y == yhat) ) / sum(y)}
+# fpr = ..      # See Example
+tnr =         function(y,yhat) {sum(!y & (y == yhat) ) / sum(!y)}
+sensitivity = function(y,yhat) {sum(y==yhat & y==TRUE )/sum(y==TRUE)} 
+specificity = function(y,yhat) {sum(y==yhat & y==FALSE )/sum(y==FALSE)} 
+recall =      function(y,yhat) {sum(y & (y == yhat) ) / sum(y)} 
+precision =   function(y,yhat) {sum(yhat & (y == yhat) ) / sum(yhat)}
 
 # EXAMPLE: fpr
 # The FPR is THE NUMBER OF FALSE POSITIVES / NEGATIVES (TN+FP)
@@ -129,11 +128,19 @@ fpr = function(y,yhat)
   sum(! y)                # N
 
 fpr(y,yhat)
+prevalence(y,yhat)
+accuracy(y,yhat)
+error_rate(y,yhat)
+tpr(y,yhat)
+tnr(y,yhat)
+sensitivity(y,yhat)
+specificity(y,yhat)
+recall(y,yhat)
+precision(y,yhat)
 
 ```
 
 - What is wrong with the modeling approach used?
-
 
 
 

@@ -1,6 +1,6 @@
 ---
 title: "03-exercises"
-author: "Your Name Here"
+author: "Octavio Suarez Munist"
 date: "April 20, 2016"
 output: html_document
 ---
@@ -27,7 +27,7 @@ Note: The following will set-up your environment for this exercise. If you get a
 
 ```{r,echo=FALSE, warning=FALSE, message=FALSE}
 
-packs <-  c('AppliedPredictiveModeling', 'ggplot2', 'magrittr', 'dplyr', 'caret', 'MASS')
+packs <-  c('AppliedPredictiveModeling', 'ggplot2', 'magrittr', 'dplyr', 'caret')
 
 for( nm in packs ) { 
   # message(nm)
@@ -58,20 +58,23 @@ Using Fuel Economy data set from the **AppliedPredictiveModeling** Package.
 
 ```{r}
 
-form <- ~ EngDispl + NumCyl + Transmission + AirAspirationMethod + NumGears + TransLockup + TransCreeperGear + DriveDesc + IntakeValvePerCyl + ExhaustValvesPerCyl + CarlineClassDesc + VarValveTiming + VarValveLift
+fit.min <- lm( FE ~ 1, fe)
+stepAIC(fit.min, scope = ~ 1+ EngDispl + Transmission + NumCyl, direction = "forward")
 
- # Your work here
- fit.min <- lm( FE ~ 1, fe )
+# to get all predictors: fe  %>% names  %>%  cat(sep=" +")
 
- 
- stepAIC( fit.min.forward, scope = ~ 1, direction = "backward")
- 
- 
- fit.full <- lm( FE ~ ., fe )
- stepAIC( fit.full, score = ~ 1, direction = "backward")
+stepAIC(fit.min, scope = ~ + EngDispl +NumCyl +Transmission + +AirAspirationMethod +NumGears +TransLockup +TransCreeperGear +DriveDesc +IntakeValvePerCyl +ExhaustValvesPerCyl +CarlineClassDesc +VarValveTiming +VarValveLift, direction = "forward")
+
+fit.full <- lm( FE ~ ., fe)
+stepAIC(fit.full, score = ~ 1, direction = "backward")
+
+
 ```
 
-- Are they the same model? If not why?  Which is better? JUstify your answer.
+
+
+- Are they the same model? If not why?  Which is better?
+
 
 
 
@@ -122,7 +125,7 @@ Using the GermanCredit data from the **Caret** package/ UCI Machine Learning Lib
 
 ```{r}
 
-fit.min.forward
+
 ```
 
 
@@ -185,4 +188,3 @@ fit
 - Is the model good?
 - What happens if increase the value of `nsamples`? Decrease it?
 - What transformations would you apply to x1? x2? x3? 
-

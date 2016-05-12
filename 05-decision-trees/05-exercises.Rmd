@@ -1,8 +1,10 @@
 ---
 title: "05-exercises"
-author: "Your Name Here"
+author: "Octavio Suarez Munist"
 date: "2016-05-xx"
-output: html_document
+output:  
+  html_document: 
+    keep_md: yes
 ---
 
 ## Reading:
@@ -10,7 +12,7 @@ output: html_document
 - **APM** Chapter 14.1-14.5 "Classification Trees and Rule-Based"  
 
 ```{r, echo=FALSE, results='hide', warning=FALSE }
-packs <-  c('ggplot2', 'magrittr', 'dplyr', 'caret', 'AppliedPredictiveModeling')
+packs <-  c('ggplot2', 'magrittr', 'dplyr', 'caret', 'AppliedPredictiveModeling', 'pROC')
 
 for( nm in packs ) { 
   # message(nm)
@@ -40,14 +42,19 @@ Save the caret objects with the names provided.
 
 # Your work here. 
 
-fit.glm <- ..
-fit.knn <- ..
-fit.rpart <- ..
-fit.rf <- ..
-fit.myown <- ..
+data(GermanCredit)
+gc <- GermanCredit
+
+ctrl <- trainControl( method="boot", number=5, classProb=TRUE, savePrediction=TRUE )
+
+fit.glm <- train(Class ~ Amount, data=gc, method="glm", family="binomial", trControl=ctrl)
+fit.knn <- train(Class ~ Amount, data=gc, method="knn", tuneGrid=data.frame( k=c(40,50,60)))
+fit.rpart <- train(Class ~ Amount, data=gc, method="rpart",trControl=ctrl, tuneLength=20)
+fit.rf <- train(Class ~ Amount, data=gc, method="rf",trControl=ctrl)
+fit.myown <- train(Class ~ Amount, data=gc, method="bayesglm",trControl=ctrl)
 
 
-````
+```
 
 
 - Compare the models using `caret::confusionMatrix`
@@ -56,21 +63,38 @@ fit.myown <- ..
   
 Show your work! 
 
+NOTE: Not sure why KNN is failing; removing from analysis for now.
+
 ```{r}
 
-.. # YOUR WORK HERE
+table(fit.glm$pred$pred, fit.glm$pred$obs) %>% confusionMatrix()
+#table(fit.knn$pred$pred, fit.knn$pred$obs) %>% confusionMatrix()
+table(fit.rpart$pred$pred, fit.rpart$pred$obs) %>% confusionMatrix()
+table(fit.rf$pred$pred, fit.rf$pred$obs) %>% confusionMatrix()
+table(fit.myown$pred$pred, fit.myown$pred$obs) %>% confusionMatrix()
+
+roc(fit.glm$pred$obs, fit.glm$pred$Bad, auc=TRUE )  %>% plot( print.auc=TRUE, grid=TRUE)
+#roc(fit.knn$pred$obs, fit.knn$pred$Bad, auc=TRUE )  %>% plot( print.auc=TRUE, grid=TRUE)
+roc(fit.rpart$pred$obs, fit.rpart$pred$Bad, auc=TRUE )  %>% plot( print.auc=TRUE, grid=TRUE)
+roc(fit.rf$pred$obs, fit.rf$pred$Bad, auc=TRUE )  %>% plot( print.auc=TRUE, grid=TRUE)
+roc(fit.myown$pred$obs, fit.myown$pred$Bad, auc=TRUE )  %>% plot( print.auc=TRUE, grid=TRUE)
+
 
 ```
 
 
 Q: Which models would you select based on these tools?
 
-Q: If you assume that a `Class=="bad""` is 10 more costly than `Class=="good"`, determine your threshold for the model of your choice.  Show your work.
+A: base on AUC, GLM is the best, with also the second-best Accuracy, but sensitivity is the worse of a bad lot. 
+
+Q: If you assume that a `Class=="bad""` is 10 more costly than `Class=="good"`, determine your threshold for the model of your choice.  
+
+A: First thought would be to lower threshold by a factor of 10, to 0.05. But maybe adjust for proportion of bad.
 
 
 ```{r}
 
-.. # YOUR WORK HERE
+
 
 
 ```
