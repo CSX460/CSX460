@@ -1,0 +1,132 @@
+---
+title: "05-exercises"
+author: "Bo Wu
+date: "2016-05-11"
+output: html_document
+---
+
+## Reading:
+- **APM** Chapter 8.1-8.5 "Regression Trees and Rule-Based Models" (25 pages)
+- **APM** Chapter 14.1-14.5 "Classification Trees and Rule-Based"  
+
+```{r, echo=FALSE, results='hide', warning=FALSE }
+packs <-  c('ggplot2', 'magrittr', 'dplyr', 'caret', 'AppliedPredictiveModeling')
+
+for( nm in packs ) { 
+  # message(nm)
+  if( ! nm  %in% installed.packages()[,1]  ) install.packages(nm)
+  library(nm, character.only = TRUE)
+}
+
+.. = NULL  # For Aesthetics
+
+```
+
+
+## Exercise 1: GermanCredit
+
+Revisit the GermanCredit data. Use `caret` to build models of `Class` using the following techniques:
+
+- glm
+- rpart
+- knn
+- party::ctree
+- randomForest
+- A method of your choice from the Caret Model List (you will need to install any dependencies)
+
+Save the caret objects with the names provided.
+
+```{r}
+
+# Your work here. 
+
+data("GermanCredit")
+
+ctrl <- trainControl( method="boot", number=5, classProb=TRUE, savePrediction=TRUE )
+
+fit.glm <- train( Class ~ ., data=GermanCredit, trControl=ctrl, method ="glm", family="binomial")
+
+fit.knn <- train( Class ~ ., data=GermanCredit, trControl=ctrl, method="knn", tuneGrid=data.frame( k=c(40,50,60)))
+
+fit.rpart <- train( Class ~ ., data=GermanCredit, trControl=ctrl, method="rpart", cp=0.02)
+
+fit.rf <- train( Class ~ ., data=GermanCredit, trControl=ctrl, method="rf")
+
+
+fit.kernelpls <- train( Class ~ ., data=GermanCredit, trControl=ctrl, method="kernelpls")
+
+````
+
+
+- Compare the models using `caret::confusionMatrix`
+- Comparing the models Using the `pROC` packages
+  - create ROC curves for the models 
+  
+Show your work! 
+
+```{r}
+#ConfusionMatrix
+fit.glm$finalModel  %>% summary  # Model output
+table(fit.glm$pred$pred, fit.glm$pred$obs) %>% confusionMatrix()
+
+fit.knn$finalModel  %>% summary  # Model output
+table(fit.knn$pred$pred, fit.knn$pred$obs) %>% confusionMatrix()
+
+fit.rpart$finalModel  %>% summary  # Model output
+table(fit.rpart$pred$pred, fit.rpart$pred$obs) %>% confusionMatrix()
+
+fit.rf$finalModel  %>% summary  # Model output
+table(fit.rf$pred$pred, fit.rf$pred$obs) %>% confusionMatrix()
+
+fit.kernelpls$finalModel  %>% summary  # Model output
+table(fit.kernelpls$pred$pred, fit.kernelpls$pred$obs) %>% confusionMatrix()
+
+
+#ROC curves
+library(pROC)
+
+roc.glm <- roc(fit.glm$pred$obs, fit.glm$pred$Bad, auc=TRUE )
+roc.glm %>% plot( print.auc=TRUE, grid=TRUE)
+
+roc.knn <- roc(fit.knn$pred$obs, fit.knn$pred$Bad, auc=TRUE )
+roc.knn %>% plot( print.auc=TRUE, grid=TRUE)
+
+roc.rpart <- roc(fit.rpart$pred$obs, fit.rpart$pred$Bad, auc=TRUE )
+roc.rpart %>% plot( print.auc=TRUE, grid=TRUE)
+
+roc.rf <- roc(fit.rf$pred$obs, fit.rf$pred$Bad, auc=TRUE )
+roc.rf %>% plot( print.auc=TRUE, grid=TRUE)
+
+roc.kernelpls <- roc(fit.kernelpls$pred$obs, fit.kernelpls$pred$Bad, auc=TRUE )
+roc.kernelpls%>% plot( print.auc=TRUE, grid=TRUE)
+
+
+```
+
+
+Q: Which models would you select based on these tools?
+
+I would select randomforest and glm because they gave the highest AUC and Kappa values, and accuracy.
+
+Q: If you assume that a `Class=="bad""` is 10 more costly than `Class=="good"`, determine your threshold for the model of your choice.  Show your work.
+
+
+```{r}
+library(ROCR)
+data(ROCR.simple)
+#Using the glm model as my choice. 
+
+pred <- prediction( fit.glm$pred$Bad, fit.glm$pred$obs)
+perf <- performance ( pred,  "sens", "spec")
+plot(perf)
+
+cutoffs <- data.frame(cut=perf@alpha.values[[1]], specificity=perf@x.values[[1]], sensitivity=perf@y.values[[1]])
+
+cutoffs <- cutoffs[order(cutoffs$specificity, decreasing=TRUE),]
+
+#Since Bad is 10 more costly than Good, we want to make sensitivity 10 times more than speciticity. Specificity  = 0.09 and Sensitivity = 0.9
+
+head(subset(cutoffs, specificity < 0.09))
+
+#The threshold should be set at 0.065.
+```
