@@ -1,0 +1,132 @@
+---
+title: "06-exercises"
+author: "Octavio Suarez Munist"
+date: "2016-05-18"
+output: html_document
+---
+  
+  ## Reading:
+  - **APM** Chapter 8.6 and 8.8 
+- **APM** Chapter 14.8 
+- **APM** Chapter 7.1 & 7.3 "Non-Linear Regression Models"
+- **APM** Chapter 13.2 & 13.4 "Non-Linear Classifcation Models"
+
+
+```{r,echo=FALSE}
+
+packs <-  c('AppliedPredictiveModeling', 'ggplot2', 'magrittr', 'dplyr', 'Metrics','caret')
+
+for( nm in packs ) { 
+  # message(nm)
+  if( ! nm  %in% installed.packages()[,1]  ) install.packages(nm)
+  library(nm, character.only = TRUE)
+}
+
+# Load data set into environment
+data(FuelEconomy)
+
+
+FE <- dplyr::bind_rows(cars2010, cars2011)    # Train data set
+FE12 <- cars2012 # Test data set
+
+```
+
+## Fuel Economy 
+
+
+This week we return to the Fuel Economy Data having learned much about model building. This assignment is to go through the process of building several regression models and pick the most predictive model. Use the `FE` data set created for you above.
+
+
+Start by making choosing a metric and making a naive guess of model performance: 
+  
+  Metric: __RMSE_____
+Naive Guess: ____34.71 ___________
+Expected Model Performance (based on Naive Guess): _____11.31_______
+
+Show your work below for the calculations
+
+```{r} 
+
+
+naive_guess = mean(FE$FE)
+
+err_naive_guess = RMSE(FE12$FE,rep(34.71,nrow(FE12)))
+
+hist(FE$FE)
+
+```
+
+
+Based only on your intuition, how low do your think you can get your metric: ___Lookign at the histogram, the distribution looks normal, with some skewness. That, combined with the high predictablility of physics and engineering (versus human behavior, for example) mkaes me think this can belowqeed significanlty, to between 2 and 3 MPG. _____
+
+
+## Examine your data
+
+Scatter plot to look at EngDisp vs. NumCyl so I can select my predictor guess:
+```{r}
+ggplot(FE,aes(EngDispl,NumCyl)) + geom_point()
+```
+NumCyl would be my choice, but EngDispl is more continuous.Cleary, they do correlate highly.
+* Plot your response/outcome 
+
+* Make a guess of a strong predictor: _____EngDispl____  
+* Plot your response vs your predictor. 
+
+```{r}
+
+ggplot(FE,aes(EngDispl,FE)) + geom_point()
+
+```
+
+
+
+## Build Simple Models
+
+Using **caret**, build a simple linear model and a simple tree model. 
+
+```{r}
+
+ctrl <- trainControl( method="boot", number=5, savePrediction=TRUE )
+
+fit.lm <- train(FE ~ EngDispl, data=FE, method="glm", trControl=ctrl)
+rmse.lm <- RMSE(predict(fit.lm, FE12),FE12$FE)
+
+fit.rp <- train(FE ~ EngDispl, data=FE, method="rpart",trControl=ctrl, tuneLength=20)
+rmse.rp <- RMSE(predict(fit.rp, FE12),FE12$FE)
+
+```
+
+
+What did you learn about the data from these models.
+
+Both reduced the RMSE significantly (44% and 55%, respectively), but still far from my estimate.
+
+
+## Build More Advanced Models
+
+Now refine your models. Use **caret** to build advanced models:
+  - one that uses model averaging (bagging) 
+- one that uses boosting 
+
+```{r echo=FALSE, message=FALSE}
+
+
+# Your work here.
+ctrl <- trainControl( method="boot", savePrediction=TRUE )
+fit.bag   <- train(FE ~ ., method = 'treebag', data=FE, trControl=ctrl) 
+rmse.bag <-RMSE(predict(fit.bag, FE12),FE12$FE)
+
+ctrl <- trainControl( method="boot", savePrediction=TRUE )
+fit.boost <- train(FE ~ ., method = 'glmboost', data=FE, trControl=ctrl) 
+rmse.boost <-RMSE(predict(fit.boost, FE12),FE12$FE)
+
+
+```
+
+
+## Conclusion 
+
+Which model would you use and why?  Under different circumstances why would you choose one of the other models.
+
+Based on RMSE alone, 'treebag' method proved to be the best, with a 57% improvement over the naive guess. However, with the parameters selected/defaulted, it was noticibly slower than the 'glmboost' method, almost 6 times longer. If the application required multiple estimations or larger data sets, that could be something to consider.
+
