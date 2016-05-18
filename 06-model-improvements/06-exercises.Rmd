@@ -115,7 +115,7 @@ fit.boost <- train(FE ~ EngDispl, data=FE, trControl=ctrl, method="glmboost", me
 
 Which model would you use and why?  Under different circumstances why would you choose one of the other models.
 
-I would used the bagged model because it reported the lowest RMSE. If you have access to a machine with enough processing power, low computing cost, and good-sized dataset, then you should use bagged and boosting models. Otherwise, you should use the simpler models. 
+I would use the bagged model because it reported the lowest RMSE. If you have access to a machine with enough processing power, low computing cost, and good-sized dataset, then you should use bagged and boosting models. Otherwise, you should use the simpler models. 
 
 
 
