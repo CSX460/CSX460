@@ -154,29 +154,41 @@ Exercise(s):
 
 
 ### 6.	Advanced Techniques
+
 - Bagging
 - Bagged Trees / Random Forests 
 - Exercises
 
 Reading:
 
+## Reading:
+- **APM** Chapter 8.6 and 8.8 
+- **APM** Chapter 14.8 
+- **APM** Chapter 7.1 & 7.3 "Non-Linear Regression Models"
+- **APM** Chapter 13.2 & 13.4 "Non-Linear Classification Models"
+
 Exercise(s):
+- See Exercises
 
-
-### 7.	Advanced Techniques: Boosting
-
-- Boosting
-- Neural Networks  
-- Support Vector Machines
-- Exercises
+### 7.	Time Series
 
 Reading:
+
+- [**Forecasting Principals and Practice**](https://www.otexts.org/fpp) 
+  - Chapters 1 "Getting Started"
+  - Chapter 2 "The Forecaster's Toolbox"
+  - Chapter 6 "Time Series Decomposition"
+
+- **APM**
+  - Chapter 7.1, 13.2 "Neural Networks"
+  - Chapter 7.3, 13.4 "Support Vector Machines"
+
 
 Exercise(s):
 
 
 ### 8.	Deployment 
 
-- Diving into the data lake
-- Optimization 
 - Delivery and Production
+- Patterns
+

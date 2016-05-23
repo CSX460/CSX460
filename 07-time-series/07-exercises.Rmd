@@ -1,0 +1,22 @@
+---
+title: "05-exercises"
+author: "Your Name Here"
+date: "2016-05-xx"
+output: html_document
+---
+
+## Reading:
+
+- [**Forecasting Principals and Practice**](https://www.otexts.org/fpp) 
+  - Chapters 1 "Getting Started"
+  - Chapter 2 "The Forecaster's Toolbox"
+  - Chapter 6 "Time Series Decomposition"
+
+- **APM**
+  - Chapter 7.1, 13.2 "Neural Networks"
+  - Chapter 7.3, 13.4 "Support Vector Machines"
+
+
+There are no exercises this week.  Since Wednesday is the last section, please review class material and come with questions.
+
+
