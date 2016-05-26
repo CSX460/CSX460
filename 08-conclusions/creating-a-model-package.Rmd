@@ -1,0 +1,126 @@
+---
+title: "Creating  a model package"
+author: "Christopher Brown"
+date: "May 25, 2016"
+output: html_document
+---
+
+```{r,echo=FALSE, warning=FALSE, results='hide', message=FALSE}
+
+packs <-  c('AppliedPredictiveModeling', 'ggplot2', 'magrittr', 'dplyr', 'caret')
+
+for( nm in packs ) { 
+  # message(nm)
+  if( ! nm  %in% installed.packages()[,1]  ) install.packages(nm)
+  library(nm, character.only = TRUE)
+}
+
+# Load data set into environment
+data(FuelEconomy)
+.. = NULL  # Needed for aesthetics 
+
+FE <- dplyr::bind_rows(cars2010, cars2011, cars2012)    # Define Da
+
+```
+
+
+Model packages should contain and make available:
+
+ * a model object named `fit` or fitting function, typically the result of the the training function, often `caret::train`.
+
+* an optional function, `featurize` for transforming feature vectors
+
+* a function for 
+
+
+
+## Step 0: Train Model
+
+```{r}
+
+fit <- 
+  train( FE ~ poly(NumCyl,2) + poly(NumGears,2) + poly(EngDispl,2), FE, method="lm" )
+
+```
+
+
+## Step 1: Create a R package
+
+
+```{r, eval=FALSE}
+library(devtools)
+PATH = '/Temp'
+dir <- file.path( PATH, 'FE.model' ) 
+print(dir)
+devtools::create(dir, rstudio = FALSE) 
+```
+
+
+## Step 2: Save the model to package
+
+Save `fit`
+* Save `fit` and `featurize` to the `data` directory; 
+
+
+```{r, eval=FALSE}
+DATAPATH =file.path( dir, 'data' )
+dir.create( DATAPATH, showWarnings = FALSE, recursive = TRUE )
+save( fit, file=file.path( dir, 'data', 'fit.rda') )
+```
+
+
+## Step 3: Test 
+
+```{r, eval=FALSE}
+rm(fit)
+load_all(dir)
+fit
+predict(fit, fit$trainingData)
+```
+
+## Step 4: Createa/Update documentation
+
+* ROxygen Documentation: `R/fit.R`, `R/featurize.R`
+
+```
+#' @name fit
+#' @description model for fitting Fuel Economy based on 
+#' @details ...
+#' @docType data
+#' @import caret randomForest etc.
+
+NULL
+```
+
+### DESCRIPTION
+
+Update your descriptions 
+
+ * Author: 
+ * Date:
+ * **Version:**
+ * LazyData: TRUE
+ * Imports: caret, ...
+ * etc.
+
+  Use Sementic Versioning X.Y.Z.a 
+
+
+## Step 5: Update git, add, commmit + tag changes    
+
+```
+git add ...
+git commit
+git tag vX.Y.Z.a
+git push ...
+```
+
+## Step 6: Build Your Package
+
+```{r, eval=FALSE}
+devtools::build(dir)
+```
+
+### Step 7: Distribute your package
+
+Warning: Dependencies may change. To ensure that everything works consider creating a packrat project or deploying using a strictly controlled environment, such as a virtual machine
