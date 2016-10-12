@@ -1,0 +1,74 @@
+---
+title: "Assingment NYC Flight Data"
+author: "Your Name Here"
+date: "October 5, 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## NYC Flight Data
+
+Your job is to create a "rectangular" table useful for modeling from flight data. In the folder `02-fundamentals/data` there are four CSV files: `flights.csv`, `airports.csv`, `planes.csv` and `weather.csv`.  Put code in each of the sections provided.
+
+## 1. Read Data
+
+Using the `readr` package read the `flights` data.
+
+```{r}
+library(readr)
+flights <- read_csv("flights.csv")
+```
+
+## Numeric Variables  
+
+Plot a histogram of arrival delays and departure delays 
+
+```{r}
+hist(flights$arr_delay, main = "Histogram of Arrival Delays", xlab = "Arrival Delays")
+hist(flights$dep_delay, main = "Histogram of Departure Delays", xlab = "Departure Delays")
+```
+
+## Scatterplot
+
+Plot a scatterplot of date vs arrival delay 
+
+```{r}
+plot(x = flights$day,
+     y = flights$arr_delay,
+     main = "Scatter plot of date vs. arrival delay",
+     xlab = "Date (January 2013)",
+     ylab = "Arrival delay")
+
+```
+
+
+
+## Create tables for Categorical Variables
+
+Create a `table` of occurences of origin airports and carrier.
+
+```{r}
+table(flights$origin, flights$carrier)
+
+```
+
+
+## Join Data
+
+**Read** in the other data sets. Use methods to join the data together to create a single table containing one record per row.  (HINT: see `?data.table` or `?dplyr::join`)
+
+```{r}
+airports <- read_csv("airports.csv")
+planes <- read_csv("planes.csv")
+weather <- read_csv("weather.csv")
+library(dplyr)
+x <- inner_join(flights, airports, by = c("origin" = "faa"))
+x <- inner_join(x, planes, by = c("tailnum" = "tailnum"))
+x <- inner_join(x, weather, by = c("time_hour" = "time_hour", "origin" = "origin"))
+```
+
+
+
