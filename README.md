@@ -75,7 +75,7 @@ All assignments are due the day before the next lecture.
 
 ## Google Group
 
-There is an google group for this class: ***CSX460***.  Contact the professor for entrance to the group.
+There is an google group for this class: [CSX460](https://groups.google.com/forum/#!forum/csx460).  Contact the professor for entrance to the group.
 
 
 ## Class Syllabus 
@@ -101,7 +101,7 @@ Reading:
  - Chapters 1-2 of **Machine Learning with R (MLR)**
   
 
-### 2. Fundamentals of Machine Learning / Linear Regression
+### 2. Fundamentals of Machine Learning / Regrssion
 
  - Data processing 
  - Building First Models
@@ -116,7 +116,7 @@ Reading:
  - **MLR** Chapter 3, Chapter 6 pp.171-200
  - [Introduction to dplyr](https://cran.r-project.org/web/packages/dplyr/vignettes/introduction.html)
  - [Introduction to data.table](https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.pdf)
- - [Introducting Magrittr](https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html)
+ - [Introducting magrittr](https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html)
 
 Exercise(s):
   02-fundamentals/02-exercise-nycflights.Rmd
@@ -129,12 +129,42 @@ R Packages Introduced:
 
 
 
-### 3. Linear Regression / Logistic Regression
+### 3. Linear Regression  
+
+Topics:
+ - Linear Regression
+ - Model Formula
+ - Modeling Process
 
 Reading:
+ - [Introduction to R Graphics with *ggplot2*](http://tutorials.iq.harvard.edu/R/Rgraphics/Rgraphics.htm)
+ - ?formula
+ - ?MASS::stepAIC
+ - Suggested: 
+   - broom
+     - [Introduction to broom](https://cran.r-project.org/web/packages/broom/vignettes/broom.html)
+     - [broom+dplyr](https://cran.r-project.org/web/packages/broom/vignettes/broom_and_dplyr.html) 	
+
 
 Exercise(s):
- - Finish in-class exercises
+ - 03-linear-regression/
+
+R Packages Introduced:
+ - [ggplot2](https://cran.r-project.org/package=ggplot2)
+ - [broom](https://cran.r-project.org/package=broom)
+ - [MASS::stepAIC](https://cran.r-project.org/package=MASS)
+
+
+### 4. Introduction to classification / logistic regression
+
+Reading:
+ -
+
+Exercise(s):
+ -
+
+R Packages Introduced:
+ - 
 
 
 ### 4. Resammpling Techniques Binomial Classification Metrics 
@@ -166,13 +196,7 @@ Exercises
 Reading:
 
 ## Reading:
-- **APM** Chapter 8.6 and 8.8 
-- **APM** Chapter 14.8 
-- **APM** Chapter 7.1 & 7.3 "Non-Linear Regression Models"
-- **APM** Chapter 13.2 & 13.4 "Non-Linear Classification Models"
 
-Exercise(s):
-- See Exercises
 
 ### 7.	Time Series
 

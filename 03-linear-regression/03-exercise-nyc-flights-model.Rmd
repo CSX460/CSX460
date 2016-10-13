@@ -1,0 +1,61 @@
+---
+title: "NYCFlights: Arrival Delay Regression Model"
+author: "[Your Name]"
+date: "[Today's Date]"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# NYCFlights Model
+
+Using the rectangular data that you created last week and following the *Predicting Medical Expenses* example from the text (*MLwR*), create a model for arr_delay. Follow MLwR structure 
+for building a model. Describe/Explain each of the steps and show all work in codeblocks below.
+
+
+## Step 1: Collect Data 
+
+```{r "Step 1: Collect Data" }
+
+```
+
+## Step 2: Explore and Prep The Data
+
+
+One of the things not done in the MLwR text is a pairwise comparison between the response and each of the predictors. Make sure to do this; this is often very illustrative of the relationship between that predictor and the response. This can be done with `pairs` or `psych::panel.pairs`
+
+
+```{r "Step 2: Explore and Prep The Data" }
+
+```
+
+## Step 3:  Train The Model
+
+```{r "Step 3: Train The Model" }
+
+```
+
+## Step 4: Evaluate Performance
+
+Evaluating performance is a crutial step, that has yet to be treated well by the MLwR. Think about some of the tools that you have for evaluating performance.  Choose one and articulate why you have chosen it.
+
+```{r "Step 4: Evaluate Performance" }
+
+```
+
+
+## Step 5: Improve Performance 
+
+Show some steps for improving model performance.
+
+```{r "Step 5: Improve Performance" }
+
+```
+
+
+# Question:
+
+Is this a good model?  (Write your answer here.)
+
