@@ -160,7 +160,8 @@ R Packages Introduced:
 Reading:
  - [Introduction to Statistical Learning, Classification 4.1-4.3 "Logistic Regression"](http://www-bcf.usc.edu/~gareth/ISL/)
  - ** MLwR ** Chapter 10
-
+ - Suggested: 
+   - [AIC:Akaike Information Criterion](https://en.wikipedia.org/wiki/Akaike_information_criterion)
 
 Exercise(s):
  - 03-exercise-nyc-flights-logistic.Rmd
