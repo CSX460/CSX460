@@ -98,7 +98,7 @@ Topics:
 
 
 Reading:
- - Chapters 1-2 of **Machine Learning with R (MLR)**
+ - **Machine Learning with R (MLR)**, Chapters 1-2
   
 
 ### 2. Fundamentals of Machine Learning / Regrssion
@@ -144,7 +144,7 @@ Reading:
    - broom
      - [Introduction to broom](https://cran.r-project.org/web/packages/broom/vignettes/broom.html)
      - [broom+dplyr](https://cran.r-project.org/web/packages/broom/vignettes/broom_and_dplyr.html) 	
-
+ 
 
 Exercise(s):
  - 03-linear-regression/
@@ -155,17 +155,20 @@ R Packages Introduced:
  - [MASS::stepAIC](https://cran.r-project.org/package=MASS)
 
 
-### 4. Introduction to classification / logistic regression
+### 4. Introduction to classification / binary classification / logistic regression
 
 Reading:
- -
+ - [Introduction to Statistical Learning, Classification 4.1-4.3 "Logistic Regression"](http://www-bcf.usc.edu/~gareth/ISL/)
+ - ** MLwR ** Chapter 10
+
 
 Exercise(s):
- -
+ - 03-exercise-nyc-flights-logistic.Rmd
 
 R Packages Introduced:
- - 
-
+ - stats::glm
+ - MASS::stepAIC
+ 
 
 ### 4. Resammpling Techniques Binomial Classification Metrics 
 
