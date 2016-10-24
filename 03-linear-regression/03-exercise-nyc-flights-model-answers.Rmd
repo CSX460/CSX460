@@ -1,0 +1,186 @@
+---
+title: "NYCFlights: Arrival Delay Regression Model"
+author: "[Your Name]"
+date: "[Today's Date]"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# NYCFlights Model
+
+Using the rectangular data that you created last week and following the *Predicting Medical Expenses* example from the text (*MLwR*), create a model for `arr_delay`. Follow *MLwR* structure for building a model. Describe/Explain each of the steps and show all work in codeblocks below.
+
+
+## Step 1: Collect Data 
+
+See previous exercise. 
+
+```{r "Step 1: Collect Data" }
+
+yx <- copy(YX)
+
+```
+
+
+## Step 2: Explore and Prep The Data
+
+
+One of the things not done in the MLwR text is a pairwise comparison between the response and each of the predictors. Make sure to do this; this is often very illustrative of the relationship between that predictor and the response. This can be done with `pairs` or `psych::panel.pairs`
+
+## Response;
+
+- arr_delay : right skewed, some negative 
+
+- Hypothesis: flight delays are a function of weather, mechanical problems and 
+  other factors:
+
+## Predictors
+
+This is reasonable list of variables that can be used 
+
+- fligths
+  - month             **
+  - dep_delay (?)     ***
+  - carrier / flight  *
+  - origin            
+  - dest 
+  - air_time          **
+  - distance          **  (can make up time in the air)
+  - air time / hour / minute not known at end of flight
+  
+- planes
+  - year              ** 
+  - type              **
+  - manufacture
+  - engines          (not much variation)
+  - seats
+  - engine           **
+  - speed  (not well populated)
+
+- weather 
+  - temp             
+  - dewp
+  - wind_dir         **+
+  - wind_gust        **+ 
+  - precip           **
+  - pressure         **
+  - visib            **
+  
+- airports (origin and dest)
+  - faa or name
+  - lat             ** dest(only)
+  - lon             ** dest(only)
+  - alt              
+  
+  
+- DERIVED: 
+  - bearing relate to orgin and dest
+  - cos( bearing, wind_dir )
+
+
+
+```{r "Step 2: Explore and Prep The Data" }
+
+ y <- "arr_delay"
+ xs <- c(
+    'month','dep_delay','carrier','air_time','distance'
+   ,'year.pl','type','engine'
+   ,'wind_dir','wind_speed','wind_gust','precip','pressure','visib'
+   ,'lat','lon','lat.dest','lon.dest'
+ )
+
+ 
+ yx <- yx[ , c(y,xs), with=FALSE ]
+ 
+ qqnorm(yx  %>% sample_n(1000) %>% extract2('arr_delay') )  
+ qplot(yx$arr_delay) 
+ qplot(yx$arr_delay) + scale_y_sqrt() 
+ qplot(yx$arr_delay) + scale_x_sqrt() 
+ 
+ 
+ 
+# Fix the response (arr_delay)
+# Remove Outliers
+
+ yx <- yx[ arr_delay >= quantile(arr_delay,0.01,na.rm=TRUE) &  
+           arr_delay <= quantile(arr_delay,0.96,na.rm=TRUE) ]
+
+ # Consider: log, sqrt transformation (?)
+ #  This will make the calculation of errors trickier
+ yx[ , target := arr_delay %>% add( min(arr_delay, na.rm=TRUE ) ) %>% log  ]
+
+   
+ # Examine predictors 
+ 
+ # COR
+ numerics <- yx   %>% sapply( is.numeric )  %>% which   %>% names()  # numerics
+ yx[ , numerics, with = FALSE ] %>% sample_n(1e3) %>% cor( use="pairwise.complete.obs" )
+ 
+ # pairs.panels
+ yx  %>% sample_n(1000)  %>% psych::pairs.panels()
+ 
+ # ggplot2
+ ( yx  %>% sample_n(1000)  %>% .[ , qplot(y=arr_delay, x=dep_delay )] ) + geom_smooth() + coord_cartesian()
+ 
+ # HANDLE NA VALUES
+ yx %>% sapply( . %>% is.na %>% sum )
+ 
+ 
+ # FIX MISSING VALUES
+
+```
+
+
+
+
+## Step 3:  Train The Model
+
+Our naive guess is: `r yx$arr_delay  %>% mean()` 
+Our naive rmse is: `r yx[ , arr_delay - mean(arr_delay)  ] %>% .^2 %>% mean %>% sqrt`
+
+```{r "Step 3: Train The Model" }
+
+
+# START WITH A SMALL MODEL
+form <- arr_delay ~ dep_delay
+fit <- lm( form, yx %>% sample_n(1000) )
+
+fit <- lm( arr_delay ~ . , yx %>% sample_n(1e5) )
+
+library(MASS)
+fit.step <- stepAIC(fit, scope=list(upper=. ~ ., lower = . ~ 1 ) )
+
+# UH-OH 
+yx  %>% sapply( .  %>% is.na  %>% sum )
+
+```
+
+## Step 4: Evaluate Performance
+
+Evaluating performance is a crutial step, that has yet to be treated well by the MLwR. Think about some of the tools that you have for evaluating performance.  Choose one and articulate why you have chosen it.
+
+```{r "Step 4: Evaluate Performance" }
+
+fit %>% resid %>% .^2 %>% mean %>% sqrt 
+
+```
+
+
+## Step 5: Improve Performance 
+
+Show some steps for improving model performance.
+
+```{r "Step 5: Improve Performance" }
+
+```
+
+
+# Question:
+
+Is this a good model?  (Write your answer here.)
+
+It is decent based on the little effort we applied.
+
