@@ -1,0 +1,43 @@
+---
+title: "Classification Metrics"
+author: "Christopher Brown"
+date: 
+output: html_document
+---
+
+The German Credit Data (data/german_credit); 
+
+1. Read in the German Credit Data
+2. Partition the model into Test and Training Sets using only `base::sample` 
+3. Train a model for `Creditability` 
+4. Knit the document and submit both the this file Rmd and html files.
+
+Show All Work! 
+
+```{r}
+
+
+```
+
+
+Using the `predict` function and `test` data, write functions to calculate and 
+calculate: 
+
+* Misclassification Rate
+* Prevalence 
+* Accuracy
+* Accuracy
+* Error Rate / Misclassification Rate
+* True Positive Rate  
+* False Positive Rate
+* True Negative Rate  
+* False Negative Rate 
+* Sensitivity 
+* Specificity 
+* Recall 
+* Precision
+
+```{r, echo=FALSE}
+
+
+```

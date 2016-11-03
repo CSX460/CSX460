@@ -171,18 +171,25 @@ R Packages Introduced:
  - MASS::stepAIC
  
 
-### 4. Resammpling Techniques Binomial Classification Metrics 
+### 5. Classification Metrics and Resampling
 
 Reading:
-
+ - ** MLwR ** Chapter 5
+ 
 Exercise(s):
- - Finish in-class exercise(s)
+ - classification-metrics-exercises.Rmd
+ 
+R Packages Introduced:
+ - caret
+ - gmodels
+ - ROCR, pROC
+ 
 
-
-### 5. Advanced Techniques: Partitioning Methods
+### 6. Advanced Techniques: Partitioning Methods
 
  - K Nearest Neighbors
  - Decision Trees/Recursive Partitioning
+
 
 Reading:
 
@@ -190,7 +197,7 @@ Exercise(s):
  - Finish in class exercises.
 
 
-### 6.	Advanced Techniques
+### 7.	Advanced Techniques
 
  - Bagging
  - Bagged Trees / Random Forests 
@@ -202,7 +209,7 @@ Reading:
 ## Reading:
 
 
-### 7.	Time Series
+### 8.	Time Series
 
 Reading:
 
@@ -211,16 +218,20 @@ Reading:
   - Chapter 2 "The Forecaster's Toolbox"
   - Chapter 6 "Time Series Decomposition"
 
-- **APM**
-  - Chapter 7.1, 13.2 "Neural Networks"
-  - Chapter 7.3, 13.4 "Support Vector Machines"
-
 
 Exercise(s):
 
 
-### 8.	Deployment 
+### 9.	Deployment 
 
+Topics:
 - Delivery and Production
 - Patterns
 
+
+Reading:
+
+
+Exercise(s):
+
+### 10. Special Topics
