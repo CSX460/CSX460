@@ -5,22 +5,21 @@ date:
 output: html_document
 ---
 
-The German Credit Data (data/german_credit); 
+Using the first **logistic regression** model that you created in previous exercise; 
 
-1. Read in the German Credit Data
-2. Partition the model into Test and Training Sets using only `base::sample` 
-3. Train a model for `Creditability` 
-4. Knit the document and submit both the this file Rmd and html files.
-
-Show All Work! 
+1. Partition the model into Test and Training Sets using only `base::sample` 
 
 ```{r}
 
+```
+
+2. Re-train the model on the training data 
+
+```{r}
 
 ```
 
-
-Using the `predict` function and `test` data, write functions to calculate and 
+3. Using the `predict` function and `test` data, write functions to calculate and 
 calculate: 
 
 * Misclassification Rate
