@@ -159,7 +159,7 @@ R Packages Introduced:
 
 Reading:
  - [Introduction to Statistical Learning, Classification 4.1-4.3 "Logistic Regression"](http://www-bcf.usc.edu/~gareth/ISL/)
- - ** MLwR ** Chapter 10
+ - **MLwR** Chapter 10
  - Suggested: 
    - [AIC:Akaike Information Criterion](https://en.wikipedia.org/wiki/Akaike_information_criterion)
 
@@ -174,7 +174,7 @@ R Packages Introduced:
 ### 5. Classification Metrics and Resampling
 
 Reading:
- - ** MLwR ** Chapter 5
+ - **MLwR** Chapter 5
  
 Exercise(s):
  - classification-metrics-exercises.Rmd
@@ -185,16 +185,26 @@ R Packages Introduced:
  - ROCR, pROC
  
 
-### 6. Advanced Techniques: Partitioning Methods
+### 6. Recursive Partitioning / Bias-Variance Trade-off
 
- - K Nearest Neighbors
  - Decision Trees/Recursive Partitioning
-
+ - Bias-Variance Trade-off
+ - Introduction to Caret
 
 Reading:
+ - **MLwR** Chapter 11 Improving Model Performance (First Part) 
+   - Tuning Stock Models (pp. 347-358)
+ - Review [Caret Website](https://topepo.github.io/caret/) 
+   There is a lot in the caret website, it is most important to familiarize yourself with the use of the models.
 
 Exercise(s):
- - Finish in class exercises.
+ - None. 
+
+R Packges introduced:
+ - caret
+ - rpart
+ - ctree
+ - C50
 
 
 ### 7.	Advanced Techniques
