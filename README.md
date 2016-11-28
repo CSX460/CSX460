@@ -192,6 +192,7 @@ R Packages Introduced:
  - Introduction to Caret
 
 Reading:
+
  - **MLwR** Chapter 11 Improving Model Performance (First Part) 
    - Tuning Stock Models (pp. 347-358)
  - Review [Caret Website](https://topepo.github.io/caret/) 
@@ -207,16 +208,23 @@ R Packges introduced:
  - C50
 
 
-### 7.	Advanced Techniques
-
+### 7. Improving Model Performance 
  - Bagging
- - Bagged Trees / Random Forests 
+   - Bagged Trees / Random Forests 
+ - Boosting
 
-Exercises
+
+Exercises:  
+ -  exercise-caret-models.Rmd (Due: 2016-12-06)
 
 Reading:
+ - **MLwR** Chapter 11 Improving Model Performance (Second Part) 
+   - Tuning Stock Models (pp. 359-376)
 
-## Reading:
+
+
+R Packages introduced:
+ - caret
 
 
 ### 8.	Time Series
