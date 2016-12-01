@@ -231,13 +231,23 @@ R Packages introduced:
 
 Reading:
 
+- [CRAN Task View: **Time Series Analysis**](https://cran.r-project.org/web/views/TimeSeries.html)
 - [**Forecasting Principals and Practice**](https://www.otexts.org/fpp) 
   - Chapters 1 "Getting Started"
   - Chapter 2 "The Forecaster's Toolbox"
-  - Chapter 6 "Time Series Decomposition"
+  - Chapter 3 "Judgemental Forecasts"
+  - Chapter 8 "Arima Models"
 
 
 Exercise(s):
+- Complete control-lift in-class exercise
+- Complete revenue forecast exercise 
+
+
+R Packages Introduced:
+ - survival : survReg
+ - forecast : Arima
+
 
 
 ### 9.	Deployment 
@@ -251,5 +261,7 @@ Reading:
 
 
 Exercise(s):
+ - None
 
 ### 10. Special Topics
+

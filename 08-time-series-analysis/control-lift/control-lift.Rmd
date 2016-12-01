@@ -1,0 +1,24 @@
+---
+title: "control-lift-stability"
+author: "Christopher Brown"
+date: "November 30, 2016"
+output: html_document
+---
+
+Your job is to create a model for the control lift stability of a hypotetical 
+aircraft. 
+
+Download and the data at "~/data/control-lift.rds". Create a model for the 
+control lift response as a function of alpha (angle of attach) and 
+beta (roll angle) for the hypothetical aircraft. 
+
+Show all work:
+
+```r
+
+```
+
+How good is your model?
+
+What did you find surprising?
+
