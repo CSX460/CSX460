@@ -4,7 +4,7 @@ This is the repository for *Practical Machine Learning with R* (CSX460) at the U
 
 ## Course Description
 
-This course provides an introduction to machine learning using R, the open source, statistical programming language. Once a niche set of tools for statisticians, programmers and quants, machine learning (sometimes also called sttistical learning or data mining) has spread in popularity to become an indispensable tool to a wide variety of applications and disciplines. This course teaches the fundamentals of machine learning without delving into too much mathemtics or code.  The course will teach practical aspects of machine learning. Upon completion of the course students will be able to apply lessons to solve problems using machine learning in their own work.
+This course provides an introduction to machine learning using R, the open source, statistical programming language. Once a niche set of tools for statisticians, programmers and quants, machine learning (sometimes also called statistical learning or data mining) has spread in popularity to become an indispensable tool to a wide variety of applications and disciplines. This course teaches the fundamentals of machine learning without delving into too much mathematics or code.  The course will teach practical aspects of machine learning. Upon completion of the course students will be able to apply lessons to solve problems using machine learning in their own work.
  
 
 ## Course Learning Objectives
@@ -52,14 +52,6 @@ Students of this class will learn:
 
 Text for the Course:
 
-    ***Machine Learning with R, 2nd Edition***
-    ISBN: 978-1-78439-390-8
-    Lantz, Brett
-    Packt Publishing 
-    2015
-     
-Recommended:
-
     ***Applied Predictive Modeling***
     ISBN-13: 978-1461468486
     ISBN-10: 1461468485
@@ -67,10 +59,19 @@ Recommended:
     Springer Science+Business
     2013
     
+     
+Supplementary:
+
+    ***Machine Learning with R, 2nd Edition***
+    ISBN: 978-1-78439-390-8
+    Lantz, Brett
+    Packt Publishing 
+    2015
+
 
 ## Assignments 
 
-All assignments are due the day before the next lecture.
+All assignments are due midnight the day before the next lecture.
 
 
 ## Google Group
@@ -80,9 +81,10 @@ There is an google group for this class: [CSX460](https://groups.google.com/foru
 
 ## Class Syllabus 
 
-Current Term: Fall 2016
+Current Term: Spring 2017
 
-This provides a session by session overview of CS-X460 (Practical Machine Learning).  
+This provides a session by session overview of CSX460 (Practical Machine Learning).  
+
 
 ### 1. Introduction to R, setting up the ML developers environment
 
@@ -98,11 +100,15 @@ Topics:
 
 
 Reading:
+ - **APM**, Chapters 1-2
+  
+Supplementary Reading (Optional): 
  - **Machine Learning with R (MLR)**, Chapters 1-2
   
 
-### 2. Fundamentals of Machine Learning / Regrssion
+### 2. Fundamentals of Machine Learning / Regression
 
+Topics:
  - Data processing 
  - Building First Models
  - Supervised, unsupervised, and semi-supervised 
@@ -111,22 +117,22 @@ Reading:
  - Machine learning prerequisites
  - Algorithm types 
 
-Reading:
 
- - **MLR** Chapter 3, Chapter 6 pp.171-200
+Reading: 
  - [Introduction to dplyr](https://cran.r-project.org/web/packages/dplyr/vignettes/introduction.html)
  - [Introduction to data.table](https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.pdf)
  - [Introducting magrittr](https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html)
+Supplementary Reading (Optional): 
+ - **MLR** Chapter 3, Chapter 6 pp.171-200
 
 Exercise(s):
-  02-fundamentals/02-exercise-nycflights.Rmd
+ - TBD
 
 
 R Packages Introduced:
  - General awesomeness: magrittr
  - Data Manipulation: dplyr, data.table
  - Reading data: readr, data.table::fread
-
 
 
 ### 3. Linear Regression  
@@ -137,6 +143,7 @@ Topics:
  - Modeling Process
 
 Reading:
+ - **APM** TBD 
  - [Introduction to R Graphics with *ggplot2*](http://tutorials.iq.harvard.edu/R/Rgraphics/Rgraphics.htm)
  - ?formula
  - ?MASS::stepAIC
@@ -147,7 +154,7 @@ Reading:
  
 
 Exercise(s):
- - 03-linear-regression/
+ - TBD 
 
 R Packages Introduced:
  - [ggplot2](https://cran.r-project.org/package=ggplot2)
@@ -158,13 +165,16 @@ R Packages Introduced:
 ### 4. Introduction to classification / binary classification / logistic regression
 
 Reading:
+ - **APM** TBD 
  - [Introduction to Statistical Learning, Classification 4.1-4.3 "Logistic Regression"](http://www-bcf.usc.edu/~gareth/ISL/)
+ 
+
+Supplementary Reading (Optional): 
  - **MLwR** Chapter 10
- - Suggested: 
-   - [AIC:Akaike Information Criterion](https://en.wikipedia.org/wiki/Akaike_information_criterion)
+ - [AIC:Akaike Information Criterion](https://en.wikipedia.org/wiki/Akaike_information_criterion)
 
 Exercise(s):
- - 03-exercise-nyc-flights-logistic.Rmd
+ - TBD
 
 R Packages Introduced:
  - stats::glm
@@ -173,7 +183,13 @@ R Packages Introduced:
 
 ### 5. Classification Metrics and Resampling
 
+Topics: 
+
+
 Reading:
+ - **APM** TBD 
+
+Supplementary Reading (Optional): 
  - **MLwR** Chapter 5
  
 Exercise(s):
@@ -187,67 +203,68 @@ R Packages Introduced:
 
 ### 6. Recursive Partitioning / Bias-Variance Trade-off
 
+Topics:
  - Decision Trees/Recursive Partitioning
  - Bias-Variance Trade-off
  - Introduction to Caret
 
-Reading:
 
- - **MLwR** Chapter 11 Improving Model Performance (First Part) 
-   - Tuning Stock Models (pp. 347-358)
- - Review [Caret Website](https://topepo.github.io/caret/) 
+Reading:
+ - **APM** TBD 
+ - [Caret Website](https://topepo.github.io/caret/) 
    There is a lot in the caret website, it is most important to familiarize yourself with the use of the models.
 
+
+Supplementary Reading (Optional): 
+ - **MLwR** Chapter 11 Improving Model Performance (First Part) 
+   - Tuning Stock Models (pp. 347-358)
+
 Exercise(s):
- - None. 
+ - TBD 
 
 R Packges introduced:
- - caret
+ - caret 
  - rpart
  - ctree
  - C50
 
 
 ### 7. Improving Model Performance 
+
+Topics:
  - Bagging
    - Bagged Trees / Random Forests 
  - Boosting
 
+Reading: 
+ - **APM** TBD 
 
-Exercises:  
- -  exercise-caret-models.Rmd (Due: 2016-12-06)
-
-Reading:
+Supplementary Reading (Optional): 
  - **MLwR** Chapter 11 Improving Model Performance (Second Part) 
    - Tuning Stock Models (pp. 359-376)
 
-
+Exercises:  
+ -  exercise-caret-models.Rmd 
 
 R Packages introduced:
- - caret
+ - caret (cont)
 
 
-### 8.	Time Series
+### 8.	Time Series Modeling
 
+Topics: 
+ - Survival Models
+ - Time Series Models 
+ - Forecast Window Models
+ 
+ 
 Reading:
-
-- [CRAN Task View: **Time Series Analysis**](https://cran.r-project.org/web/views/TimeSeries.html)
 - [**Forecasting Principals and Practice**](https://www.otexts.org/fpp) 
   - Chapters 1 "Getting Started"
   - Chapter 2 "The Forecaster's Toolbox"
-  - Chapter 3 "Judgemental Forecasts"
-  - Chapter 8 "Arima Models"
-
+  - Chapter 6 "Time Series Decomposition"
 
 Exercise(s):
-- Complete control-lift in-class exercise
-- Complete revenue forecast exercise 
-
-
-R Packages Introduced:
- - survival : survReg
- - forecast : Arima
-
 
 
 ### 9.	Deployment 
@@ -256,12 +273,24 @@ Topics:
 - Delivery and Production
 - Patterns
 
+Reading:
+ - TBD 
+ 
+Supplementary Reading (Optional): 
+ - TBD 
+ 
+Exercise(s):
+ - TBD
+
+R Packages Introduced: 
+ - devtools
+
+
+### 10. Special Topics
+
+Topics:
 
 Reading:
 
-
-Exercise(s):
- - None
-
-### 10. Special Topics
+Supplementary Reading (Optional): 
 
