@@ -1,0 +1,68 @@
+---
+title: "Assingment NYC Flight Data"
+author: "Your Name Here"
+date: "October 5, 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## NYC Flight Data
+
+Your job is to create a "rectangular" table useful for modeling from flight data. 
+In the folder `02-fundamentals/data` there are four CSV files: `flights.csv`, 
+`airports.csv`, `planes.csv` and `weather.csv`.  Join/merge these tables such 
+that there is one rectangular table with one row for each flight. 
+
+
+Put code in each of the sections provided.
+
+## 1. Read Data
+
+Using the `readr` package read the `flights` data.
+
+```{r}
+
+
+```
+
+## Numeric Variables  
+
+Plot a histogram of arrival delays and departure delays 
+
+```{r}
+
+```
+
+## Scatterplot
+
+Plot a scatterplot of date vs arrival delay 
+
+```{r}
+
+```
+
+
+
+## Create tables for Categorical Variables
+
+Create a `table`, counting the flights by origin airports and carrier.
+
+```{r}
+
+
+```
+
+
+## Join Data
+
+**Read** in the other data sets. Use methods to join the data together to create a single table containing one record per row.  (HINT: see `?data.table` or `?dplyr::join`)
+
+```{r}
+
+```
+
+
+
