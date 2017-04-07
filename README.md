@@ -1,6 +1,6 @@
 # CSX460 
 
-This is the repository for *Practical Machine Learning with R* (CSX460) at the University of California, Berkeley. The most recent class is/was `Fall 2016`. 
+This is the repository for *Practical Machine Learning with R* (CSX460) at the University of California, Berkeley. The most recent class is/was `Spring 2017`. 
 
 ## Course Description
 
@@ -105,6 +105,9 @@ Reading:
 Supplementary Reading (Optional): 
  - **Machine Learning with R (MLR)**, Chapters 1-2
   
+Exercise(s):
+ - R Warmups
+
 
 ### 2. Fundamentals of Machine Learning / Regression
 
@@ -121,18 +124,23 @@ Topics:
 Reading: 
  - [Introduction to dplyr](https://cran.r-project.org/web/packages/dplyr/vignettes/introduction.html)
  - [Introduction to data.table](https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.pdf)
- - [Introducting magrittr](https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html)
+ - **APM**, Chapter 3
+ 
 Supplementary Reading (Optional): 
  - **MLR** Chapter 3, Chapter 6 pp.171-200
-
+ - [Introducting magrittr](https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html)
+ 
 Exercise(s):
- - TBD
-
+ - NYC FLights 
 
 R Packages Introduced:
- - General awesomeness: magrittr
- - Data Manipulation: dplyr, data.table
- - Reading data: readr, data.table::fread
+ - [magrittr](https://cran.r-project.org/package=magrittr)
+ - Data Manipulation
+   - [dplyr](https://cran.r-project.org/package=dplr)
+ - [data.table](https://cran.r-project.org/package=data.table)
+ - Reading data: 
+   - [readr](https://cran.r-project.org/package=readr)
+   - [data.table::fread](https://cran.r-project.org/package=data.table)
 
 
 ### 3. Linear Regression  
