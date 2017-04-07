@@ -1,8 +1,11 @@
 ---
 title: "01-exercises"
-author: "Christopher Brown"
-date: "April 6, 2016"
-output: html_document
+author: "Dennis Raj"
+date: "April 4, 2017"
+output:
+  html_document: default
+  pdf_document: default
+  word_document: default
 ---
 
 
@@ -11,46 +14,56 @@ output: html_document
 Write a function (f) that takes a vector of numbers, **x**, and returns a vector of numbers such that each element containing the product of every element of x except the element of x with the same index. 
 
 
-### Example 
-
-    > x <- c( 1, 5, 2, 8 ) 
-    > f(x) 
-    [1] 80 16 40 10
-    # 5*2*8, 1*2*8, 1*5*8, 1*2*5  
-
-
 ### Solution 
 
 ```{r}
-f <- function(x) {
-  
-  # ...
-  
+# supplied vector
+x <- c(1,5,2,8) 
+# create function f that iterates over the index of length 1:length(x)
+# for each element in x, save the product of all the elements of x except x to vector y 
+f <- function(x){
+  y <- c()
+  for(i in 1:length(x)){
+    y[i] <- prod(x[-i])
+  }
+  return(y)
 }
-
+f(x)
 ```
     
 
 
-## Exercise 2
+## Exercise 2:
 
 Write a function f(x) to accept an integer vector, and returns a vector with those numbers except for: 
-   multiples of 3 replaced by "Fizz" 
+   multiples of 3 replaced by "Fizz"? 
    multiples of 5 replaced by "Buzz" 
    multiples of 3 and 5 replaced by "FizzBuzz""
    
-### Example
-
-    > x <- 1:20
-    > f(1:20) 
-    # 1 2 Fizz 4 Buzz Fizz 7 8 Fizz Buzz 11 Fizz 13 14 FizzBuzz 16 17 Fizz 19 Buzz
-
-
 ### Solution
-
 ```{r}
-f <- function(x) {
-  # ...
-  
+#Create vector of 1 through 20
+x <- c(1:20)
+# Define function f as a for loop that iterates over numbers in x
+# Within the function replace integers wholely divisable by 3 and 5 with Fizzbuzz,
+# then replace intigers wholely divisable by 3 with Fizz and by 5 with Buzz respectively
+f <- function(x){
+  for (i in x){
+  if ( (i%%3==0) & (i%%5==0) ) { x[i] <- "Fizzbuzz" }
+  else if (i%%3==0) { x[i] <- "Fizz" }
+  else if (i%%5==0) { x[i] <- "Buzz" }
 }
+return(x)
+}
+f(x)
 ```
+
+
+
+
+
+
+ 
+  
+
+
