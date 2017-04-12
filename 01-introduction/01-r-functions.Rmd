@@ -1,6 +1,6 @@
 ---
 title: "01-exercises"
-author: "Christopher Brown"
+student: "Thuyen Nguyen"
 date: "April 6, 2016"
 output: html_document
 ---
