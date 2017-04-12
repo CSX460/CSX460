@@ -62,7 +62,10 @@ hist(arr_delay,breaks=100,xlab="arrival delay",main="histogram of arrival delay"
 Plot a scatterplot of date vs arrival delay 
 
 ```{r}
-
+library(ggplot2)
+library(lubridate)
+flights$date <- as.Date(with(flights, paste(year, month, day,sep="-")), "%Y-%m-%d")
+ggplot(flights, aes(flights$date, arr_delay)) +geom_point()
 ```
 
 
@@ -83,6 +86,9 @@ View(flight_origin)
 **Read** in the other data sets. Use methods to join the data together to create a single table containing one record per row.  (HINT: see `?data.table` or `?dplyr::join`)
 
 ```{r}
+library(margrittr)
+library(dtplyr)
+
 data_join <- flights %>%
   transform(dephour = floor(dep_time / 100)) %>%
   inner_join(.,planes, by=c("tailnum" = "tailnum")) %>% 
