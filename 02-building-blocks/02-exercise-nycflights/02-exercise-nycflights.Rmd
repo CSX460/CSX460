@@ -1,7 +1,7 @@
 ---
 title: "Assingment NYC Flight Data"
-author: "Your Name Here"
-date: "October 5, 2016"
+author: "Thuyen Nguyen"
+date: "April 10, 2017"
 output: html_document
 ---
 
@@ -24,6 +24,14 @@ Put code in each of the sections provided.
 Using the `readr` package read the `flights` data.
 
 ```{r}
+library(readr)
+library(data.table)
+airports <- read_csv("~/Documents/CSX460/02-building-blocks/02-exercise-nycflights/data/airports.csv") %>% setDT
+flights <- read_csv("~/Documents/CSX460/02-building-blocks/02-exercise-nycflights/data/flights.csv") %>% setDT
+planes <- read_csv("~/Documents/CSX460/02-building-blocks/02-exercise-nycflights/data/planes.csv") %>% setDT
+weather <- read_csv("~/Documents/CSX460/02-building-blocks/02-exercise-nycflights/data/weather.csv") %>% setDT
+##View(airports)
+##View(weather)
 
 
 ```
@@ -33,6 +41,19 @@ Using the `readr` package read the `flights` data.
 Plot a histogram of arrival delays and departure delays 
 
 ```{r}
+##removing NA from data set
+dep_delay <- na.omit(flights$dep_delay) 
+
+hist(dep_delay,breaks=100,xlim=c(-50,500),xlab="departure delay",main="histogram of departure delay")
+## to see the impact of the long tail
+hist(dep_delay,breaks=100,xlim=c(-50,500),xlab="departure delay",main="histogram of departure delay",ylim=c(0,200))
+
+##removing NA from data set
+arr_delay <- na.omit(flights$arr_delay) 
+
+hist(arr_delay,breaks=100,xlim=c(-100,500),xlab="arrival delay",main="histogram of arrival delay")
+## to see the impact of the long tail
+hist(arr_delay,breaks=100,xlab="arrival delay",main="histogram of arrival delay",ylim=c(0,400))
 
 ```
 
@@ -51,7 +72,8 @@ Plot a scatterplot of date vs arrival delay
 Create a `table`, counting the flights by origin airports and carrier.
 
 ```{r}
-
+flight_origin <- flights %>% group_by(origin, carrier) %>% summarize(total.count=n())
+View(flight_origin)
 
 ```
 
@@ -61,6 +83,12 @@ Create a `table`, counting the flights by origin airports and carrier.
 **Read** in the other data sets. Use methods to join the data together to create a single table containing one record per row.  (HINT: see `?data.table` or `?dplyr::join`)
 
 ```{r}
+data_join <- flights %>%
+  transform(dephour = floor(dep_time / 100)) %>%
+  inner_join(.,planes, by=c("tailnum" = "tailnum")) %>% 
+  inner_join(.,airports,by=c("origin"="faa"))  %>%
+  inner_join(.,airports,by=c("dest"="faa")) %>%
+  inner_join(.,weather, by=c("origin"="origin","dephour"="hour","year.x"="year","month"="month","day"="day")) 
 
 ```
 
