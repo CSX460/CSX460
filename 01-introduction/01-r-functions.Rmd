@@ -11,6 +11,7 @@ output: html_document
 Write a function (f) that takes a vector of numbers, **x**, and returns a vector of numbers such that each element containing the product of every element of x except the element of x with the same index. 
 
 
+<<<<<<< HEAD
 ### Solution 
 
 ```{r}
@@ -22,6 +23,25 @@ f <- function(x) {
   
 }
 
+=======
+### Example 
+
+    > x <- c( 1, 5, 2, 8 ) 
+    > f(x) 
+    [1] 80 16 40 10
+    # 5*2*8, 1*2*8, 1*5*8, 1*2*5  
+
+
+### Solution 
+
+```{r}
+f <- function(x) {
+  y<-1:length(x)
+  prod(x) / x[y]
+  # ...
+  
+}
+>>>>>>> origin/master
 ```
     
 
@@ -36,9 +56,15 @@ Write a function f(x) to accept an integer vector, and returns a vector with tho
 ### Example
 
     > x <- 1:20
+<<<<<<< HEAD
     > fizzbuzz(1:20) 
     # 1 2 Fizz 4 Buzz Fizz 7 8 Fizz Buzz 11 Fizz 13 14 FizzBuzz 16 17 Fizz 19 Buzz
     # will need to figure out how to print without quotes.  default casting as text
+=======
+    > f(1:20) 
+    # 1 2 Fizz 4 Buzz Fizz 7 8 Fizz Buzz 11 Fizz 13 14 FizzBuzz 16 17 Fizz 19 Buzz
+
+>>>>>>> origin/master
 
 ### Solution
 
@@ -48,8 +74,18 @@ fizzbuzz <- function(x) {
   div5<- x %% 5 == 0
   div15 <- x %% 15 == 0
   
+<<<<<<< HEAD
   x[which(div3 == TRUE)] <- 'Fizz'
   x[which(div5 == TRUE)] <-'Buzz'
   x[which(div15==TRUE)] <-'FizzBuzz'
   print(x)
 }
+=======
+  x[which(div3 == TRUE)] <- 'buzz'
+  x[which(div5 == TRUE)] <-'fizz'
+  x[which(div15==TRUE)] <-'fizzbuzz'
+  print(x)
+}
+
+```
+>>>>>>> origin/master
