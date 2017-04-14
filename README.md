@@ -71,7 +71,7 @@ Supplementary:
 
 ## Assignments 
 
-All assignments are due midnight the day before the next lecture.
+All assignments are due midnight the day before the lecture.
 
 
 ## Google Group
@@ -109,17 +109,15 @@ Exercise(s):
  - R Warmups
 
 
-### 2. Fundamentals of Machine Learning / Regression
+### 2. Machine Learning Fundamentals
 
 Topics:
- - Data processing 
- - Building First Models
  - Supervised, unsupervised, and semi-supervised 
  - Regression and classification
  - Measuring model error(s)
  - Machine learning prerequisites
  - Algorithm types 
-
+ - First Models
 
 Reading: 
  - [Introduction to dplyr](https://cran.r-project.org/web/packages/dplyr/vignettes/introduction.html)
@@ -127,11 +125,11 @@ Reading:
  - **APM**, Chapter 3
  
 Supplementary Reading (Optional): 
- - **MLR** Chapter 3, Chapter 6 pp.171-200
+ - **MLR** Chapter 3
  - [Introducting magrittr](https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html)
  
 Exercise(s):
- - NYC FLights 
+ - NYC FLights (Data Munging) 
 
 R Packages Introduced:
  - [magrittr](https://cran.r-project.org/package=magrittr)
@@ -146,27 +144,33 @@ R Packages Introduced:
 ### 3. Linear Regression  
 
 Topics:
+ - Modeling Process Revisited
+ - Data Pre-processing
  - Linear Regression
  - Model Formula
+   - Spline Fitting
  - Modeling Process
+ - Naive Model
 
 Reading:
- - **APM** TBD 
+ - **APM** Chapter 6  
  - [Introduction to R Graphics with *ggplot2*](http://tutorials.iq.harvard.edu/R/Rgraphics/Rgraphics.htm)
  - ?formula
  - ?MASS::stepAIC
- - Suggested: 
-   - broom
-     - [Introduction to broom](https://cran.r-project.org/web/packages/broom/vignettes/broom.html)
-     - [broom+dplyr](https://cran.r-project.org/web/packages/broom/vignettes/broom_and_dplyr.html) 	
+
+Supplementary Reading (Optional): 
+ - **MLwR**, Chapter 6 pp.171-200
+ - [ProjectTemplate](https://cran.r-project.org/package=ProjectTemplate 
+ - [devtools](https://cran.r-project.org/package=devtools)
  
 
 Exercise(s):
- - TBD 
+ - Model Arrival Delay from previous data 
 
 R Packages Introduced:
  - [ggplot2](https://cran.r-project.org/package=ggplot2)
- - [broom](https://cran.r-project.org/package=broom)
+ - [ProjectTemplate](https://cran.r-project.org/package=ProjectTemplate)
+ - [devtools](https://cran.r-project.org/package=devtools)
  - [MASS::stepAIC](https://cran.r-project.org/package=MASS)
 
 

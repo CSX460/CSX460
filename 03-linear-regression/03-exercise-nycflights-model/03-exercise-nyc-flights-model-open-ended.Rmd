@@ -1,0 +1,37 @@
+---
+title: "NYCFlights: Arrival Delay Regression Model (Open Ended Variation)"
+author: "[Your Name]"
+date: "[Today's Date]"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# NYCFlights Model
+
+Using the rectangular data that you created last week create a model for `arr_delay`. Follow a well defined process for creating a model as discussed in class or from one of the readings. 
+
+Break the process down into steps and create a codeblock for each step. 
+ - Use as many steps you feel as necessary
+ - Concisely explain each step 
+ - Show all work
+ 
+(You can start with the data that you created last week.)
+
+
+## Step 1: [Step Name] 
+
+```{r "Step 1: [Step Name]" }
+
+```
+
+## Step 2: ...
+
+
+
+# Question:
+
+Is this a good model?  (Write your answer here.)
+
