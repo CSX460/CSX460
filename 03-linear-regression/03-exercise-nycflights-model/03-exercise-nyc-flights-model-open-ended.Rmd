@@ -21,17 +21,56 @@ Break the process down into steps and create a codeblock for each step.
 (You can start with the data that you created last week.)
 
 
-## Step 1: [Step Name] 
+## Setup Data 
 
-```{r "Step 1: [Step Name]" }
 
+
+```{r}
+library(readr)
+library(data.table)
+library(dplyr)
+library(ggplot2)
+library(lubridate)
+library(magrittr)
+
+airports <- read_csv("~/Documents/CSX460/02-building-blocks/02-exercise-nycflights/data/airports.csv") %>% setDT
+flights <- read_csv("~/Documents/CSX460/02-building-blocks/02-exercise-nycflights/data/flights.csv") %>% setDT
+planes <- read_csv("~/Documents/CSX460/02-building-blocks/02-exercise-nycflights/data/planes.csv") %>% setDT
+weather <- read_csv("~/Documents/CSX460/02-building-blocks/02-exercise-nycflights/data/weather.csv") %>% setDT
+
+data_join <- flights %>%
+  transform(dephour = floor(dep_time / 100)) %>%
+  left_join(.,planes, by=c("tailnum" = "tailnum")) %>% 
+  left_join(.,airports,by=c("origin"="faa"))  %>%
+  left_join(.,airports,by=c("dest"="faa")) %>%
+  left_join(.,weather, by=c("origin"="origin","dephour"="hour","year.x"="year","month"="month","day"="day")) 
+head(data_join)
+
+
+```
+## Step 1
+```{r "Step 1: [test model with a few variables that are known to cause arrival delay" }
+
+fit <- lm(formula= arr_delay ~ +dep_delay +carrier, data=data_join)
+summary(fit)
+ggplot(flights, aes(dep_delay, arr_delay)) +geom_point()
 ```
 
 ## Step 2: ...
+```{r "Step 2: [test model with other variables & lots of variables to determine significance" }
 
+fit <- lm(formula= arr_delay ~ +carrier +flight +time_hour.x +model + engines +origin +dest, data=data_join)
+summary(fit)
 
+fit <- lm(formula= arr_delay ~ +sched_dep_time +dep_time +dep_delay +carrier +flight +time_hour.x +model + engines +origin +dest, data=data_join)
 
+summary(fit)
+
+```
 # Question:
 
 Is this a good model?  (Write your answer here.)
 
+The first model is a good model with an adjusted R-Square = 0.84, only 16% of the error are not answered by the model. Dep_delay by itself has an R-Square of 0.83.  The other two variables gets us another 1 pct in R-Square.  
+
+The rest of the regression runs yielded very small adjusted R-Square. This is an indication that these coefficients are not sigificant factors for arr_delay.  The last model with a lot more variables has a higher R-Square value, but it has a lot of insigificant coefficients which will create a lot of noise and not a good model.  
