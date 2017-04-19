@@ -1,7 +1,7 @@
 ---
 title: "NYCFlights: Arrival Delay Regression Model (Open Ended Variation)"
-author: "[Your Name]"
-date: "[Today's Date]"
+author: "Thuyen Nguyen"
+date: "04/17/2017"
 output: html_document
 ---
 
@@ -71,6 +71,6 @@ summary(fit)
 
 Is this a good model?  (Write your answer here.)
 
-The first model is a good model with an adjusted R-Square = 0.84, only 16% of the error are not answered by the model. Dep_delay by itself has an R-Square of 0.83.  The other two variables gets us another 1 pct in R-Square.  
+The first model is a good model with an adjusted R-Square = 0.84, only 16% of the error are not answered by the model. Dep_delay by itself has an R-Square of 0.83.  The other two variables gets us another 1 pct in R-Square.  The included scatter plot demonstrates a clear linear relationship between dep_delay and arr_delay.  There is a little bit of a fat tail effect on the left indicates that a few-minute delays can be made up during flights.  
 
 The rest of the regression runs yielded very small adjusted R-Square. This is an indication that these coefficients are not sigificant factors for arr_delay.  The last model with a lot more variables has a higher R-Square value, but it has a lot of insigificant coefficients which will create a lot of noise and not a good model.  

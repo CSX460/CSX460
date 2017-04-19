@@ -104,7 +104,7 @@ data_join <- flights %>%
   left_join(.,planes, by=c("tailnum" = "tailnum")) %>% 
   left_join(.,airports,by=c("origin"="faa"))  %>%
   left_join(.,airports,by=c("dest"="faa")) %>%
-  inner_join(.,weather, by=c("origin"="origin","dephour"="hour","year.x"="year","month"="month","day"="day")) 
+  left_join(.,weather, by=c("origin"="origin","dephour"="hour","year.x"="year","month"="month","day"="day")) 
 head(data_join)
 
 ```
