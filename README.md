@@ -153,7 +153,7 @@ Topics:
  - Naive Model
 
 Reading:
- - **APM** Chapter 6  
+ - **APM** Chapter 6.1 - 6.3, 6.5  
  - [Introduction to R Graphics with *ggplot2*](http://tutorials.iq.harvard.edu/R/Rgraphics/Rgraphics.htm)
  - ?formula
  - ?MASS::stepAIC
@@ -177,7 +177,7 @@ R Packages Introduced:
 ### 4. Introduction to classification / binary classification / logistic regression
 
 Reading:
- - **APM** TBD 
+ - **APM** Chapter 12.1 - 12.2 
  - [Introduction to Statistical Learning, Classification 4.1-4.3 "Logistic Regression"](http://www-bcf.usc.edu/~gareth/ISL/)
  
 
@@ -186,7 +186,7 @@ Supplementary Reading (Optional):
  - [AIC:Akaike Information Criterion](https://en.wikipedia.org/wiki/Akaike_information_criterion)
 
 Exercise(s):
- - TBD
+ - NYC Flights Logicstic Regression
 
 R Packages Introduced:
  - stats::glm
