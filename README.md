@@ -196,16 +196,21 @@ R Packages Introduced:
 ### 5. Classification Metrics and Resampling
 
 Topics: 
-
+* Classification Metrics
+* Resampling
 
 Reading:
- - **APM** TBD 
-
-Supplementary Reading (Optional): 
- - **MLwR** Chapter 5
+ - **APM** Chapter 4.1 - 4.4 "Over Fitting and Model Tuning"
+ - **APM** Chapter 5 "Measuring Performance in Regression Models" (~6 pages)
+ - **APM** Chapter 11 "Measuring Performance in Classification Models" (~20 pages)
  
+Supplementary Reading (Optional): 
+ - **MLwR** Chapter 3-4 
+
+
 Exercise(s):
- - classification-metrics-exercises.Rmd
+ - classification-metrics
+ - resampling
  
 R Packages Introduced:
  - caret
@@ -223,12 +228,15 @@ Topics:
 
 Reading:
  - **APM** TBD 
+ - **APM** Chapter 5 "Measuring Performance in Regression Models" (esp. 5.2 "The Variance Bias Trade-Off") (5 pages)
+
  - [Caret Website](https://topepo.github.io/caret/) 
    There is a lot in the caret website, it is most important to familiarize yourself with the use of the models.
 
 
 Supplementary Reading (Optional): 
- - **MLwR** Chapter 11 Improving Model Performance (First Part) 
+ - **MLwR** Chapter 5 "Divide and Conquer - Classification Using Decision Trees and Rules"
+ - **MLwR** Chapter 11 "Improving Model Performance" (First Part) 
    - Tuning Stock Models (pp. 347-358)
 
 Exercise(s):
