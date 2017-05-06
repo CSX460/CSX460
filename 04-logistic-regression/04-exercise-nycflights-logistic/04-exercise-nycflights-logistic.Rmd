@@ -1,0 +1,46 @@
+---
+title: "NYCFlights: Arrival Delay Logictic Model"
+author: "[Your Name]"
+date: "[Today's Date]"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Logsitic and Inverse Logistic Transformation 
+
+- Write an R function for the logistic function. The function should accept a `numeric` vector with values `[-Inf,Inf]` and produce a numeric vector in the the range `[0,1]`.
+
+- Plot the logistic function from  `[-10,10]`
+
+- Write a R function for the inverse logistic function. The function should accept a `numeric` vector with values `[0,1]` and prodcuce a numeric vector in the range `[-Inf,Inf]`
+
+- Plot the Inverse Logistic function from `[0,1]`
+
+
+**Hint:** For plotting curves see `?graphics::curve` or `?ggplot2::stat_function`
+
+```{r "Logistic and Inverse Logistic" }
+
+```
+
+
+# NYCFlights Model
+
+Using the rectangular data that you created from the earlier assignment and following theexample from the text and class, create a model for arr_delay >= 22 minutes. Describe/Explain each of the steps and show all work.
+
+KNIT YOUR DOCUMENT AS *HTML* AND SUBMIT IT AND THE `Rmd` file to your repository.   
+
+
+# Question:
+
+Is this a good model?  (Write your answer here.)
+
+
+# PART B:
+
+Your model should be good at explaining tardiness. Now, assume that your job is to predict arrival delays a month in advance. You can no longer use all the features in your model. Retrain your model using only features that will be *known* only a month in advance of the departure time.  Show all steps as above.
+

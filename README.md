@@ -153,7 +153,7 @@ Topics:
  - Naive Model
 
 Reading:
- - **APM** Chapter 6  
+ - **APM** Chapter 6.1 - 6.3, 6.5  
  - [Introduction to R Graphics with *ggplot2*](http://tutorials.iq.harvard.edu/R/Rgraphics/Rgraphics.htm)
  - ?formula
  - ?MASS::stepAIC
@@ -177,7 +177,7 @@ R Packages Introduced:
 ### 4. Introduction to classification / binary classification / logistic regression
 
 Reading:
- - **APM** TBD 
+ - **APM** Chapter 12.1 - 12.2 
  - [Introduction to Statistical Learning, Classification 4.1-4.3 "Logistic Regression"](http://www-bcf.usc.edu/~gareth/ISL/)
  
 
@@ -186,7 +186,7 @@ Supplementary Reading (Optional):
  - [AIC:Akaike Information Criterion](https://en.wikipedia.org/wiki/Akaike_information_criterion)
 
 Exercise(s):
- - TBD
+ - NYC Flights Logicstic Regression
 
 R Packages Introduced:
  - stats::glm
@@ -196,16 +196,21 @@ R Packages Introduced:
 ### 5. Classification Metrics and Resampling
 
 Topics: 
-
+* Classification Metrics
+* Resampling
 
 Reading:
- - **APM** TBD 
-
-Supplementary Reading (Optional): 
- - **MLwR** Chapter 5
+ - **APM** Chapter 4.1 - 4.4 "Over Fitting and Model Tuning"
+ - **APM** Chapter 5 "Measuring Performance in Regression Models" (~6 pages)
+ - **APM** Chapter 11 "Measuring Performance in Classification Models" (~20 pages)
  
+Supplementary Reading (Optional): 
+ - **MLwR** Chapter 3-4 
+
+
 Exercise(s):
- - classification-metrics-exercises.Rmd
+ - classification-metrics
+ - resampling
  
 R Packages Introduced:
  - caret
@@ -223,12 +228,15 @@ Topics:
 
 Reading:
  - **APM** TBD 
+ - **APM** Chapter 5 "Measuring Performance in Regression Models" (esp. 5.2 "The Variance Bias Trade-Off") (5 pages)
+
  - [Caret Website](https://topepo.github.io/caret/) 
    There is a lot in the caret website, it is most important to familiarize yourself with the use of the models.
 
 
 Supplementary Reading (Optional): 
- - **MLwR** Chapter 11 Improving Model Performance (First Part) 
+ - **MLwR** Chapter 5 "Divide and Conquer - Classification Using Decision Trees and Rules"
+ - **MLwR** Chapter 11 "Improving Model Performance" (First Part) 
    - Tuning Stock Models (pp. 347-358)
 
 Exercise(s):

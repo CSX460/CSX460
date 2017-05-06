@@ -1,0 +1,191 @@
+---
+title: "Assingment NYC Flight Data - Answer"
+author: "Christopher Brown"
+date: "October 5, 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE, warning=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(readr)
+library(ggplot2)
+library(magrittr)
+library(lubridate)
+library(stringr)
+library(dplyr)
+library(data.table)
+```
+
+## NYC Flight Data
+
+Your job is to create a "rectangular" table useful for modeling by 
+joining/merging flight data. In the folder `02-fundamentals/data` there are four 
+CSV files: `flights.csv`, `airports.csv`, `planes.csv` and `weather.csv`.  
+Put code in each of the sections provided.
+
+## 1. Read Data
+
+Using the `readr` package read the `flights` data.
+
+```{r}
+# data.frame / dplyr
+flights  <- "data/flights.csv" %>% read_csv 
+# flights <- "data/flights.csv" %>% read.csv(stringsAsFactors=FALSE)
+planes   <- read_csv("data/planes.csv")
+airports <- read_csv("data/airports.csv") 
+weather  <- read_csv("data/weather.csv")
+
+# data.tables
+flightsDT  <- fread("data/flights.csv") 
+planesDT   <- fread("data/planes.csv")  %>% setkey(tailnum)
+airportsDT <- fread("data/airports.csv")  %>% setkey(faa) 
+weatherDT  <- fread("data/weather.csv") %>%   setkey(origin,year,month,day,hour)
+
+```
+
+## Numeric Variables  
+
+Plot a histogram of arrival delays and departure delays 
+
+```{r}
+( flights$dep_delay %>% qplot )   # OR 
+
+ggplot( data=flights, aes(x=arr_delay)) + geom_histogram() + scale_x_log10()
+
+ggplot( data=flights, aes(x=arr_delay)) + geom_histogram() + scale_x_sqrt()
+
+```
+
+## Scatterplot
+
+Plot a scatterplot of date vs arrival delay 
+
+First create a date variable from year/month/day:
+
+```{r}
+
+str_pad4 <- . %>% str_pad(4,'left',0)
+str_pad2 <- . %>% str_pad(2,'left',0)
+
+ymd_hm <- function(year, month, day, hour, minute ) { 
+  dates <- paste0(
+    year %>% str_pad4, 
+    month %>% str_pad2,
+    day %>% str_pad2,
+    " ",
+    hour %>% str_pad2,
+    ":",
+    minute %>% str_pad2
+  ) 
+  
+  dates %>% lubridate:::ymd_hm(.)
+  
+}
+
+ymd <- function(year, month, day ) { 
+  dates <- paste0(
+    year %>% str_pad4, 
+    month %>% str_pad2,
+    day %>% str_pad2,
+  ) 
+  
+  dates %>% lubridate:::ymd(.)
+  
+}    
+  
+
+# data.frame
+  flights$dt <- 
+    ymd_hm( flights$year, flights$month, flights$day, flights$hour, flights$minute ) 
+
+# dplyr
+  flights <- flights %>% mutate( dt = ymd_hm(year,month,day,hour,minute) )
+ 
+# data.table 
+  flightsDT[ , dt := ymd_hm(year,month,day,hour,minute) ] 
+
+
+# Sample  
+ggplot( data=flights %>% sample_n(1e3), aes(x=dt, y=arr_delay) ) +
+  geom_point() + geom_smooth()
+
+
+ 
+```
+
+
+
+## Create tables for Categorical Variables
+
+Create a `table` of occurences of origin airports and carrier.
+
+```{r}
+
+flights$carrier %>% table( useNA="always") %>% sort 
+flights$origin %>% table( useNA="always") %>% sort 
+
+table( flights$carrier, flights$origin)
+
+```
+
+
+## Join Data
+
+**Read** in the other data sets. Use methods to join the data together to create a single table containing one record per row.  (HINT: see `?data.table` or `?dplyr::join`)
+
+```{r}
+
+# merge.data.frame
+
+## flights 
+YX <- flights 
+
+## planes
+YX <- merge( YX, planes, by="tailnum", all.x = TRUE )
+
+## airports  
+YX <- merge(YX, airports, by.x="origin", by.y="faa", all.x=TRUE, suffixes=c("", ".origin")  )
+YX <- merge(YX, airports, by.x="dest", by.y="faa", all.x=TRUE, suffixes=c("", ".dest")  )
+
+## weather
+# weather$date <- ymd(weather$year, weather$month, weather$day)
+YX <- 
+  merge( flights, weather, by=c("origin","year","month","day","hour"), all.x=TRUE, suffixes=c('',".weather") )
+
+
+
+# data.frame
+
+# dplyr
+YX <- 
+  flights %>% 
+  left_join(weather, by=c("origin","year","month","day","hour") ) %>%
+  left_join(planes, by='tailnum', suffixes=c('','.pl') ) %>% 
+  left_join(airports, by=c('origin'='faa') ) %>% 
+  left_join(airports, by=c('dest'='faa') )    
+
+prefix_names <- function(x,prefix) { 
+  setnames(x, names(x), paste0(prefix,names(x))) 
+  return(invisible(x)) 
+}
+
+# data.table
+YX <- flightsDT %>% copy %>% prefix_names('fl.') 
+YX <- planesDT %>% copy %>% prefix_names('pl.') %>% .[ YX %>% setkey(fl.tailnum) ]
+YX <- weatherDT %>% copy %>% prefix_names('we.') %>% .[ YX %>% setkeyv(c("fl.origin","fl.year","fl.month","fl.day","fl.hour")) ]
+YX <- airportsDT %>% copy %>% prefix_names('orig.') %>% .[ YX %>% setkey(we.origin)  ]
+YX <- airportsDT %>% copy %>% prefix_names('dest.') %>% .[ YX %>% setkey(fl.dest) ]
+
+# BEST:
+YX <- flightsDT 
+YX %<>% merge( planesDT, all.x = TRUE, by='tailnum', suffixes=c('','.pl') )
+YX %<>% merge( weatherDT, all.x = TRUE, by=c('origin','year','month','day','hour'), suffixes=c('','.we') )
+YX %<>% merge( airportsDT, all.x = TRUE, by.x='origin', by.y='faa', suffixes=c('','.orig') )
+YX %<>% merge( airportsDT, all.x = TRUE, by.x='dest', by.y='faa', suffixes=c('','.dest') )
+
+
+
+```
+
+
+
