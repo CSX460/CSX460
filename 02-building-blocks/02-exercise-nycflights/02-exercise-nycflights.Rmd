@@ -3,8 +3,8 @@ title: "Assingment NYC Flight Data"
 author: "Thuyen Nguyen"
 date: "April 10, 2017"
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -35,7 +35,7 @@ library(ggplot2)
 library(lubridate)
 library(magrittr)
 
-```{r} 
+```{r}
 
 airports <- read_csv("~/Documents/CSX460/02-building-blocks/02-exercise-nycflights/data/airports.csv") %>% setDT
 flights <- read_csv("~/Documents/CSX460/02-building-blocks/02-exercise-nycflights/data/flights.csv") %>% setDT
@@ -101,10 +101,10 @@ head(flight_origin)
 
 data_join <- flights %>%
   transform(dephour = floor(dep_time / 100)) %>%
-  inner_join(.,planes, by=c("tailnum" = "tailnum")) %>% 
-  inner_join(.,airports,by=c("origin"="faa"))  %>%
-  inner_join(.,airports,by=c("dest"="faa")) %>%
-  inner_join(.,weather, by=c("origin"="origin","dephour"="hour","year.x"="year","month"="month","day"="day")) 
+  left_join(.,planes, by=c("tailnum" = "tailnum")) %>% 
+  left_join(.,airports,by=c("origin"="faa"))  %>%
+  left_join(.,airports,by=c("dest"="faa")) %>%
+  left_join(.,weather, by=c("origin"="origin","dephour"="hour","year.x"="year","month"="month","day"="day")) 
 head(data_join)
 
 ```
