@@ -1,0 +1,31 @@
+---
+title: "Resampling"
+author: "Your Name Here"
+date: "October 5, 2015"
+output: html_document
+---
+
+**KNIT YOUR DOCUMENT AS *HTML* AND SUBMIT IT AND THE `Rmd` file**
+
+## Resampling
+
+`x` is a random variable. We want to not only know what the `mean(x)` is but want to calculate the uncertainty of `mean(x)`.  Measuring the uncertainty requires repeated measurements of `mean(x)`.
+
+- Calculate the mean of `x`.
+- Calculte the `sd( mean(x) )` using the **using 10-fold resampling**.  Create your own folds, show your work.
+- Calculte the `sd( mean(x) )` using the **using 10 bootstrap sample**.  Create your own folds, show your work. 
+
+```{r}
+set.seed(1) 
+x <- runif(20,1,20)
+
+sd_cv # <- Your work here 
+
+sd_boot # <- Your work here
+```
+
+
+### Your answers here: 
+
+- sd_cv   is: `r sd_cv`
+- sd_boot is: `r sd_boot`

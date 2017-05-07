@@ -1,0 +1,45 @@
+---
+title: "Classification Mettrics"
+author: "Christopher Brown"
+date: "October 5, 2015"
+output: html_document
+---
+
+
+**KNIT YOUR DOCUMENT AS *HTML* AND SUBMIT IT AND THE `Rmd` file.** 
+ 
+
+## Classification Metrics Functions 
+
+Write functions of `y` and `y_hat` to calculate the following classification metrics
+
+* True Positive Rate  
+* False Positive Rate
+* True Negative Rate  
+* False Negative Rate 
+* Sensitivity 
+* Specificity 
+* Recall 
+* Precision
+* Prevalence 
+* Accuracy
+* Kappa
+
+```{r "definitions", echo=FALSE}
+
+
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+
+## Usage 
+
+Use the function(s) above to calculate the metrics for your late arrival model that
+you created last week. 
+
+```{r "evaluations"}
+
+
+```
+
