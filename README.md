@@ -227,20 +227,23 @@ Topics:
 
 
 Reading:
- - **APM** TBD 
- - **APM** Chapter 5 "Measuring Performance in Regression Models" (esp. 5.2 "The Variance Bias Trade-Off") (5 pages)
+ - **APM** Chapter 8.1-8.3 "Regression Trees and Rule-Based Models"
+ - **APM** Chapter 14.1-14.2 "Classification and Rule-Based Models"
+ - **APM** Chapter 5.2 "The Variance Bias Trade-Off" and 5.3 "Computing" (5 pages)
 
  - [Caret Website](https://topepo.github.io/caret/) 
    There is a lot in the caret website, it is most important to familiarize yourself with the use of the models.
 
 
 Supplementary Reading (Optional): 
- - **MLwR** Chapter 5 "Divide and Conquer - Classification Using Decision Trees and Rules"
- - **MLwR** Chapter 11 "Improving Model Performance" (First Part) 
+
+ - **MLwR**
+   - Chapter 5 "Divide and Conquer - Classification Using Decision Trees and Rules"
+   - Chapter 11 "Improving Model Performance" (First Part) 
    - Tuning Stock Models (pp. 347-358)
 
 Exercise(s):
- - TBD 
+ - Caret and Recursive Partitioning
 
 R Packges introduced:
  - caret 
