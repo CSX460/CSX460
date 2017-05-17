@@ -1,0 +1,53 @@
+---
+title: "Caret / Recursive Partitioning"
+author: "Your Name Here"
+date: "Today's Date"
+output: pdf_document
+---
+
+```{r init, warning=FALSE, echo=FALSE, message=FALSE}
+library(rpart)
+library(caret)
+# .. Additional libraries
+```
+
+
+## Exercise 1: caret/logistic regression (5 points)
+
+Rebuild your logistic regression model from the previous week, this time using the `caret` package. 
+
+- Calculate the training or apparent performance of the model. 
+- Calculate an unbiased measure of performance 
+- Create a ROC Curve for your model
+
+Show all work.
+
+```{r logistic model}
+# Your Work Here
+```
+
+
+## Exercise 2: caret/rpart (5 points)
+
+Using the `caret` and `rpart` packages, create a **classification** model for flight delays using your NYC FLight data. Your solution should include:
+
+- The use of `caret` and `rpart` to train a model.
+- An articulation of the the problem your are 
+- An naive model
+- An unbiased calculation of the performance metric
+- A plot of your model -- (the actual tree; there are several ways to do this)
+- A discussion of your model 
+
+
+
+Show and describe all work
+
+```{r rpart model}
+# Your Work Here
+```
+
+
+### Questions:
+
+- Discuss the difference between the models and why you would use one model over the other?
+- How might you produce an ROC type curve for the *rpart* model? 
