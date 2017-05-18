@@ -1,13 +1,22 @@
 ---
 title: "Caret / Recursive Partitioning"
-author: "Your Name Here"
-date: "Today's Date"
-output: pdf_document
+author: "Thuyen Nguyen"
+date: "May 15, 2017"
+output:
+  html_document: default
 ---
 
 ```{r init, warning=FALSE, echo=FALSE, message=FALSE}
 library(rpart)
 library(caret)
+library(dplyr)
+library(pROC)
+library(partykit)
+library(readr)
+library(ggplot2)
+library(magrittr)
+library(data.table)
+
 # .. Additional libraries
 ```
 
@@ -24,6 +33,50 @@ Show all work.
 
 ```{r logistic model}
 # Your Work Here
+
+#loaddata
+
+airports <- read_csv("~/Documents/CSX460/02-building-blocks/02-exercise-nycflights/data/airports.csv") %>% setDT
+flights <- read_csv("~/Documents/CSX460/02-building-blocks/02-exercise-nycflights/data/flights.csv") %>% setDT
+planes <- read_csv("~/Documents/CSX460/02-building-blocks/02-exercise-nycflights/data/planes.csv") %>% setDT
+weather <- read_csv("~/Documents/CSX460/02-building-blocks/02-exercise-nycflights/data/weather.csv") %>% setDT
+
+data_join <- flights %>%
+  transform(dephour = floor(dep_time / 100)) %>%
+  left_join(.,planes, by=c("tailnum" = "tailnum")) %>% 
+  left_join(.,airports,by=c("origin"="faa"))  %>%
+  left_join(.,airports,by=c("dest"="faa")) %>%
+  left_join(.,weather, by=c("origin"="origin","dephour"="hour","year.x"="year","month"="month","day"="day")) 
+head(data_join)
+#isolate just the lateflight
+data_join$lateflight <- factor(data_join$arr_delay >= 20) 
+#data_join$lateflight %>% qplot
+
+#remove NA data
+data_join <- na.omit(data_join [,c("lateflight","dep_delay","month","air_time","distance","carrier","lat.y","lon.y","arr_delay")])
+
+#create training data
+set.seed(1234)
+inTraining <- createDataPartition(data_join$lateflight, p=0.75,list=FALSE)
+
+#Train the model using caret
+
+train <- trainControl(method = "cv", number = 20)
+training <- data_join[inTraining,]
+testing <- data_join[-inTraining,]
+
+fitformula <- lateflight ~ dep_delay + month + air_time + distance + carrier + lat.y + lon.y
+fitmodel <- train(fitformula, data = training, trControl = train, method = "glm")
+ predictions <- predict(fitmodel, testing)
+ confusionMatrix(predictions,testing$lateflight)
+ 
+ fitLinear <- arr_delay ~ dep_delay + month + air_time + distance + carrier + lat.y + lon.y
+ LinearModel <- train(fitLinear, data = training, trControl = train, method = "glm")
+ predictLinear <- predict(LinearModel, testing)
+ plot(roc(testing$lateflight,predictLinear))
+ 
+
+ 
 ```
 
 
@@ -44,6 +97,34 @@ Show and describe all work
 
 ```{r rpart model}
 # Your Work Here
+
+#Naive Model, randome number
+
+set.seed(1234)
+y <- sample(c(TRUE,FALSE),length(training$lateflight), TRUE)
+confusionMatrix(y, data_join$lateflight)
+
+#unbiased calculation 
+
+formula <- lateflight ~ dep_delay + month + air_time + distance + carrier + lat.y + lon.y
+model <- train(formula, data = training, trControl = train, method = "rpart")
+ unBiased <- predict(model, testing)
+ confusionMatrix(unBiased,testing$lateflight)
+
+#training the model
+ 
+TuneModel <- rpart(lateflight ~ dep_delay + month.flight + air_time + distance + carrier + lat.y + lon.y,
+                   data = training,
+                   method = "class",
+                   control = list(cp = 0.01, minsplit = 5, maxdepth = 20))
+TrainPrediction <- predict(TuneModel, testing)
+confusionMatrix(TrainPrediction, testing$lateflight)
+
+#plot the model
+
+rpartTree <- as.party(TuneModel)
+plot(rpartTree)
+
 ```
 
 
