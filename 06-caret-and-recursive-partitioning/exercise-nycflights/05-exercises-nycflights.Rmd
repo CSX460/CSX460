@@ -102,7 +102,7 @@ Show and describe all work
 
 set.seed(1234)
 y <- sample(c(TRUE,FALSE),length(training$lateflight), TRUE)
-confusionMatrix(y, data_join$lateflight)
+confusionMatrix(y, training$lateflight)
 
 #unbiased calculation 
 
@@ -113,7 +113,7 @@ model <- train(formula, data = training, trControl = train, method = "rpart")
 
 #training the model
  
-TuneModel <- rpart(lateflight ~ dep_delay + month.flight + air_time + distance + carrier + lat.y + lon.y,
+TuneModel <- rpart(lateflight ~ dep_delay + month + air_time + distance + carrier + lat.y + lon.y,
                    data = training,
                    method = "class",
                    control = list(cp = 0.01, minsplit = 5, maxdepth = 20))
