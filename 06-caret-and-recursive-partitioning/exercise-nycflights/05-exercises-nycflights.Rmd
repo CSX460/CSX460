@@ -117,9 +117,12 @@ TuneModel <- rpart(lateflight ~ dep_delay + month + air_time + distance + carrie
                    data = training,
                    method = "class",
                    control = list(cp = 0.01, minsplit = 5, maxdepth = 20))
-TrainPrediction <- predict(TuneModel, testing)
-confusionMatrix(TrainPrediction, testing$lateflight)
+#TrainPrediction <- predict(TuneModel, testing)
+#confusionMatrix(TrainPrediction, testing$lateflight)
 
+printcp(TuneModel)
+plotcp(TuneModel)
+summary(TuneModel)
 #plot the model
 
 rpartTree <- as.party(TuneModel)
