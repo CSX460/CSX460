@@ -123,6 +123,10 @@ confusionMatrix(TrainPrediction, testing$lateflight)
 printcp(TuneModel)
 plotcp(TuneModel)
 summary(TuneModel)
+#plot the model
+
+rpartTree <- as.party(TuneModel)
+plot(rpartTree)
 
 #Producing an ROC by switching to linear model
 
@@ -134,10 +138,7 @@ TrainPrediction <- predict(TuneModel, testing,type="class")
 plot(roc(testing$lateflight,as.numeric(TrainPrediction)))
 
 
-#plot the model
 
-rpartTree <- as.party(TuneModel)
-plot(rpartTree)
 
 ```
 
