@@ -117,12 +117,23 @@ TuneModel <- rpart(lateflight ~ dep_delay + month + air_time + distance + carrie
                    data = training,
                    method = "class",
                    control = list(cp = 0.01, minsplit = 5, maxdepth = 20))
-#TrainPrediction <- predict(TuneModel, testing)
-#confusionMatrix(TrainPrediction, testing$lateflight)
+TrainPrediction <- predict(TuneModel, testing,type='class')
+confusionMatrix(TrainPrediction, testing$lateflight)
 
 printcp(TuneModel)
 plotcp(TuneModel)
 summary(TuneModel)
+
+#Producing an ROC by switching to linear model
+
+TuneModel <- rpart(arr_delay ~ dep_delay + month + air_time + distance + carrier + lat.y + lon.y,
+                   data = data_join,
+                   method = "class",
+                   control = list(cp = 0.01, minsplit = 5, maxdepth = 20))
+TrainPrediction <- predict(TuneModel, testing,type="class")
+plot(roc(testing$lateflight,as.numeric(TrainPrediction)))
+
+
 #plot the model
 
 rpartTree <- as.party(TuneModel)
@@ -134,4 +145,12 @@ plot(rpartTree)
 ### Questions:
 
 - Discuss the difference between the models and why you would use one model over the other?
+
+The CART - regression tree model performs not as well as the straight linear model.  The linear model has a good kappa and an accuracy rate of 92%.  The data set we have does not have discontuos y values.
+And therefore the regression tree method wont be as good.  
+
+
+
 - How might you produce an ROC type curve for the *rpart* model? 
+
+We need to compare the the linear model prediction.  See above.  
