@@ -260,7 +260,8 @@ Topics:
  - Boosting
 
 Reading: 
- - **APM** TBD 
+ - **APM** Chapter 8.4-8.6 "Bagged Trees", "Random Forests", "Boosting"
+ - **APM** Chapter 14.3-14.5  "Bagged Trees", "Random Forests", "Boosting"
 
 Supplementary Reading (Optional): 
  - **MLwR** Chapter 11 Improving Model Performance (Second Part) 
