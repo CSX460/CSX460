@@ -274,15 +274,33 @@ R Packages introduced:
  - caret (cont)
 
 
-### 8.	Time Series Modeling
+### 8. Advanced Models
+
+Topics:
+ - Support Vector Machines
+ - Neural Networks
+   - Deep Learning
+
+Reading:
+  - Chapter 7.1, 13.2 "Neural Networks"
+  - Chapter 7.3, 13.4 "Support Vector Machines"
+
+Exercise(s): 
+
+
+
+### 9.	Time Series Modeling
 
 Topics: 
  - Survival Models
  - Time Series Models 
+   - Regression 
+   - [S][AR][I][MA] and variants
  - Forecast Window Models
  
  
 Reading:
+
 - [**Forecasting Principals and Practice**](https://www.otexts.org/fpp) 
   - Chapters 1 "Getting Started"
   - Chapter 2 "The Forecaster's Toolbox"
@@ -291,7 +309,8 @@ Reading:
 Exercise(s):
 
 
-### 9.	Deployment 
+
+### 10.	Deployment 
 
 Topics:
 - Delivery and Production
