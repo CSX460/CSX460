@@ -1,0 +1,30 @@
+---
+title: "Customer Lifetime Value"
+author: "Christopher Brown"
+date: "May 2, 2016"
+output: html_document
+---
+
+You work as an analyst for *Spotifoo*, an online music streaming service. Spotifoo charges its customers a low fixed rate to stream music online. In addition to a monthly subscription fee, *Spotifoo* allows its customers to purchase products and services mentioned using the *Spotifoo* app. Some customers make no additional purchase besides the monthly subscriptions fee. Other make regular purchases.  
+
+Management wants to:
+
+1. understand who their best customers are.
+2. create a customer lifetime value (CLV) model that predict the lifetime value of each customer after their first month on the *Spotifoo* service.
+
+
+The data assets are available to you are:
+- user attributes (demographics, locations, customer survey responses, etc.)
+- purchase history (items purchases, date/time of purchase, purchase amount, etc.) and, 
+- product attributes (product, product type, etc.) 
+
+For each management question, describe your process. In particular, describe:
+- the response you would use for your model,
+- what predictors you would use,
+- what errors you will use,
+- how you get a training and test data set, 
+- the modeling techniques you would use
+
+# Who Are *Spotifoo*'s best customers?
+
+# Customer Lifetime Value
