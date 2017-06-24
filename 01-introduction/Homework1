@@ -1,0 +1,5 @@
+Exercise 1
+ifelse(x==1,"80", ifelse(x==5,"16",ifelse(x==2,"40",ifelse(x==8,"10",x))))
+
+Exercise 2
+ifelse(x%%3==0,"Fizz",ifelse(X%%5==0,"Buzz",ifelse(x%%15==0,"FizzBuzz",x)))
